@@ -171,6 +171,7 @@
       "declaration-block-trailing-semicolon": null,
       "no-descending-specificity": null,
       "number-leading-zero": null
+      
     }
   },
   "lint-staged": {
