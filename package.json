@@ -82,21 +82,26 @@
     "plugins": [
       "react",
       "react-hooks",
+      "jest-formatting",
       "@typescript-eslint",
-      "testing-library"
+      "testing-library",
+      "cypress"
     ],
     "extends": [
       "eslint:recommended",
       "next",
       "plugin:jsx-a11y/recommended",
       "plugin:@typescript-eslint/recommended",
+      "plugin:cypress/recommended",
+      "plugin:cypress/recommended",
       "prettier",
       "plugin:prettier/recommended"
     ],
     "env": {
       "es6": true,
       "browser": true,
-      "node": true
+      "node": true,
+      "cypress/globals": true
     },
     "rules": {
       "react/react-in-jsx-scope": 0,
@@ -167,9 +172,6 @@
     "ignoreFiles": [
       "**/*.{ts,tsx,js,jsx}"
     ],
-    "extends": [
-      "stylelint-config-standard"
-    ],
     "rules": {
       "at-rule-no-unknown": [
         true,
@@ -201,7 +203,8 @@
       ],
       "declaration-block-trailing-semicolon": null,
       "no-descending-specificity": null,
-      "number-leading-zero": null
+      "number-leading-zero": null,
+      "selector-class-pattern": null
     }
   },
   "lint-staged": {
