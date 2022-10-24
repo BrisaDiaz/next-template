@@ -83,22 +83,13 @@
       "react",
       "react-hooks",
       "@typescript-eslint",
-      "jest",
-      "jest-formatting",
-      "testing-library",
-      "jest-dom",
-      "cypress"
+      "testing-library"
     ],
     "extends": [
       "eslint:recommended",
       "next",
       "plugin:jsx-a11y/recommended",
       "plugin:@typescript-eslint/recommended",
-      "plugin:jest/recommended",
-      "plugin:jest-formatting/recommended",
-      "plugin:testing-library/react",
-      "plugin:jest-dom/recommended",
-      "plugin:cypress/recommended",
       "prettier",
       "plugin:prettier/recommended"
     ],
@@ -161,6 +152,17 @@
       }
     }
   },
+  "overrides": [
+    {
+      "files": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[jt]s?(x)"
+      ],
+      "extends": [
+        "plugin:testing-library/react"
+      ]
+    }
+  ],
   "stylelint": {
     "ignoreFiles": [
       "**/*.{ts,tsx,js,jsx}"
