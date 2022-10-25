@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import Button from '../components/atoms/Button/Index'
 
 import styles from '../styles/Home.module.css'
 
@@ -12,7 +13,11 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}></main>
+      <main className={styles.main}>
+        <Button color="pink" onClick={() => console.log('submit')}>
+          Hola
+        </Button>
+      </main>
     </div>
   )
 }
