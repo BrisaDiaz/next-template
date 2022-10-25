@@ -52,5 +52,6 @@ Small.args = {
 export const ExtraSmall = Template.bind({})
 ExtraSmall.args = {
   size: 'xs',
-  color: 'pink'
+  color: 'pink',
+  variant: 'outline'
 }
