@@ -1,11 +1,4 @@
-import { getStyles, Color, Size, Variant } from './styles'
-
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  size?: Size
-  variant?: Variant
-  color?: Color
-}
+import { GetStyles, ButtonProps } from './styles'
 
 export default function Button({
   children,
@@ -19,7 +12,7 @@ export default function Button({
       <button {...other} className={`btn bn--${color}-${variant} btn--${size}`}>
         {children}
       </button>
-      <style>{getStyles({ color, size })}</style>
+      {GetStyles({ color, size, variant, ...other })}
     </>
   )
 }
