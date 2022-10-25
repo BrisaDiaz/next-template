@@ -14,9 +14,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <Button color="pink" onClick={() => console.log('submit')}>
-          Hola
-        </Button>
+        <Button color="pink">Hola</Button>
       </main>
     </div>
   )
