@@ -19,7 +19,9 @@
     "build:analyze": "cross-env ANALYZE=true npm run build",
     "type-check": "tsc --pretty --noEmit",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "lgci": "lhci autorun --headful",
+    "lgci:run": "npm run build &&  npm run lgci"
   },
   "dependencies": {
     "next": "12.3.1",
