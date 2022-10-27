@@ -9,8 +9,6 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "test:related": "jest --bail --findRelatedTests",
-    "storybook": "start-storybook -p 9009 -s public",
-    "test:storybook": "SKIP_PREFLIGHT_CHECK=true react-scripts test --setupFiles setup.test.storybook.ts",
     "test": "jest --watch --env=jsdom",
     "test:ci": "jest --ci",
     "cypress": "cypress open",
@@ -21,7 +19,9 @@
     "build:analyze": "cross-env ANALYZE=true npm run build",
     "type-check": "tsc --pretty --noEmit",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "lgci": "lhci autorun --headful",
+    "lgci:run": "npm run build &&  npm run lgci"
   },
   "dependencies": {
     "next": "12.3.1",
