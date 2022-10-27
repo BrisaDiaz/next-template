@@ -124,8 +124,8 @@ export default function Button({
       <style jsx>{`
         .btn {
           border: 1px solid transparent;
-          font-weight: 600;
-          border-radius: 0.375em;
+          font-weight: var(--fontWeights-semibold);
+          border-radius: var(--radii-md);
           cursor: pointer;
           transition-property: var(--transition-property-common);
           transition-duration: var(--transition-duration-normal);
