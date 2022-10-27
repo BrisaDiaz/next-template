@@ -1,57 +1,68 @@
 export const colorSchema = {
   whiteAlpha: {
-    main: '--colors-whiteAlpha-500',
-    dark: '--colors-whiteAlpha-600',
+    main: '--colors-whiteAlpha-600',
+    dark: '--colors-whiteAlpha-700',
+    light: '--colors-whiteAlpha-600',
     contrast: 'dark'
   },
   blackAlpha: {
-    main: '--colors-blackAlpha-500',
-    dark: '--colors-blackAlpha-600',
+    main: '--colors-blackAlpha-600',
+    dark: '--colors-blackAlpha-700',
+    light: '--colors-blackAlpha-600',
     contrast: 'dark'
   },
   gray: {
     main: '--colors-gray-100',
     dark: '--colors-gray-200',
+    light: '--colors-red-100',
     contrast: 'light'
   },
   red: {
-    main: '--colors-red-500',
-    dark: '--colors-red-600',
+    main: '--colors-red-600',
+    dark: '--colors-red-700',
+    light: '--colors-red-400',
     contrast: 'dark'
   },
   orange: {
-    main: '--colors-orange-500',
-    dark: '--colors-orange-600',
+    main: '--colors-orange-600',
+    dark: '--colors-orange-700',
+    light: '--colors-orange-400',
     contrast: 'dark'
   },
   yellow: {
     main: '--colors-yellow-400',
     dark: '--colors-yellow-500',
+    light: '--colors-yellow-400',
     contrast: 'light'
   },
   green: {
-    main: '--colors-green-500',
-    dark: '--colors-green-600',
+    main: '--colors-green-600',
+    dark: '--colors-green-700',
+    light: '--colors-green-400',
     contrast: 'dark'
   },
   teal: {
-    main: '--colors-teal-500',
-    dark: '--colors-teal-600',
+    main: '--colors-teal-600',
+    dark: '--colors-teal-700',
+    light: '--colors-teal-400',
     contrast: 'dark'
   },
   blue: {
-    main: '--colors-blue-500',
-    dark: '--colors-blue-600',
+    main: '--colors-blue-600',
+    dark: '--colors-blue-700',
+    light: '--colors-blue-400',
     contrast: 'dark'
   },
   purple: {
-    main: '--colors-purple-500',
-    dark: '--colors-purple-600',
+    main: '--colors-purple-600',
+    dark: '--colors-purple-700',
+    light: '--colors-purple-400',
     contrast: 'dark'
   },
   pink: {
-    main: '--colors-pink-500',
-    dark: '--colors-pink-600',
+    main: '--colors-pink-600',
+    dark: '--colors-pink-700',
+    light: '--colors-pink-400',
     contrast: 'dark'
   }
 }
@@ -81,10 +92,11 @@ export const sizeSchema = {
     paddingInline: '--space-6'
   }
 }
+export const variantSchema = ['solid', 'ghost', 'outline']
 
 export type Color = keyof typeof colorSchema
 export type Size = keyof typeof sizeSchema
-export type Variant = 'solid' | 'ghost' | 'outline'
+export type Variant = typeof variantSchema[number]
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -178,6 +190,23 @@ export default function Button({
         .bn--${color}-ghost:active::before,
           .bn--${color}-outline:active::before {
           opacity: 0.15;
+        }
+         {
+          /* DARK MODE STYLES */
+        }
+        @media (prefers-color-scheme: dark) {
+          .bn--${color}-outline {
+            border-color: var(${colorSchema[color]?.light});
+            color: var(
+              ${color === 'gray' ? 'inherit' : colorSchema[color]?.light}
+            );
+            background-color: var(--colors-transparent);
+          }
+          .bn--${color}-ghost {
+            border-color: var(--colors-transparent);
+            background-color: var(--colors-transparent);
+            color: var(${colorSchema[color]?.light});
+          }
         }
       `}</style>
     </>

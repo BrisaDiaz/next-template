@@ -1,7 +1,7 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
-import Button from './Index'
+import Button, { colorSchema, variantSchema, sizeSchema } from './Index'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -11,7 +11,28 @@ export default {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     onClick: { action: 'clicked' },
-    onSubmit: { action: 'submit' }
+    onSubmit: { action: 'submit' },
+    color: {
+      defaultValue: 'gray',
+      options: Object.keys(colorSchema),
+      control: {
+        type: 'select'
+      }
+    },
+    variant: {
+      defaultValue: 'solid',
+      options: variantSchema,
+      control: {
+        type: 'radio'
+      }
+    },
+    size: {
+      defaultValue: 'md',
+      options: Object.keys(sizeSchema),
+      control: {
+        type: 'radio'
+      }
+    }
   }
 } as ComponentMeta<typeof Button>
 
