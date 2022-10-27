@@ -69,7 +69,7 @@ jobs:
           name: .next
           path: .next
       - name: Test
-        run: npm test
+        run: npm run test:ci
 
   e2e:
     needs: [lint, build]
@@ -91,7 +91,7 @@ jobs:
       - name: E2E tests
         uses: cypress-io/github-action@v2
         with:
-          command: npm run cypress
+          command: npm run e2e
           start: npm  start
           wait-on: http://localhost:3000
 
