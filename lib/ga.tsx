@@ -36,6 +36,8 @@ export const event = ({
 
 // Put this in _document.tsx
 export const GAScripts = () => {
+  //// the website is not provided with tracking id
+  if (!GA_TRACKING_ID?.length) return <></>
   return (
     <>
       <script
@@ -57,8 +59,12 @@ export const GAScripts = () => {
 // Use this hook in _app.tsx
 export const useAppGA = () => {
   const router = useRouter()
+  //// the website is not provided with tracking id
 
   useEffect(() => {
+    //// the website is not provided with tracking id
+    if (!GA_TRACKING_ID?.length) return
+
     const handleRouteChange = (url: string) => {
       pageview(url)
     }
