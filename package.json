@@ -111,36 +111,31 @@
       "prettier",
       "plugin:prettier/recommended"
     ],
-    "env": {
-      "es6": true,
-      "browser": true,
-      "node": true,
-      "cypress/globals": true
-    },
     "overrides": [
       {
         "files": [
           "**/__tests__/**/*.[jt]s?(x)",
           "**/?(*.)+(spec|test).[jt]s?(x)"
         ],
-        "extends": [
-          "plugin:testing-library/react"
-        ]
-      },
-      {
-        "files": [
-          "cypress/**/*.ts"
+        "plugins": [
+          "jest",
+          "jest-formatting",
+          "jest-dom"
         ],
-        "parserOptions": {
-          "project": [
-            "cypress/tsconfig.json"
-          ]
-        },
         "extends": [
-          "plugin:cypress/recommended"
+          "plugin:testing-library/react",
+          "plugin:jest/recommended",
+          "plugin:jest-formatting/recommended",
+          "plugin:jest-dom/recommended"
         ]
       }
     ],
+    "env": {
+      "es6": true,
+      "browser": true,
+      "node": true,
+      "jest/globals": true
+    },
     "rules": {
       "react/react-in-jsx-scope": 0,
       "react/display-name": 0,
