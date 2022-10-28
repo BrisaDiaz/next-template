@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 
 import { render, screen, fireEvent } from '@testing-library/react'
 import { composeStories } from '@storybook/testing-react'
-
+import { Moon } from '../../common/SVG'
 // import Button stories file as a module
 import * as stories from './Button.stories'
 const { Default, Disable, ExtraSmall } = composeStories(stories)
@@ -11,8 +11,8 @@ test('render children', () => {
   render(<Default />)
 
   const buttonElement = screen.getByRole('button')
-  expect(buttonElement).not.toBeNull()
-  expect(buttonElement.textContent).toEqual('Content')
+  expect(buttonElement).toBeInTheDocument()
+  expect(buttonElement).toHaveTextContent(/Content/)
 })
 
 test('onclick handler is called', async () => {
@@ -45,7 +45,7 @@ test('allows to add additional classes', async () => {
   render(<Default className="my-class" />)
   const buttonElement = screen.getByRole('button')
 
-  expect(buttonElement.classList).toContain('my-class')
+  expect(buttonElement).toHaveClass('my-class')
 })
 
 test('allows to add inline styles', () => {
@@ -80,4 +80,44 @@ test('apply correct classes', () => {
   expect(className).toContain(ExtraSmall.args?.size)
   expect(className).toContain(ExtraSmall.args?.color)
   expect(className).toContain(ExtraSmall.args?.variant)
+})
+
+test('renders start and end icons end text content', () => {
+  render(
+    <Default
+      startIcon={<Moon data-testid="start-icon" />}
+      endIcon={<Moon data-testid="end-icon" />}
+    />
+  )
+
+  const buttonElement = screen.getByRole('button')
+  const startIcon = screen.getByTestId('start-icon')
+  const endIcon = screen.getByTestId('end-icon')
+  expect(buttonElement).toHaveTextContent(/Content/)
+  expect(startIcon).toBeInTheDocument()
+  expect(endIcon).toBeInTheDocument()
+})
+
+test('set  data-theme="light" when prop themeMode is not provided', () => {
+  render(<Default />)
+
+  const buttonElement = screen.getByRole('button')
+
+  expect(buttonElement).toHaveAttribute('data-theme', 'light')
+})
+
+test('set  data-theme="dark" when  prop themeMode="dark"', () => {
+  render(<Default themeMode="dark" />)
+
+  const buttonElement = screen.getByRole('button')
+
+  expect(buttonElement).toHaveAttribute('data-theme', 'dark')
+})
+
+test('set  data-theme="light" when  prop themeMode="light"', () => {
+  render(<Default themeMode="light" disabled />)
+
+  const buttonElement = screen.getByRole('button')
+
+  expect(buttonElement).toHaveAttribute('data-theme', 'light')
 })

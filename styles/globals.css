@@ -408,14 +408,32 @@
   --colors-fg-on-accent: var(--colors-white);
 }
 html {
-      --colors-body-text: var(--colors-gray-800);
+     --colors-body-text: var(--colors-gray-800);
     --colors-body-bg: var(--colors-white);
     --colors-border-color: var(--colors-gray-200);
     --colors-placeholder-color: var(--colors-gray-500);
 }
+[data-theme="dark"] {
+
+   --colors-body-text: var(--colors-whiteAlpha-900);
+    --colors-body-bg: var(--colors-gray-800);
+    --colors-border-color: var(--colors-whiteAlpha-300);
+    --colors-placeholder-color: var(--colors-whiteAlpha-400);
+    --colors-accent: var(--colors-teal-300);
+    --colors-accent-emphasis: var(--colors-teal-200);
+    --colors-accent-muted: var(--colors-teal-200);
+    --colors-accent-subtle: var(--colors-teal-800);
+    --colors-fg: var(--colors-gray-100);
+    --colors-fg-emphasis: var(--colors-gray-200);
+    --colors-fg-muted: var(--colors-gray-400);
+    --colors-fg-subtle: var(--colors-gray-300);
+    --colors-fg-on-accent: inherit;
+
+}
+
 body {
     font-family: var(--fonts-body);
-    color: var(--colors-fg);
+    color: var(--colors-body-text);
     background: var(--colors-body-bg);
     transition-property: background-color;
     transition-duration: var(--transition-duration-normal);
@@ -435,25 +453,3 @@ a {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-
-  :root{
-      --colors-body-text: var(--colors-whiteAlpha-900);
-    --colors-body-bg: var(--colors-gray-800);
-    --colors-border-color: var(--colors-whiteAlpha-300);
-    --colors-placeholder-color: var(--colors-whiteAlpha-400);
-    --colors-accent: var(--colors-teal-300);
-    --colors-accent-emphasis: var(--colors-teal-200);
-    --colors-accent-muted: var(--colors-teal-200);
-    --colors-accent-subtle: var(--colors-teal-800);
-    --colors-fg: var(--colors-gray-100);
-    --colors-fg-emphasis: var(--colors-gray-200);
-    --colors-fg-muted: var(--colors-gray-400);
-    --colors-fg-subtle: var(--colors-gray-300);
-    --colors-fg-on-accent: inherit;
-  }
-
-}
