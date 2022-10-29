@@ -14,7 +14,11 @@ const Home: NextPage = () => {
           Accessible
         </Button>
         <p>Click the button to switch theme .</p>
-        <ModeSwitch variant="outline" rounded={true} />
+        <ModeSwitch
+          variant="outline"
+          rounded={true}
+          data-testid="theme switch"
+        />
       </main>
     </div>
   )
