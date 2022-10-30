@@ -25,7 +25,11 @@ const Home: NextPage = () => {
         >
           Click the button to switch theme.
         </Text>
-        <ModeSwitch variant="outline" rounded={true} />
+        <ModeSwitch
+          variant="outline"
+          rounded={true}
+          data-testid="theme switch"
+        />
         <style jsx>{`
           :global(.instructive-text) {
           }
