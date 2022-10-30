@@ -1,4 +1,4 @@
-const sizeSchema = {
+export const sizeSchema = {
   xs: '--fontSizes-xs',
   sm: '--fontSizes-sm',
   md: '--fontSizes-md',
@@ -10,7 +10,7 @@ const sizeSchema = {
   '5xl': '--fontSizes-5xl',
   '6xl': '--fontSizes-6xl'
 }
-const weightSchema = {
+export const weightSchema = {
   hairline: '--fontWeights-hairline',
   thin: '--fontWeights-thin',
   light: '--fontWeights-light',
@@ -21,7 +21,49 @@ const weightSchema = {
   extrabold: '--fontWeights-extrabold',
   black: '--fontWeights-black'
 }
-const componentSchema = [
+export const colorSchema = {
+  inherit: {
+    main: '--colors-inherit',
+    light: '--colors-inherit'
+  },
+  gray: {
+    main: '--colors-gray-600',
+    light: '--colors-gray-200'
+  },
+  red: {
+    main: '--colors-red-600',
+    light: '--colors-red-300'
+  },
+  orange: {
+    main: '--colors-orange-600',
+    light: '--colors-orange-300'
+  },
+  yellow: {
+    main: '--colors-yellow-700',
+    light: '--colors-yellow-300'
+  },
+  green: {
+    main: '--colors-green-600',
+    light: '--colors-green-300'
+  },
+  teal: {
+    main: '--colors-teal-600',
+    light: '--colors-teal-300'
+  },
+  blue: {
+    main: '--colors-blue-600',
+    light: '--colors-blue-300'
+  },
+  purple: {
+    main: '--colors-purple-600',
+    light: '--colors-purple-300'
+  },
+  pink: {
+    main: '--colors-pink-600',
+    light: '--colors-pink-300'
+  }
+}
+export const componentSchema = [
   'p',
   'h1',
   'h2',
@@ -42,34 +84,57 @@ const componentSchema = [
   'sub'
 ] as const
 
-const alignSchema = ['center', 'inherit', 'justify', 'left', 'right'] as const
+export const alignSchema = [
+  'center',
+  'inherit',
+  'auto',
+  'end',
+  'start'
+] as const
+export const themedModes = ['light', 'dark'] as const
 
+export type ThemeMode = typeof themedModes[number]
 export type Size = keyof typeof sizeSchema
 export type Weight = keyof typeof weightSchema
 export type Component = typeof componentSchema[number]
 export type Align = typeof alignSchema[number]
-interface TextProps extends React.HTMLAttributes<HTMLElement> {
+export type Color = keyof typeof colorSchema
+
+export interface ExtraProps {
   size?: Size
   weight?: Weight
   component?: Component
   align?: Align
   extraStyles?: JSX.Element
+  color?: Color
+  themeMode?: ThemeMode
 }
-
+export type TextProps = React.HTMLAttributes<HTMLElement> & ExtraProps
+export const defaultValue = {
+  size: 'md' as Size,
+  weight: 'normal' as Weight,
+  component: 'p' as Component,
+  align: 'inherit' as Align,
+  color: 'inherit' as Color,
+  themeMode: 'light' as ThemeMode
+}
 export default function Text({
-  size = 'md',
-  weight = 'normal',
-  component = 'p',
-  align = 'inherit',
+  size = defaultValue.size,
+  weight = defaultValue.weight,
+  component = defaultValue.component,
+  align = defaultValue.align,
+  color = defaultValue.color,
+  themeMode = defaultValue.themeMode,
   children,
   className,
   extraStyles,
   ...other
 }: TextProps) {
   const props = {
-    className: ` text text--${size}-${weight}-${align}  ${
+    className: ` text text--${color}-${size}-${weight}-${align}  ${
       className ? className : ''
     }  `,
+    'data-theme': themeMode,
     ...other
   }
 
@@ -94,13 +159,23 @@ export default function Text({
       {'s' === component && <s {...props}>{children}</s>}
       {'sub' === component && <sub {...props}>{children}</sub>}
       <style jsx global>{`
-        .text--${size}-${weight}-${align} {
+        ${extraStyles || ''}
+        .text {
+          --color: var(${colorSchema[color].main});
+        }
+        .text--${color}-${size}-${weight}-${align} {
           font-size: var(${sizeSchema[size]});
           font-weight: var(${weightSchema[weight]});
           align-self: ${align};
+          color: var(--color);
+        }
+         {
+          /* DARK themeMode VARIABLES */
+        }
+        [data-theme='dark'] {
+          --color: var(${colorSchema[color].light});
         }
       `}</style>
-      <style jsx>{extraStyles}</style>
     </>
   )
 }

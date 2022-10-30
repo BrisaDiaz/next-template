@@ -8,6 +8,7 @@
   --space-y-reverse: 0;
   --colors-transparent: transparent;
   --colors-current: currentColor;
+    --colors-inherit: inherit;
   --colors-black: #000000;
   --colors-white: #ffffff;
   --colors-whiteAlpha-50: rgba(255, 255, 255, 0.04);

@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import css from 'styled-jsx/css'
 import Button from '../components/atoms/Button/ThemedButton'
-import Text from '../components/atoms/Text/Index'
+import Text from '../components/atoms/Text/ThemedText'
 import Head from '../components/common/Head'
 import styles from '../styles/Home.module.css'
 import ModeSwitch from '../components/atoms/ModeSwitch/Index'
@@ -16,6 +16,7 @@ const Home: NextPage = () => {
         </Button>
         <Text
           size="lg"
+          color="gray"
           extraStyles={css`
             .text {
               margin: 1rem 0;
