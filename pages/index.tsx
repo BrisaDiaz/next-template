@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
-
+import css from 'styled-jsx/css'
 import Button from '../components/atoms/Button/ThemedButton'
+import Text from '../components/atoms/Text/ThemedText'
 import Head from '../components/common/Head'
 import styles from '../styles/Home.module.css'
 import ModeSwitch from '../components/atoms/ModeSwitch/Index'
@@ -13,12 +14,26 @@ const Home: NextPage = () => {
         <Button color="pink" variant="outline">
           Accessible
         </Button>
-        <p>Click the button to switch theme .</p>
+        <Text
+          size="lg"
+          color="gray"
+          extraStyles={css`
+            .text {
+              margin: 1rem 0;
+            }
+          `}
+        >
+          Click the button to switch theme.
+        </Text>
         <ModeSwitch
           variant="outline"
           rounded={true}
           data-testid="theme switch"
         />
+        <style jsx>{`
+          :global(.instructive-text) {
+          }
+        `}</style>
       </main>
     </div>
   )

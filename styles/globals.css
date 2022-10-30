@@ -8,6 +8,7 @@
   --space-y-reverse: 0;
   --colors-transparent: transparent;
   --colors-current: currentColor;
+    --colors-inherit: inherit;
   --colors-black: #000000;
   --colors-white: #ffffff;
   --colors-whiteAlpha-50: rgba(255, 255, 255, 0.04);
@@ -437,7 +438,7 @@ body {
     background: var(--colors-body-bg);
     transition-property: background-color;
     transition-duration: var(--transition-duration-normal);
-    line-height: var(--lineHeights-base);font-weight: var(  --fontWeights-normal: 400);
+    line-height: var(--lineHeights-base);font-weight: var(  --fontWeights-normal);
 
 
     
