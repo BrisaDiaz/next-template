@@ -3,16 +3,20 @@ describe('Theme', () => {
     // Start from the index page
     cy.visit('http://localhost:3000/')
 
-    const storedTheme = window?.localStorage?.getItem('theme')
+    let currentTheme = 'light'
 
-    const prefersDark =
-      window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches
+    if (Cypress.env('NODE_ENV') === 'development') {
+      const storedTheme = window?.localStorage?.getItem('theme')
 
-    const defaultDark =
-      storedTheme === 'dark' || (storedTheme === null && prefersDark)
+      const prefersDark =
+        window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches
 
-    const currentTheme = defaultDark ? 'dark' : 'light'
+      const defaultDark =
+        storedTheme === 'dark' || (storedTheme === null && prefersDark)
+
+      currentTheme = defaultDark ? 'dark' : 'light'
+    }
 
     const toChangeTheme1 = currentTheme === 'light' ? 'dark' : 'light'
 
