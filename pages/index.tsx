@@ -15,11 +15,16 @@ const Home: NextPage = () => {
           Accessible
         </Button>
         <Text
-          size="lg"
+          size="sm"
           color="gray"
-          extraStyles={css`
+          extraStyles={css.resolve`
             .text {
-              margin: 1rem 0;
+              margin: 2rem 0;
+            }
+            @media (min-width: 600px) {
+              .text {
+                font-size: var(--fontSizes-md);
+              }
             }
           `}
         >

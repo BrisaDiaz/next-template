@@ -1,13 +1,12 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-
+import { themedModes } from '../../common/Props'
 import Text, {
   colorSchema,
   sizeSchema,
   weightSchema,
   componentSchema,
-  alignSchema,
-  themedModes
+  alignSchema
 } from './Index'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -60,7 +59,7 @@ export default {
         type: 'select'
       }
     },
-    extraStyles: { defaultValue: null, description: 'JSX styles' },
+    extraStyles: { defaultValue: null, description: 'JSX styles css.resolve' },
     children: {
       defaultValue: 'Hello Word 🖐',
       control: {

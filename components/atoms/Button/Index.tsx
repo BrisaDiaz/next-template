@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-
+import { defaultExtraStyles, ThemeMode, ExtraStyles } from '../../common/Props'
 export const colorSchema = {
   whiteAlpha: {
     main: '--colors-whiteAlpha-600',
@@ -95,12 +95,10 @@ export const sizeSchema = {
   }
 }
 export const variantSchema = ['solid', 'ghost', 'outline'] as const
-export const themedModes = ['light', 'dark'] as const
 
 export type Color = keyof typeof colorSchema
 export type Size = keyof typeof sizeSchema
 export type Variant = typeof variantSchema[number]
-export type ThemeMode = typeof themedModes[number]
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -112,7 +110,7 @@ export interface ButtonProps
   endIcon?: ReactNode
   rounded?: boolean
   themeMode?: ThemeMode
-  extraStyles?: JSX.Element
+  extraStyles?: ExtraStyles
 }
 
 export default function Button({
@@ -126,7 +124,7 @@ export default function Button({
   endIcon,
   rounded = false,
   themeMode = 'light',
-  extraStyles,
+  extraStyles = defaultExtraStyles,
   ...other
 }: ButtonProps) {
   return (
@@ -135,7 +133,7 @@ export default function Button({
         data-theme={themeMode}
         className={`btn btn--${color}-${variant} btn--${size} ${
           isIconButton && 'btn--icon'
-        } ${className ?? ''}`}
+        } ${extraStyles.className} ${className ? className : ''}`}
         {...other}
       >
         <>
@@ -233,8 +231,8 @@ export default function Button({
           background-color: var(--ghost-color);
           opacity: 0.1;
         }
-        ${extraStyles || ''}
       `}</style>
+      {extraStyles.styles}
     </>
   )
 }
