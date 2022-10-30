@@ -65,8 +65,12 @@ export default {
       defaultValue: null
     },
     children: {
-      defaultValue: null
-    }
+      defaultValue: '',
+      control: {
+        type: 'text'
+      }
+    },
+    extraStyles: { defaultValue: null, description: 'JSX styles' }
   }
 } as ComponentMeta<typeof Button>
 

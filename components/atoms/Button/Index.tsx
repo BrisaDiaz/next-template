@@ -112,6 +112,7 @@ export interface ButtonProps
   endIcon?: ReactNode
   rounded?: boolean
   themeMode?: ThemeMode
+  extraStyles?: JSX.Element
 }
 
 export default function Button({
@@ -125,6 +126,7 @@ export default function Button({
   endIcon,
   rounded = false,
   themeMode = 'light',
+  extraStyles,
   ...other
 }: ButtonProps) {
   return (
@@ -231,6 +233,7 @@ export default function Button({
           background-color: var(--ghost-color);
           opacity: 0.1;
         }
+        ${extraStyles || ''}
       `}</style>
     </>
   )
