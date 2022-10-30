@@ -1,31 +1,28 @@
 describe('Theme', () => {
   it('should toggle dark mode', () => {
     // Start from the index page
-    cy.visit('http://localhost:3000/')
 
-    let currentTheme = 'light'
+    const startTheme = 'dark'
 
-    if (Cypress.env('NODE_ENV') === 'development') {
-      const storedTheme = window?.localStorage?.getItem('theme')
+    cy.visit('/', {
+      onBeforeLoad(win) {
+        localStorage.setItem('theme', startTheme)
+        cy.stub(win, 'matchMedia')
+          .withArgs(`(prefers-color-scheme: ${startTheme})`)
+          .returns({
+            matches: true
+          })
+      }
+    })
 
-      const prefersDark =
-        window.matchMedia &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches
-
-      const defaultDark =
-        storedTheme === 'dark' || (storedTheme === null && prefersDark)
-
-      currentTheme = defaultDark ? 'dark' : 'light'
-    }
-
-    const toChangeTheme1 = currentTheme === 'light' ? 'dark' : 'light'
+    const toChangeTheme1 = startTheme === 'dark' ? 'light' : 'dark'
 
     cy.get('[data-testid="theme switch"]')
       .as('themeSwitch')
       .invoke('attr', 'aria-label')
       .should('contain', `switch to ${toChangeTheme1} mode`)
 
-    const toChangeTheme2 = toChangeTheme1 === 'light' ? 'dark' : 'light'
+    const toChangeTheme2 = startTheme
 
     cy.get('@themeSwitch').click()
 
