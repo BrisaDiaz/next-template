@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react'
 function useMediaQuery(query: string): boolean {
   const getMatches = (query: string): boolean => {
     // Prevents SSR issues
-    if (typeof window !== 'undefined') {
-      return window.matchMedia(query).matches
+    if (typeof window !== 'undefined' && window?.matchMedia(query)) {
+      return window?.matchMedia(query)?.matches
     }
     return false
   }
@@ -22,13 +22,14 @@ function useMediaQuery(query: string): boolean {
     handleChange()
 
     // Listen matchMedia
-    if (matchMedia.addListener) {
-      matchMedia.addListener(handleChange)
+    if (matchMedia && matchMedia.addListener) {
+      matchMedia?.addListener(handleChange)
     } else {
-      matchMedia.addEventListener('change', handleChange)
+      matchMedia?.addEventListener('change', handleChange)
     }
 
     return () => {
+      if (!matchMedia) return
       if (matchMedia.removeListener) {
         matchMedia.removeListener(handleChange)
       } else {
