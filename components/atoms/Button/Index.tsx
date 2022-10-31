@@ -112,7 +112,127 @@ export interface ButtonProps
   themeMode?: ThemeMode
   extraStyles?: ExtraStyles
 }
+const generateStyles = () => {
+  const sizeCss = Object.entries(sizeSchema)
+    .map(
+      (size) => `        
+          .btn--${size[0]} {
+          height: var(${size[1].height});
+          min-width: var(${size[1].width});
+          font-size: var(${size[1].fontSize});
+          padding-inline-start: var(${size[1].paddingInline});
+          padding-inline-end: var(${size[1].paddingInline});
+        }`
+    )
+    .join(' ')
 
+  const colorCss = Object.entries(colorSchema)
+    .map((entry) => {
+      const colorName = entry[0] as Color
+      const colorRules = entry[1]
+      const isGray = colorName === 'gray'
+      return `
+    
+              .btn {
+             --solid-${colorName}-bg: var(${colorRules.main});
+             --solid-${colorName}-color: var(
+            ${
+              colorRules.contrast === 'light'
+                ? '--colors-black'
+                : '--colors-white'
+            }
+          );
+          --solid-${colorName}-bg-hover: var(${colorRules.dark});
+         --outline-${colorName}-color: var(${
+        isGray ? '--colors-gray-600' : colorRules.dark
+      });
+          --ghost-${colorName}-color: var(--outline-${colorName}-color);
+          }
+        
+      
+
+        .btn--${colorName}-solid {
+          background-color: var(--solid-${colorName}-bg);
+          color: var(--solid-${colorName}-color);
+        }
+
+        .btn--${colorName}-solid:hover {
+          background-color: var(--solid-${colorName}-bg-hover);
+        }
+
+        .btn--${colorName}-ghost {
+          border-color: var(--colors-transparent);
+          background-color: var(--colors-transparent);
+          color: var(--ghost-${colorName}-color);
+        }
+
+       .btn--${colorName}-outline {
+          border-color: var(--outline-${colorName}-color);
+          color: var(--outline-${colorName}-color);
+          background-color: var(--colors-transparent);
+        } 
+
+        .btn--${colorName}-ghost:hover::before,
+          .btn--${colorName}-outline:hover::before {
+          content: ' ';
+          position: absolute;
+          border-radius: inherit;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          background-color: var(--ghost-${colorName}-color);
+          opacity: 0.1;
+        }
+    
+        [data-theme='dark'] {
+          --outline-${colorName}-color: var(${colorRules.light});
+          --ghost-${colorName}-color: var(--outline-${colorName}-color);
+        }
+    `
+    })
+    .join(' ')
+
+  const staticStyles = ` 
+        .btn {
+          font-weight: var(--fontWeights-semibold);
+          cursor: pointer;
+          transition-property: var(--transition-property-common);
+          transition-duration: var(--transition-duration-normal);
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: var(--fontSizes-3xs);
+          border-radius: var(--radii-md);
+          border:1px solid transparent
+        }
+       .btn--icon {
+          padding-inline-start: var(--space-2);
+          padding-inline-end: var(--space-2);
+        }
+        .btn--icon-xs {
+          padding-inline-start: 0;
+          padding-inline-end: 0;
+        }
+        .btn:focus-visible {
+          outline-offset: var(--ring-offset-width);
+          outline: 3px solid var(--ring-color);
+        }
+        .btn[disabled] {
+          opacity: 0.4;
+          cursor: not-allowed;
+          box-shadow: var(--shadows-none);
+        }
+        .btn--rounded {
+          border-radius: var(--radii-full);
+        }
+
+ 
+        
+        `
+  return ` ${sizeCss}  ${staticStyles} ${colorCss}`
+}
 export default function Button({
   children,
   color = 'gray',
@@ -131,9 +251,15 @@ export default function Button({
     <>
       <button
         data-theme={themeMode}
-        className={`btn btn--${color}-${variant} btn--${size} ${
-          isIconButton && 'btn--icon'
-        } ${extraStyles.className} ${className ? className : ''}`}
+        className={` btn btn--${size} ${
+          isIconButton && size === 'xs'
+            ? 'btn--icon-xs'
+            : isIconButton
+            ? 'btn--icon'
+            : ' '
+        } ${rounded ? 'btn--rounded' : ' '}  btn--${color}-${variant}  ${
+          extraStyles.className
+        } ${className ? className : ' '}`}
         {...other}
       >
         <>
@@ -142,95 +268,7 @@ export default function Button({
       </button>
 
       <style jsx>{`
-        .btn {
-          border: 1px solid transparent;
-          font-weight: var(--fontWeights-semibold);
-          border-radius: var(${rounded ? ' --radii-full' : '--radii-md'});
-          cursor: pointer;
-          transition-property: var(--transition-property-common);
-          transition-duration: var(--transition-duration-normal);
-          position: relative;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: var(--fontSizes-3xs);
-          --solid-bg: var(${colorSchema[color].main});
-          --solid-color: var(
-            ${colorSchema[color].contrast === 'light'
-              ? '--colors-black'
-              : '--colors-white'}
-          );
-          --solid-bg-hover: var(${colorSchema[color].dark});
-          --outline-color: var(
-            ${color === 'gray' ? '--colors-body-text' : colorSchema[color].dark}
-          );
-          --ghost-color: var(--outline-color);
-        }
-        .btn:focus-visible {
-          outline-offset: var(--ring-offset-width);
-          outline: 3px solid var(--ring-color);
-        }
-        .btn[disabled] {
-          opacity: 0.4;
-          cursor: not-allowed;
-          box-shadow: var(--shadows-none);
-        }
-         {
-          /* DARK themeMode VARIABLES */
-        }
-        [data-theme='dark'] {
-          --outline-color: var(
-            ${color === 'gray'
-              ? '--colors-body-text'
-              : colorSchema[color].light}
-          );
-          --ghost-color: var(--outline-color);
-        }
-
-        .btn--${color}-solid {
-          background-color: var(--solid-bg);
-          color: var(--solid-color);
-        }
-
-        .btn--${color}-solid:hover {
-          background-color: var(--solid-bg-hover);
-        }
-
-        .btn--${size} {
-          height: var(${sizeSchema[size].height});
-          min-width: var(${sizeSchema[size].width});
-          font-size: var(${sizeSchema[size].fontSize});
-          padding-inline-start: var(${sizeSchema[size].paddingInline});
-          padding-inline-end: var(${sizeSchema[size].paddingInline});
-        }
-        .btn--icon {
-          padding-inline-start: ${size === 'xs' ? 0 : 'var(--space-2)'};
-          padding-inline-end: ${size === 'xs' ? 0 : 'var(--space-2)'};
-        }
-        .btn--${color}-outline {
-          border-color: var(--outline-color);
-          color: var(--outline-color);
-          background-color: var(--colors-transparent);
-        }
-
-        .btn--${color}-ghost {
-          border-color: var(--colors-transparent);
-          background-color: var(--colors-transparent);
-          color: var(--ghost-color);
-        }
-
-        .btn--${color}-ghost:hover::before,
-          .btn--${color}-outline:hover::before {
-          content: ' ';
-          position: absolute;
-          border-radius: inherit;
-          width: 100%;
-          height: 100%;
-          top: 0;
-          left: 0;
-          background-color: var(--ghost-color);
-          opacity: 0.1;
-        }
+        ${generateStyles()}
       `}</style>
       {extraStyles.styles}
     </>

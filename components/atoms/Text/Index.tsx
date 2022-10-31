@@ -118,7 +118,38 @@ export const defaultValue = {
   themeMode: 'light' as ThemeMode,
   extraStyles: defaultExtraStyles
 }
+const generateStyles = () => {
+  const sizeCss = Object.entries(sizeSchema)
+    .map((size) => `.text--${size[0] as Size} {font-size: var(${size[1]});}`)
+    .join(' ')
 
+  const weightCss = Object.entries(weightSchema)
+    .map(
+      (weight) =>
+        `.text--${weight[0] as Weight} {font-weight: var(${weight[1]});}`
+    )
+    .join(' ')
+
+  const alignCss = alignSchema
+    .map((align: Align) => `.text--align-${align} { align-self: ${align};}`)
+    .join(' ')
+
+  const colorCss = Object.entries(colorSchema)
+    .map((entry) => {
+      const colorName = entry[0] as Color
+      return `   
+         .text--color-${colorName} {
+          --color-${colorName}: var(${entry[1].main});
+          color: var(--color-${colorName});
+        }
+        [data-theme='dark'] {
+         --color-${colorName}: var(${entry[1].light});
+        }`
+    })
+    .join(' ')
+
+  return `  ${colorCss} ${sizeCss} ${weightCss} ${alignCss} `
+}
 export default function Text({
   size = defaultValue.size,
   weight = defaultValue.weight,
@@ -132,9 +163,9 @@ export default function Text({
   ...other
 }: TextProps) {
   const props = {
-    className: ` text text--${color}-${size}-${weight}-${align}  ${
+    className: ` text text--color-${color} text--${size} text--${weight} text--align-${align}  ${
       extraStyles?.className
-    } ${className ? className : ''}  `,
+    } ${className ? className : ''} `,
     'data-theme': themeMode,
     ...other
   }
@@ -159,22 +190,9 @@ export default function Text({
       {'mark' === component && <mark {...props}>{children}</mark>}
       {'s' === component && <s {...props}>{children}</s>}
       {'sub' === component && <sub {...props}>{children}</sub>}
+
       <style jsx global>{`
-        .text {
-          --color: var(${colorSchema[color].main});
-        }
-        .text--${color}-${size}-${weight}-${align} {
-          font-size: var(${sizeSchema[size]});
-          font-weight: var(${weightSchema[weight]});
-          align-self: ${align};
-          color: var(--color);
-        }
-         {
-          /* DARK themeMode VARIABLES */
-        }
-        [data-theme='dark'] {
-          --color: var(${colorSchema[color].light});
-        }
+        ${generateStyles()}
       `}</style>
       {extraStyles.styles}
     </>
