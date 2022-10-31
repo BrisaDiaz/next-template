@@ -18,6 +18,7 @@ export default function ModeSwitch({ size = 'md', ...props }: ButtonProps) {
       aria-label={`switch to ${mode === 'light' ? 'dark' : 'light'} mode`}
       onClick={() => toggleMode()}
       isIconButton={true}
+      themeMode={mode}
     >
       {mode === 'dark' ? (
         <Sun size={sizeSchema[size]} />

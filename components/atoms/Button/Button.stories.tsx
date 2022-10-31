@@ -1,12 +1,8 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Sun, Moon } from '../../common/SVG'
-import Button, {
-  colorSchema,
-  variantSchema,
-  sizeSchema,
-  themedModes
-} from './Index'
+import { themedModes } from '../../common/Props'
+import Button, { colorSchema, variantSchema, sizeSchema } from './Index'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -65,8 +61,12 @@ export default {
       defaultValue: null
     },
     children: {
-      defaultValue: null
-    }
+      defaultValue: '',
+      control: {
+        type: 'text'
+      }
+    },
+    extraStyles: { defaultValue: null, description: 'JSX styles css.resolve' }
   }
 } as ComponentMeta<typeof Button>
 

@@ -1,3 +1,4 @@
+import { defaultExtraStyles, ThemeMode, ExtraStyles } from '../../common/Props'
 export const sizeSchema = {
   xs: '--fontSizes-xs',
   sm: '--fontSizes-sm',
@@ -91,9 +92,7 @@ export const alignSchema = [
   'end',
   'start'
 ] as const
-export const themedModes = ['light', 'dark'] as const
 
-export type ThemeMode = typeof themedModes[number]
 export type Size = keyof typeof sizeSchema
 export type Weight = keyof typeof weightSchema
 export type Component = typeof componentSchema[number]
@@ -105,7 +104,7 @@ export interface ExtraProps {
   weight?: Weight
   component?: Component
   align?: Align
-  extraStyles?: JSX.Element
+  extraStyles?: ExtraStyles
   color?: Color
   themeMode?: ThemeMode
 }
@@ -116,7 +115,40 @@ export const defaultValue = {
   component: 'p' as Component,
   align: 'inherit' as Align,
   color: 'inherit' as Color,
-  themeMode: 'light' as ThemeMode
+  themeMode: 'light' as ThemeMode,
+  extraStyles: defaultExtraStyles
+}
+const generateStyles = () => {
+  const sizeCss = Object.entries(sizeSchema)
+    .map((size) => `.text--${size[0] as Size} {font-size: var(${size[1]});}`)
+    .join(' ')
+
+  const weightCss = Object.entries(weightSchema)
+    .map(
+      (weight) =>
+        `.text--${weight[0] as Weight} {font-weight: var(${weight[1]});}`
+    )
+    .join(' ')
+
+  const alignCss = alignSchema
+    .map((align: Align) => `.text--align-${align} { align-self: ${align};}`)
+    .join(' ')
+
+  const colorCss = Object.entries(colorSchema)
+    .map((entry) => {
+      const colorName = entry[0] as Color
+      return `   
+         .text--color-${colorName} {
+          --color-${colorName}: var(${entry[1].main});
+          color: var(--color-${colorName});
+        }
+        [data-theme='dark'] {
+         --color-${colorName}: var(${entry[1].light});
+        }`
+    })
+    .join(' ')
+
+  return `  ${colorCss} ${sizeCss} ${weightCss} ${alignCss} `
 }
 export default function Text({
   size = defaultValue.size,
@@ -125,15 +157,15 @@ export default function Text({
   align = defaultValue.align,
   color = defaultValue.color,
   themeMode = defaultValue.themeMode,
+  extraStyles = defaultValue.extraStyles,
   children,
   className,
-  extraStyles,
   ...other
 }: TextProps) {
   const props = {
-    className: ` text text--${color}-${size}-${weight}-${align}  ${
-      className ? className : ''
-    }  `,
+    className: ` text text--color-${color} text--${size} text--${weight} text--align-${align}  ${
+      extraStyles?.className
+    } ${className ? className : ''} `,
     'data-theme': themeMode,
     ...other
   }
@@ -158,24 +190,11 @@ export default function Text({
       {'mark' === component && <mark {...props}>{children}</mark>}
       {'s' === component && <s {...props}>{children}</s>}
       {'sub' === component && <sub {...props}>{children}</sub>}
+
       <style jsx global>{`
-        ${extraStyles || ''}
-        .text {
-          --color: var(${colorSchema[color].main});
-        }
-        .text--${color}-${size}-${weight}-${align} {
-          font-size: var(${sizeSchema[size]});
-          font-weight: var(${weightSchema[weight]});
-          align-self: ${align};
-          color: var(--color);
-        }
-         {
-          /* DARK themeMode VARIABLES */
-        }
-        [data-theme='dark'] {
-          --color: var(${colorSchema[color].light});
-        }
+        ${generateStyles()}
       `}</style>
+      {extraStyles.styles}
     </>
   )
 }
