@@ -5,19 +5,25 @@ import Text from '../components/atoms/Text/ThemedText'
 import Head from '../components/common/Head'
 import styles from '../styles/Home.module.css'
 import ModeSwitch from '../components/atoms/ModeSwitch/Index'
-import { useScreenSize } from '../hooks'
+import { useBreakpoints } from '../hooks'
+
 const Home: NextPage = () => {
-  const { isSM, isLG } = useScreenSize()
+  const breakpoint = useBreakpoints()
 
   return (
     <div className={styles.container}>
       <Head />
       <main className={styles.main}>
-        <Button color="pink" variant="outline" size={isSM ? 'md' : 'sm'}>
+        <Button
+          color="pink"
+          variant="outline"
+          size={breakpoint.up('md') ? 'md' : 'sm'}
+        >
           Accessible
         </Button>
+
         <Text
-          size={isLG ? '2xl' : isSM ? 'lg' : 'sm'}
+          size={breakpoint.up('xl') ? '2xl' : breakpoint.up('sm') ? 'lg' : 'sm'}
           extraStyles={css.resolve`
             .text {
               margin: 2rem 0;
@@ -28,7 +34,7 @@ const Home: NextPage = () => {
         </Text>
         <ModeSwitch
           variant="ghost"
-          size={isLG ? 'lg' : isSM ? 'md' : 'sm'}
+          size={breakpoint.up('xl') ? 'lg' : breakpoint.up('sm') ? 'md' : 'sm'}
           data-testid="theme switch"
         />
         <style jsx>{``}</style>
