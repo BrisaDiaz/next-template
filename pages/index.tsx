@@ -1,11 +1,12 @@
 import type { NextPage } from 'next'
-import css from 'styled-jsx/css'
+
 import Button from '../components/atoms/Button/ThemedButton'
 import Text from '../components/atoms/Text/ThemedText'
 import Head from '../components/common/Head'
 import styles from '../styles/Home.module.css'
 import ModeSwitch from '../components/atoms/ModeSwitch/Index'
 import { useBreakpoints } from '../hooks'
+import createStyles from '../components/common/createStyles'
 
 const Home: NextPage = () => {
   const breakpoint = useBreakpoints()
@@ -24,11 +25,10 @@ const Home: NextPage = () => {
 
         <Text
           size={breakpoint.up('xl') ? '2xl' : breakpoint.up('sm') ? 'lg' : 'sm'}
-          extraStyles={css.resolve`
-            .text {
-              margin: 2rem 0;
-            }
-          `}
+          extraStyles={createStyles({
+            selector: '.text',
+            reactCss: { margin: ' 2rem 0' }
+          })}
         >
           Click the button to switch theme.
         </Text>
@@ -37,7 +37,6 @@ const Home: NextPage = () => {
           size={breakpoint.up('xl') ? 'lg' : breakpoint.up('sm') ? 'md' : 'sm'}
           data-testid="theme switch"
         />
-        <style jsx>{``}</style>
       </main>
     </div>
   )
