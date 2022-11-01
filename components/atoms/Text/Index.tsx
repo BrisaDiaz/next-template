@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import { defaultExtraStyles, ThemeMode, ExtraStyles } from '../../common/Props'
 export const sizeSchema = {
   xs: '--fontSizes-xs',
@@ -150,24 +151,29 @@ const generateStyles = () => {
 
   return `  ${colorCss} ${sizeCss} ${weightCss} ${alignCss} `
 }
-export default function Text({
-  size = defaultValue.size,
-  weight = defaultValue.weight,
-  component = defaultValue.component,
-  align = defaultValue.align,
-  color = defaultValue.color,
-  themeMode = defaultValue.themeMode,
-  extraStyles = defaultValue.extraStyles,
-  children,
-  className,
-  ...other
-}: TextProps) {
+// ref?: LegacyRef<HTMLModElement | HTMLParagraphElement | HTMLHeadingElement>
+function Text(
+  {
+    size = defaultValue.size,
+    weight = defaultValue.weight,
+    component = defaultValue.component,
+    align = defaultValue.align,
+    color = defaultValue.color,
+    themeMode = defaultValue.themeMode,
+    extraStyles = defaultValue.extraStyles,
+    children,
+    className,
+    ...other
+  }: TextProps,
+  ref?: any
+) {
   const props = {
     className: ` text text--color-${color} text--${size} text--${weight} text--align-${align}  ${
       extraStyles?.className
     } ${className ? className : ''} `,
     'data-theme': themeMode,
-    ...other
+    ...other,
+    ref
   }
 
   return (
@@ -198,3 +204,4 @@ export default function Text({
     </>
   )
 }
+export default forwardRef(Text)

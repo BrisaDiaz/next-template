@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, forwardRef, LegacyRef } from 'react'
 import { defaultExtraStyles, ThemeMode, ExtraStyles } from '../../common/Props'
 export const colorSchema = {
   whiteAlpha: {
@@ -233,20 +233,21 @@ const generateStyles = () => {
         `
   return ` ${sizeCss}  ${staticStyles} ${colorCss}`
 }
-export default function Button({
-  children,
-  color = 'gray',
-  variant = 'solid',
-  size = 'md',
-  isIconButton = false,
-  className,
-  startIcon,
-  endIcon,
-  rounded = false,
-  themeMode = 'light',
-  extraStyles = defaultExtraStyles,
-  ...other
-}: ButtonProps) {
+function Button(props: ButtonProps, ref?: LegacyRef<HTMLButtonElement>) {
+  const {
+    children,
+    color = 'gray',
+    variant = 'solid',
+    size = 'md',
+    isIconButton = false,
+    className,
+    startIcon,
+    endIcon,
+    rounded = false,
+    themeMode = 'light',
+    extraStyles = defaultExtraStyles,
+    ...other
+  } = props
   return (
     <>
       <button
@@ -261,6 +262,7 @@ export default function Button({
           extraStyles.className
         } ${className ? className : ' '}`}
         {...other}
+        ref={ref}
       >
         <>
           {startIcon} {children} {endIcon}
@@ -274,3 +276,4 @@ export default function Button({
     </>
   )
 }
+export default forwardRef(Button)

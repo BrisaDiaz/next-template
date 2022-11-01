@@ -1,3 +1,4 @@
+import { forwardRef, Ref } from 'react'
 import { Moon, Sun } from '../../common/SVG'
 import Button, { ButtonProps } from '../Button/Index'
 import { useTheme } from '../../common/ThemeProvider'
@@ -7,7 +8,10 @@ const sizeSchema: { [key: string]: string } = {
   md: '1.25rem',
   lg: '1.5rem'
 }
-export default function ModeSwitch({ size = 'md', ...props }: ButtonProps) {
+function ModeSwitch(
+  { size = 'md', ...props }: ButtonProps,
+  ref?: Ref<HTMLButtonElement>
+) {
   const { toggleMode, mode } = useTheme()
 
   return (
@@ -19,6 +23,7 @@ export default function ModeSwitch({ size = 'md', ...props }: ButtonProps) {
       onClick={() => toggleMode()}
       isIconButton={true}
       themeMode={mode}
+      ref={ref}
     >
       {mode === 'dark' ? (
         <Sun size={sizeSchema[size]} />
@@ -28,3 +33,4 @@ export default function ModeSwitch({ size = 'md', ...props }: ButtonProps) {
     </Button>
   )
 }
+export default forwardRef(ModeSwitch)
