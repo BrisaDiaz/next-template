@@ -107,6 +107,7 @@ export interface ExtraProps {
   align?: Align
   extraStyles?: ExtraStyles
   color?: Color
+  noOfLines?: number
   themeMode?: ThemeMode
 }
 export type TextProps = React.HTMLAttributes<HTMLElement> & ExtraProps
@@ -161,6 +162,7 @@ function Text(
     color = defaultValue.color,
     themeMode = defaultValue.themeMode,
     extraStyles = defaultValue.extraStyles,
+    noOfLines,
     children,
     className,
     ...other
@@ -199,6 +201,18 @@ function Text(
 
       <style jsx global>{`
         ${generateStyles()}
+
+        ${noOfLines
+          ? `
+         .text {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: ${noOfLines};
+        }
+          `
+          : ''}
       `}</style>
       {extraStyles.styles}
     </>
