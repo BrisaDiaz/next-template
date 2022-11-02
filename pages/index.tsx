@@ -27,6 +27,8 @@ const Home: NextPage = () => {
           Click to switch theme
         </Text>
         <ModeSwitch
+          lightModeColor="blue"
+          darkModeColor="yellow"
           variant="ghost"
           size={breakpoint.up('xl') ? 'lg' : breakpoint.up('sm') ? 'md' : 'sm'}
           data-testid="theme switch"
