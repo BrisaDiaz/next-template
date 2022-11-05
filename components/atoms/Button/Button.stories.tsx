@@ -2,7 +2,7 @@ import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Sun, Moon } from '../SVG'
 import { themeModes } from '../../common/utils'
-import Button, { colorSchema, variantSchema, sizeSchema } from './index'
+import Button, { btnColorSchema, variantSchema, sizeSchema } from './index'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -15,7 +15,7 @@ export default {
     onSubmit: { action: 'submit' },
     colorSchema: {
       defaultValue: 'gray',
-      options: Object.keys(colorSchema),
+      options: Object.keys(btnColorSchema),
       control: {
         type: 'select'
       }

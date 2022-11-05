@@ -1,8 +1,8 @@
 import { ReactNode, forwardRef, LegacyRef } from 'react'
 import clsx from 'clsx'
-import { CommonProps, defaultExtraStyles } from '../../common/utils'
+import { CommonProps, defaultExtraStyles, Color } from '../../common/utils'
 
-export const colorSchema = {
+export const btnColorSchema = {
   whiteAlpha: {
     main: '--colors-whiteAlpha-600',
     dark: '--colors-whiteAlpha-700',
@@ -79,6 +79,55 @@ export const colorSchema = {
     darker: '--colors-pink-800',
     light: '--colors-pink-400',
     contrast: 'dark'
+  },
+  cyan: {
+    main: '--colors-cyan-400',
+    dark: '--colors-cyan-500',
+    darker: '--colors-cyan-600',
+    light: '--colors-cyan-300',
+    contrast: 'dark'
+  },
+  twitter: {
+    main: '--colors-twitter-500',
+    dark: '--colors-twitter-600',
+    darker: '--colors-twitter-700',
+    light: '--colors-twitter-500',
+    contrast: 'light'
+  },
+  linkedin: {
+    main: '--colors-linkedin-500',
+    dark: '--colors-linkedin-600',
+    darker: '--colors-linkedin-700',
+    light: '--colors-linkedin-500',
+    contrast: 'light'
+  },
+  facebook: {
+    main: '--colors-facebook-500',
+    dark: '--colors-facebook-600',
+    darker: '--colors-facebook-700',
+    light: '--colors-facebook-500',
+    contrast: 'dark'
+  },
+  messenger: {
+    main: '--colors-messenger-500',
+    dark: '--colors-messenger-600',
+    darker: '--colors-messenger-700',
+    light: '--colors-messenger-500',
+    contrast: 'light'
+  },
+  telegram: {
+    main: '--colors-telegram-500',
+    dark: '--colors-telegram-600',
+    darker: '--colors-telegram-700',
+    light: '--colors-telegram-500',
+    contrast: 'light'
+  },
+  whatsapp: {
+    main: '--colors-whatsapp-500',
+    dark: '--colors-whatsapp-600',
+    darker: '--colors-whatsapp-700',
+    light: '--colors-whatsapp-500',
+    contrast: 'light'
   }
 }
 export const sizeSchema = {
@@ -109,14 +158,14 @@ export const sizeSchema = {
 }
 export const variantSchema = ['solid', 'ghost', 'outline'] as const
 
-export type Color = keyof typeof colorSchema
+export type BtnColorSchema = keyof typeof btnColorSchema
 export type Size = keyof typeof sizeSchema
 export type Variant = typeof variantSchema[number]
 
 export type ExtraProps = {
   variant?: Variant
   size: Size
-  colorSchema?: Color
+  colorSchema?: BtnColorSchema
   isIconButton?: boolean
   startIcon?: ReactNode
   endIcon?: ReactNode
@@ -140,7 +189,7 @@ const generateStyles = () => {
     )
     .join(' ')
 
-  const colorCss = Object.entries(colorSchema)
+  const colorCss = Object.entries(btnColorSchema)
     .map((entry) => {
       const colorName = entry[0] as Color
       const colorRules = entry[1]
@@ -187,7 +236,7 @@ const generateStyles = () => {
        .btn-${colorName}-outline {
           border-color: var(--outline-${colorName}-color);
           color: var(--outline-${colorName}-color);
-          background-color: var(--colors-transparent);
+          background-color: var(--colors-transparent);  
         } 
 
         .btn-${colorName}-ghost:hover::before,
@@ -276,8 +325,8 @@ function Button(props: ButtonProps, ref?: LegacyRef<HTMLButtonElement>) {
     { 'btn-icon': isIconButton },
     { 'btn-rounded': rounded },
     `btn-${colorSchema}-${variant}`,
-    extraStyles.className,
-    { [`${className}`]: className }
+    { [`${className}`]: className },
+    extraStyles.className
   )
   return (
     <>
