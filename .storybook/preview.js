@@ -1,7 +1,8 @@
 import '../styles/globals.css'
 import '../styles/fonts.css'
 import '../styles/normalize.css'
-import ThemeProvider from '../components/common/ThemeProvider'
+import ThemeProvider from '../components/common/layouts/ThemeProvider'
+import ClassesProvider from '../components/common/layouts/ClassesProvider'
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -25,8 +26,10 @@ export const parameters = {
     }
   },
   decorators: (Story) => (
-    <ThemeProvider>
-      <Story />
-    </ThemeProvider>
+    <ClassesProvider>
+      <ThemeProvider>
+        <Story />
+      </ThemeProvider>
+    </ClassesProvider>
   )
 }

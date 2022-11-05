@@ -1,45 +1,79 @@
 import type { NextPage } from 'next'
+
 import { useState } from 'react'
 import Button from '../components/atoms/Button/ThemedButton'
 import Text from '../components/atoms/Text/ThemedText'
-import Head from '../components/common/Head'
-import styles from '../styles/Home.module.css'
+import Head from '../components/common/layouts/Head'
 import ModeSwitch from '../components/atoms/ModeSwitch/Index'
 import { useBreakpoints } from '../hooks'
-import createStyles from '../components/common/createStyles'
+import Box from '../components/atoms/Box'
 
 const Home: NextPage = () => {
   const breakpoint = useBreakpoints()
   const [readMore, setReadMore] = useState(false)
   const toggleReadMore = () => setReadMore(!readMore)
+
   return (
-    <div className={styles.container}>
+    <>
       <Head />
-      <main className={styles.main}>
-        <Text
-          size={breakpoint.up('xl') ? '3xl' : breakpoint.up('sm') ? 'xl' : 'md'}
-          extraStyles={createStyles({
-            selector: '.text',
-            reactCss: { margin: ' 2rem 0' }
-          })}
-          weight="semibold"
-        >
-          Click to switch theme
-        </Text>
+      <Box
+        display="flex"
+        className="px-2 pt-4 pb-16 align-item-center min-h-screen-h display-flex flex-column "
+        as="main"
+      >
         <ModeSwitch
           lightModeColor="blue"
-          darkModeColor="yellow"
+          darkModeColor="orange"
           variant="ghost"
           size={breakpoint.up('xl') ? 'lg' : breakpoint.up('sm') ? 'md' : 'sm'}
           data-testid="theme switch"
         />
         <Text
-          noOfLines={readMore ? undefined : 5}
-          size={breakpoint.up('sm') ? 'md' : 'sm'}
-          extraStyles={createStyles({
-            selector: '.text',
-            reactCss: { maxWidth: 'var(--sizes-container-lg)' }
-          })}
+          fontSize={
+            breakpoint.up('xl') ? '3xl' : breakpoint.up('sm') ? 'xl' : 'lg'
+          }
+          className="my-2 font-weight-semibold"
+          as="h1"
+        >
+          Click to switch theme
+        </Text>
+
+        <Text fontSize={breakpoint.up('sm') ? 'md' : 'sm'}>
+          Layout made with {'<Box  display="grid"/>'} and{' '}
+          {'<Box  display="grid-item"/>'}
+        </Text>
+        <Box
+          display="grid"
+          templateAreas={`"header header"
+                  "nav main"
+                  "nav footer"`}
+          templateRows={'50px 1fr 30px'}
+          templateColumns={'150px 1fr'}
+          gap="2"
+          className=" w-full h-72 max-w-container-md  mt-4 font-weight-bold "
+        >
+          <Box
+            area={'header'}
+            display="grid-item"
+            className="pl-2 bg-orange-300"
+          >
+            Header
+          </Box>
+          <Box area={'nav'} display="grid-item" className="pl-2 bg-pink-300">
+            Nav
+          </Box>
+          <Box area={'main'} display="grid-item" className="pl-2 bg-green-300">
+            Main
+          </Box>
+          <Box area={'footer'} display="grid-item" className="pl-2 bg-blue-300">
+            Footer
+          </Box>
+        </Box>
+
+        <Text
+          noOfLines={readMore ? undefined : breakpoint.up('md') ? 5 : 15}
+          fontSize={breakpoint.up('sm') ? 'md' : 'sm'}
+          className=" max-w-container-lg  px-4 my-8 gap-8 flex flex-column align-item-center"
         >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu enim a
           eros eleifend dignissim in pretium leo. Etiam quis lorem ante.
@@ -65,16 +99,15 @@ const Home: NextPage = () => {
           dolor sit amet nulla. Aliquam consectetur risus at augue lacinia
           suscipit. Vestibulum id fermentum sapien.
         </Text>
+
         <Button
-          color="pink"
-          variant="outline"
           size={breakpoint.up('md') ? 'md' : 'sm'}
           onClick={() => toggleReadMore()}
         >
           {readMore ? 'Read Less' : 'Read More'}
         </Button>
-      </main>
-    </div>
+      </Box>
+    </>
   )
 }
 

@@ -254,6 +254,7 @@
   --radii-2xl: 1rem;
   --radii-3xl: 1.5rem;
   --radii-full: 9999px;
+  --space-0: 0;
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -287,6 +288,7 @@
   --space-1-5: 0.375rem;
   --space-2-5: 0.625rem;
   --space-3-5: 0.875rem;
+   --shadows-none: none;
   --shadows-xs: 0 0 0 1px rgba(0, 0, 0, 0.05);
   --shadows-sm: 0 1px 2px 0rgba (0, 0, 0, 0.05);
   --shadows-base: 0 1px 3px 0rgba (0, 0, 0, 0.1),
@@ -299,10 +301,11 @@
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
   --shadows-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   --shadows-outline: 0 0 0 3px rgba(66, 153, 225, 0.6);
-  --shadows-inner: inset 0 2px 4px 0rgba (0, 0, 0, 0.06);
+  --shadows-inner: --sizes 0 2px 4px 0rgba (0, 0, 0, 0.06);
   --shadows-none: none;
   --shadows-dark-lg: rgba(0, 0, 0, 0.1) 0px 0px 0px 1px,
     rgba(0, 0, 0, 0.2) 0px 5px 10px, rgba(0, 0, 0, 0.4) 0px 15px 40px;
+  --sizes-0: 0;
   --sizes-1: 0.25rem;
   --sizes-2: 0.5rem;
   --sizes-3: 0.75rem;
@@ -338,7 +341,17 @@
   --sizes-3-5: 0.875rem;
   --sizes-max: max-content;
   --sizes-min: min-content;
+  --sizes-content: fit-content;
+  --sizes-auto: auto;
+--sizes-1-half: 50%;
+--sizes-1-third: 33.333333%;
+--sizes-2-thirds: 66.666667%;
+--sizes-1-quarter: 25%;
+--sizes-2-quarters: 50%;
+--sizes-3-quarters: 75%;
   --sizes-full: 100%;
+  --sizes-screen-h: 100vh;
+  --sizes-screen-w: 100vw;
   --sizes-3xs: 14rem;
   --sizes-2xs: 16rem;
   --sizes-xs: 20rem;
@@ -372,7 +385,7 @@
   --zIndices-toast: 1700;
   --zIndices-tooltip: 1800;
   --transition-property-common: background-color, border-color, color, fill,
-    stroke, opacity, box-shadow, transform;
+    stroke, --opacity, box-shadow, transform;
   --transition-property-colors: background-color, border-color, color, fill,
     stroke;
   --transition-property-dimensions: width, height;
@@ -397,6 +410,40 @@
   --blur-xl: 24px;
   --blur-2xl: 40px;
   --blur-3xl: 64px;
+  --opacity-0: 0;
+--opacity-5: 0.05;
+--opacity-10: 0.1;
+--opacity-20: 0.2;
+--opacity-25: 0.25;
+--opacity-30: 0.3;
+--opacity-40: 0.4;
+--opacity-50: 0.5;
+--opacity-60: 0.6;
+--opacity-70: 0.7;
+--opacity-75: 0.75;
+--opacity-80: 0.8;
+--opacity-90: 0.9;
+--opacity-95: 0.95;
+--opacity-100: 1;
+--scale-0:0;
+--scale-50:0.5;
+--scale-75:0.75;
+--scale-90:0.9;
+--scale-95:0.95;
+--scale-100:1;
+--scale-105:1.05;
+--scale-110:1.1;
+--scale-125:1.25;
+--scale-150:1.5;
+--rotate-0:0deg;
+--rotate-1:1deg;
+--rotate-2:2deg;
+--rotate-3:3deg;
+--rotate-6:6deg;
+--rotate-12:12deg;
+--rotate-45:45deg;
+--rotate-90:90deg;
+--rotate-180:180deg;
   --colors-accent: var(--colors-teal-500);
   --colors-accent-emphasis: var(--colors-teal-700);
   --colors-accent-static: var(--colors-teal-500);

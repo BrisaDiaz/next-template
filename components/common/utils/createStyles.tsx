@@ -1,6 +1,6 @@
 import css from 'styled-jsx/css'
 import CSS from 'csstype'
-import { breakpoints, Breakpoint } from './Props'
+import { breakpoints, Breakpoint } from './schemas'
 
 const kebabize = (string: string) => {
   return string
