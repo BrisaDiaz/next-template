@@ -1,6 +1,6 @@
 import { forwardRef, Ref } from 'react'
-import { useTheme } from '../../common/ThemeProvider'
-import Button, { ButtonProps } from './Index'
+import { useTheme } from '../../common/layouts/ThemeProvider'
+import Button, { ButtonProps } from '.'
 function ThemedButton(props: ButtonProps, ref?: Ref<HTMLButtonElement>) {
   const { mode } = useTheme()
 

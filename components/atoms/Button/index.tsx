@@ -1,69 +1,82 @@
 import { ReactNode, forwardRef, LegacyRef } from 'react'
-import { defaultExtraStyles, ThemeMode, ExtraStyles } from '../../common/Props'
+import clsx from 'clsx'
+import { CommonProps, defaultExtraStyles } from '../../common/utils'
+
 export const colorSchema = {
   whiteAlpha: {
     main: '--colors-whiteAlpha-600',
     dark: '--colors-whiteAlpha-700',
+    darker: '--colors-whiteAlpha-800',
     light: '--colors-whiteAlpha-600',
     contrast: 'dark'
   },
   blackAlpha: {
     main: '--colors-blackAlpha-600',
     dark: '--colors-blackAlpha-700',
+    darker: '--colors-blackAlpha-800',
     light: '--colors-blackAlpha-600',
     contrast: 'dark'
   },
   gray: {
     main: '--colors-gray-200',
     dark: '--colors-gray-300',
+    darker: '--colors-gray-400',
     light: '--colors-gray-200',
     contrast: 'light'
   },
   red: {
     main: '--colors-red-600',
     dark: '--colors-red-700',
+    darker: '--colors-red-800',
     light: '--colors-red-400',
     contrast: 'dark'
   },
   orange: {
     main: '--colors-orange-600',
     dark: '--colors-orange-700',
+    darker: '--colors-orange-800',
     light: '--colors-orange-400',
     contrast: 'dark'
   },
   yellow: {
     main: '--colors-yellow-400',
     dark: '--colors-yellow-500',
+    darker: '--colors-yellow-600',
     light: '--colors-yellow-300',
     contrast: 'light'
   },
   green: {
     main: '--colors-green-600',
     dark: '--colors-green-700',
+    darker: '--colors-green-800',
     light: '--colors-green-400',
     contrast: 'dark'
   },
   teal: {
     main: '--colors-teal-600',
     dark: '--colors-teal-700',
+    darker: '--colors-teal-800',
     light: '--colors-teal-400',
     contrast: 'dark'
   },
   blue: {
     main: '--colors-blue-600',
     dark: '--colors-blue-700',
+    darker: '--colors-blue-800',
     light: '--colors-blue-400',
     contrast: 'dark'
   },
   purple: {
     main: '--colors-purple-600',
     dark: '--colors-purple-700',
+    darker: '--colors-purple-800',
     light: '--colors-purple-400',
     contrast: 'dark'
   },
   pink: {
     main: '--colors-pink-600',
     dark: '--colors-pink-700',
+    darker: '--colors-pink-800',
     light: '--colors-pink-400',
     contrast: 'dark'
   }
@@ -100,23 +113,24 @@ export type Color = keyof typeof colorSchema
 export type Size = keyof typeof sizeSchema
 export type Variant = typeof variantSchema[number]
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  size?: Size
+export type ExtraProps = {
   variant?: Variant
-  color?: Color
+  size: Size
+  colorSchema?: Color
   isIconButton?: boolean
   startIcon?: ReactNode
   endIcon?: ReactNode
   rounded?: boolean
-  themeMode?: ThemeMode
-  extraStyles?: ExtraStyles
 }
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+  CommonProps &
+  ExtraProps
+
 const generateStyles = () => {
   const sizeCss = Object.entries(sizeSchema)
     .map(
       (size) => `        
-          .btn--${size[0]} {
+          .btn-${size[0]} {
           height: var(${size[1].height});
           min-width: var(${size[1].width});
           font-size: var(${size[1].fontSize});
@@ -133,7 +147,7 @@ const generateStyles = () => {
       const isGray = colorName === 'gray'
       return `
     
-              .btn {
+          .btn {
              --solid-${colorName}-bg: var(${colorRules.main});
              --solid-${colorName}-color: var(
             ${
@@ -143,6 +157,7 @@ const generateStyles = () => {
             }
           );
           --solid-${colorName}-bg-hover: var(${colorRules.dark});
+           --solid-${colorName}-bg-active: var(${colorRules.darker});
          --outline-${colorName}-color: var(${
         isGray ? '--colors-gray-600' : colorRules.dark
       });
@@ -151,29 +166,32 @@ const generateStyles = () => {
         
       
 
-        .btn--${colorName}-solid {
+        .btn-${colorName}-solid {
           background-color: var(--solid-${colorName}-bg);
           color: var(--solid-${colorName}-color);
         }
 
-        .btn--${colorName}-solid:hover {
+        .btn-${colorName}-solid:hover {
           background-color: var(--solid-${colorName}-bg-hover);
         }
+        .btn-${colorName}-solid:active {
+          background-color: var(--solid-${colorName}-bg-active);
+        }
 
-        .btn--${colorName}-ghost {
+        .btn-${colorName}-ghost {
           border-color: var(--colors-transparent);
           background-color: var(--colors-transparent);
           color: var(--ghost-${colorName}-color);
         }
 
-       .btn--${colorName}-outline {
+       .btn-${colorName}-outline {
           border-color: var(--outline-${colorName}-color);
           color: var(--outline-${colorName}-color);
           background-color: var(--colors-transparent);
         } 
 
-        .btn--${colorName}-ghost:hover::before,
-          .btn--${colorName}-outline:hover::before {
+        .btn-${colorName}-ghost:hover::before,
+          .btn-${colorName}-outline:hover::before {
           content: ' ';
           position: absolute;
           border-radius: inherit;
@@ -183,6 +201,11 @@ const generateStyles = () => {
           left: 0;
           background-color: var(--ghost-${colorName}-color);
           opacity: 0.1;
+        }
+
+      .btn-${colorName}-ghost:active::before,
+          .btn-${colorName}-outline:active::before {
+          opacity: 0.2;
         }
     
         [data-theme='dark'] {
@@ -207,11 +230,11 @@ const generateStyles = () => {
           border-radius: var(--radii-md);
           border:1px solid transparent
         }
-       .btn--icon {
+       .btn-icon {
           padding-inline-start: var(--space-2);
           padding-inline-end: var(--space-2);
         }
-        .btn--icon-xs {
+        .btn-icon-xs {
           padding-inline-start: 0;
           padding-inline-end: 0;
         }
@@ -227,40 +250,40 @@ const generateStyles = () => {
         .btn--rounded {
           border-radius: var(--radii-full);
         }
-
- 
-        
         `
   return ` ${sizeCss}  ${staticStyles} ${colorCss}`
 }
 function Button(props: ButtonProps, ref?: LegacyRef<HTMLButtonElement>) {
   const {
     children,
-    color = 'gray',
+    colorSchema = 'gray',
     variant = 'solid',
     size = 'md',
     isIconButton = false,
-    className,
     startIcon,
     endIcon,
     rounded = false,
     themeMode = 'light',
     extraStyles = defaultExtraStyles,
+    className,
     ...other
   } = props
+
+  const buttonClassName = clsx(
+    'btn',
+    `btn-${size}`,
+    { 'btn-icon-xs': isIconButton && size === 'xs' },
+    { 'btn-icon': isIconButton },
+    { 'btn-rounded': rounded },
+    `btn-${colorSchema}-${variant}`,
+    extraStyles.className,
+    { [`${className}`]: className }
+  )
   return (
     <>
       <button
         data-theme={themeMode}
-        className={` btn btn--${size} ${
-          isIconButton && size === 'xs'
-            ? 'btn--icon-xs'
-            : isIconButton
-            ? 'btn--icon'
-            : ' '
-        } ${rounded ? 'btn--rounded' : ' '}  btn--${color}-${variant}  ${
-          extraStyles.className
-        } ${className ? className : ' '}`}
+        className={` ${buttonClassName} `}
         {...other}
         ref={ref}
       >

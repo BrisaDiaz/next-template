@@ -1,7 +1,7 @@
 import { forwardRef, Ref } from 'react'
-import { Moon, Sun } from '../../common/SVG'
-import Button, { ButtonProps, Color } from '../Button/Index'
-import { useTheme } from '../../common/ThemeProvider'
+import { Moon, Sun } from '../SVG'
+import Button, { ButtonProps, Color } from '../Button'
+import { useTheme } from '../../common/layouts/ThemeProvider'
 const sizeSchema: { [key: string]: string } = {
   xs: '0.75rem',
   sm: '1rem',
@@ -30,7 +30,7 @@ function ModeSwitch(
     <Button
       variant="ghost"
       {...props}
-      color={color}
+      colorSchema={color}
       size={size}
       aria-label={`switch to ${mode === 'light' ? 'dark' : 'light'} mode`}
       onClick={() => toggleMode()}

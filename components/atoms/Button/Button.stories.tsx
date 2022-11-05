@@ -1,8 +1,8 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { Sun, Moon } from '../../common/SVG'
-import { themedModes } from '../../common/Props'
-import Button, { colorSchema, variantSchema, sizeSchema } from './Index'
+import { Sun, Moon } from '../SVG'
+import { themeModes } from '../../common/utils'
+import Button, { colorSchema, variantSchema, sizeSchema } from './index'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -13,7 +13,7 @@ export default {
   argTypes: {
     onClick: { action: 'clicked' },
     onSubmit: { action: 'submit' },
-    color: {
+    colorSchema: {
       defaultValue: 'gray',
       options: Object.keys(colorSchema),
       control: {
@@ -37,7 +37,7 @@ export default {
     themeMode: {
       defaultValue: 'light',
 
-      options: themedModes,
+      options: themeModes,
       control: {
         type: 'radio'
       }
@@ -80,34 +80,34 @@ export const Default = Template.bind({})
 Default.args = {}
 
 export const Solid = Template.bind({})
-Solid.args = { color: 'teal', variant: 'solid' }
+Solid.args = { colorSchema: 'teal', variant: 'solid' }
 
 export const Ghost = Template.bind({})
-Ghost.args = { color: 'teal', variant: 'ghost' }
+Ghost.args = { colorSchema: 'teal', variant: 'ghost' }
 
 export const Outline = Template.bind({})
-Outline.args = { color: 'teal', variant: 'outline' }
+Outline.args = { colorSchema: 'teal', variant: 'outline' }
 
 export const Disable = Template.bind({})
 Disable.args = {
-  color: 'blue',
+  colorSchema: 'blue',
   disabled: true
 }
 export const Large = Template.bind({})
 Large.args = {
   size: 'lg',
-  color: 'pink'
+  colorSchema: 'pink'
 }
 
 export const Small = Template.bind({})
 Small.args = {
   size: 'sm',
-  color: 'pink'
+  colorSchema: 'pink'
 }
 export const ExtraSmall = Template.bind({})
 ExtraSmall.args = {
   size: 'xs',
-  color: 'pink',
+  colorSchema: 'pink',
   variant: 'outline'
 }
 export const Themed = Template.bind({})
@@ -125,7 +125,7 @@ export const IconButton = Template.bind({})
 IconButton.args = {
   isIconButton: true,
   children: <Sun size="1.25rem" />,
-  color: 'yellow',
+  colorSchema: 'yellow',
   variant: 'outline',
   rounded: true
 }
@@ -134,12 +134,12 @@ export const StartIconButton = Template.bind({})
 StartIconButton.args = {
   startIcon: <Sun size="1.25rem" />,
   children: 'Good Morning',
-  color: 'yellow'
+  colorSchema: 'yellow'
 }
 export const EndIconButton = Template.bind({})
 
 EndIconButton.args = {
   endIcon: <Moon size="1.25rem" />,
   children: 'Good Night',
-  color: 'blue'
+  colorSchema: 'blue'
 }

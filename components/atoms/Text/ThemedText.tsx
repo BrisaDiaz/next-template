@@ -1,6 +1,6 @@
 import { forwardRef, Ref } from 'react'
-import { useTheme } from '../../common/ThemeProvider'
-import Text, { TextProps } from './Index'
+import { useTheme } from '../../common/layouts/ThemeProvider'
+import Text, { TextProps } from '.'
 function ThemedText(props: TextProps, ref?: Ref<unknown>) {
   const { mode } = useTheme()
 
