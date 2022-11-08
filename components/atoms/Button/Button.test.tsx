@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 
 import { render, screen, fireEvent } from '@testing-library/react'
 import { composeStories } from '@storybook/testing-react'
-import { Moon } from '../../common/SVG'
+import { Moon } from '../SVG'
 // import Button stories file as a module
 import * as stories from './Button.stories'
 const { Default, Disable, ExtraSmall } = composeStories(stories)
@@ -78,7 +78,7 @@ test('apply correct classes', () => {
   const buttonElement = screen.getByRole('button')
   const className = buttonElement.className
   expect(className).toContain(ExtraSmall.args?.size)
-  expect(className).toContain(ExtraSmall.args?.color)
+  expect(className).toContain(ExtraSmall.args?.colorSchema)
   expect(className).toContain(ExtraSmall.args?.variant)
 })
 

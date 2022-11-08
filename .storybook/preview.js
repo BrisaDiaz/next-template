@@ -1,7 +1,8 @@
 import '../styles/globals.css'
 import '../styles/fonts.css'
 import '../styles/normalize.css'
-import ThemeProvider from '../components/common/ThemeProvider'
+import ThemeProvider from '../components/common/layouts/ThemeProvider'
+
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },

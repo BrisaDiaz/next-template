@@ -1,25 +1,24 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { themedModes } from '../../common/Props'
-import Text, {
-  colorSchema,
-  sizeSchema,
-  weightSchema,
-  componentSchema,
-  alignSchema
-} from './Index'
+import {
+  themeModes,
+  fontSizeSchema,
+  fontWeightSchema,
+  colorSchema
+} from '../../common/utils'
+import Text, { componentSchema } from './index'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Atoms/Text',
 
-  component: Text,
+  as: Text,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     themeMode: {
       defaultValue: 'light',
 
-      options: themedModes,
+      options: themeModes,
       control: {
         type: 'radio'
       }
@@ -31,9 +30,9 @@ export default {
         type: 'select'
       }
     },
-    size: {
+    fontSize: {
       defaultValue: 'md',
-      options: Object.keys(sizeSchema),
+      options: Object.keys(fontSizeSchema),
       control: {
         type: 'select'
       }
@@ -45,20 +44,14 @@ export default {
         type: 'select'
       }
     },
-    weight: {
+    fontWeight: {
       defaultValue: 'normal',
-      options: Object.keys(weightSchema),
+      options: Object.keys(fontWeightSchema),
       control: {
         type: 'select'
       }
     },
-    align: {
-      defaultValue: 'inherit',
-      options: alignSchema,
-      control: {
-        type: 'select'
-      }
-    },
+
     extraStyles: { defaultValue: null, description: 'JSX styles css.resolve' },
     children: {
       defaultValue: 'Hello Word 🖐',
