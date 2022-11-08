@@ -134,7 +134,7 @@ function Text(
           -webkit-box-orient: vertical;
           -webkit-line-clamp: ${noOfLines};
            transition-property: -webkit-line-clamp,overflow,display,text-overflow;
-            transition-timing-function: var(--transition-easing-ease-in-out ;
+            transition-timing-function: var(--transition-easing-ease-in-out);
             transition-duration: var( --transition-duration-ultra-slow)
         `
             : ''}
