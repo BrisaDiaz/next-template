@@ -1,6 +1,6 @@
 import { forwardRef, Ref } from 'react'
 import { Moon, Sun } from '../SVG'
-import Button, { ButtonProps, Color } from '../Button'
+import Button, { ButtonProps, BtnColorSchema } from '../Button'
 import { useTheme } from '../../common/layouts/ThemeProvider'
 const sizeSchema: { [key: string]: string } = {
   xs: '0.75rem',
@@ -14,7 +14,10 @@ function ModeSwitch(
     darkModeColor,
     lightModeColor,
     ...props
-  }: ButtonProps & { darkModeColor?: Color; lightModeColor?: Color },
+  }: ButtonProps & {
+    darkModeColor?: BtnColorSchema
+    lightModeColor?: BtnColorSchema
+  },
   ref?: Ref<HTMLButtonElement>
 ) {
   const { toggleMode, mode } = useTheme()
