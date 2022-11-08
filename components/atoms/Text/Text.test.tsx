@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 
 import { render, screen } from '@testing-library/react'
-import Text, { defaultValue, TextProps } from './index'
+import Text, { defaultValue, TextProps, componentSchema } from './index'
 
 test('contain Text classes', () => {
   render(<Text>Hello</Text>)
@@ -18,7 +18,6 @@ test('apply correct classes and as', () => {
     as: 'h2',
     color: 'blue',
     fontSize: 'xl',
-    textAlign: 'center',
     fontWeight: 'extrabold'
   } as TextProps
 
@@ -31,6 +30,16 @@ test('apply correct classes and as', () => {
   expect(className).toContain(props.fontSize)
   expect(textElement.tagName).toBe('H2')
 })
+componentSchema.forEach((element) => {
+  test(`display ${element} pass as prop "as" and children`, () => {
+    render(<Text as={element}>Hello</Text>)
+
+    const textElement = screen.getByText('Hello')
+
+    expect(textElement.tagName.toLowerCase()).toBe(element)
+  })
+})
+
 test('set  data-theme="light" when prop themeMode is not provided', () => {
   render(<Text>Hello</Text>)
 

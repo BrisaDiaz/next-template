@@ -4,7 +4,6 @@ import {
   themeModes,
   fontSizeSchema,
   fontWeightSchema,
-  alignSchema,
   colorSchema
 } from '../../common/utils'
 import Text, { componentSchema } from './index'
@@ -52,13 +51,7 @@ export default {
         type: 'select'
       }
     },
-    textAlign: {
-      defaultValue: 'inherit',
-      options: alignSchema,
-      control: {
-        type: 'select'
-      }
-    },
+
     extraStyles: { defaultValue: null, description: 'JSX styles css.resolve' },
     children: {
       defaultValue: 'Hello Word 🖐',

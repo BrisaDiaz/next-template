@@ -1,5 +1,4 @@
-export { default as createStyles } from './createStyles'
-export { default as generateCommonStyles } from './generateCommonStyles'
 export * from './htmlTag'
 export * from './schemas'
 export * from './extraStyles'
+export * from './createStyles'

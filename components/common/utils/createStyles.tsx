@@ -1,6 +1,6 @@
 import css from 'styled-jsx/css'
 import CSS from 'csstype'
-import { breakpoints, Breakpoint } from './schemas'
+import { breakpoints, Breakpoint } from './index'
 
 const kebabize = (string: string) => {
   return string
@@ -14,28 +14,92 @@ const kebabize = (string: string) => {
 }
 
 type ReactCss = { [prop: string]: string }
+const stylePropMap = {
+  p: ['padding'],
+  pt: ['padding-top'],
+  pb: ['padding-bottom'],
+  pl: ['padding-left'],
+  pr: ['padding-right'],
+  py: ['padding-top', 'padding-bottom'],
+  px: ['padding-inline-start', 'padding-inline-end'],
+  m: ['margin'],
+  mt: ['margin-top'],
+  mb: ['margin-bottom'],
+  ml: ['margin-left'],
+  mr: ['margin-right'],
+  my: ['margin-top', 'margin-bottom'],
+  mx: ['margin-inline-start', 'margin-inline-end'],
+  bg: ['background'],
+  bgColor: ['background-color'],
+  bgGradient: ['background-image'],
+  bgClip: ['background-clip'],
+  w: ['width'],
+  h: ['height'],
+  minW: ['min-width'],
+  minH: ['min-height'],
+  maxW: ['max-width'],
+  maxH: ['max-height'],
+  boxSize: ['width', 'height'],
+  borderX: ['border-left', 'border-right'],
+  borderY: ['border-top', 'border-bottom']
+}
+type CustomPropName = keyof typeof stylePropMap
 
-const reactCssToJsx = (stylesObj: ReactCss) => {
-  const css = Object.keys(stylesObj).map(
-    (prop) => `${kebabize(prop)}:${stylesObj[prop]};`
+const cssToJsx = (stylesObj: ReactCss) => {
+  const css = Object.keys(stylesObj).map((prop) =>
+    stylePropMap[prop as CustomPropName]
+      ? ` ${stylePropMap[prop as CustomPropName]
+          .map((propName) => `${propName}:${stylesObj[prop]};`)
+          .join(' ')}`
+      : `${kebabize(prop)}:${stylesObj[prop]};`
   )
+
   return css.join('')
+}
+interface CSSType extends CSS.Properties {
+  p?: CSS.Property.Padding
+  pt?: CSS.Property.Padding
+  pb?: CSS.Property.Padding
+  pl?: CSS.Property.Padding
+  pr?: CSS.Property.Padding
+  py?: CSS.Property.Padding
+  px?: CSS.Property.Padding
+  m?: CSS.Property.Margin
+  mt?: CSS.Property.Margin
+  mb?: CSS.Property.Margin
+  ml?: CSS.Property.Margin
+  mr?: CSS.Property.Margin
+  my?: CSS.Property.Margin
+  mx?: CSS.Property.Margin
+  bg?: CSS.Property.Background
+  bgColor?: CSS.Property.BackgroundColor
+  bgGradient?: CSS.Property.BackgroundImage
+  bgClip?: CSS.Property.BackgroundClip
+  w?: CSS.Property.Width
+  h?: CSS.Property.Height
+  minW?: CSS.Property.MinWidth
+  maxW?: CSS.Property.MaxWidth
+  minH?: CSS.Property.MinHeight
+  maxH?: CSS.Property.MaxHeight
+  boxSize?: CSS.Property.Height
+  borderX?: CSS.Property.Border
+  borderY?: CSS.Property.Border
 }
 export interface Argument {
   selector: string
-  reactCss: CSS.Properties
+  css: CSSType
   breakpoint?: Breakpoint | number
 }
 export type CreateStylesArgument = Argument | Argument[]
 
 function createStyleString(
   selector: string,
-  reactCss: CSS.Properties,
+  css: CSSType,
   breakpoint?: Breakpoint | number
 ) {
-  if (!reactCss || !selector) return ' '
+  if (!css || !selector) return ' '
 
-  const rules = reactCssToJsx(reactCss as ReactCss)
+  const rules = cssToJsx(css as ReactCss)
   const queryMinWidth =
     typeof breakpoint === 'number'
       ? breakpoint
@@ -55,20 +119,16 @@ function createStyleString(
     }
   `
 }
-export default function createStyles(styles: CreateStylesArgument) {
+export function createStyles(styles: CreateStylesArgument) {
   let jsx = ''
   if (Array.isArray(styles)) {
     jsx = styles
       .map((style: Argument) =>
-        createStyleString(style.selector, style.reactCss, style?.breakpoint)
+        createStyleString(style.selector, style.css, style?.breakpoint)
       )
-      .join('')
+      .join(' ')
   } else {
-    jsx = createStyleString(
-      styles.selector,
-      styles.reactCss,
-      styles?.breakpoint
-    )
+    jsx = createStyleString(styles.selector, styles.css, styles?.breakpoint)
   }
 
   return css.resolve`

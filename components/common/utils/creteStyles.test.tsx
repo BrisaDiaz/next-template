@@ -1,10 +1,10 @@
-import createStyles from './createStyles'
+import { createStyles } from './createStyles'
 import { breakpoints } from './schemas'
 
 test('should generate correct styles when pass a single object', () => {
   const styles = createStyles({
     selector: '.title',
-    reactCss: { fontSize: '2rem' },
+    css: { fontSize: '2rem' },
     breakpoint: 'md'
   }).styles.props.children
 
@@ -12,19 +12,30 @@ test('should generate correct styles when pass a single object', () => {
   expect(styles).toContain(`.title`)
   expect(styles).toContain(`font-size:2rem;`)
 })
+test('should generate correct styles when pass custom props names', () => {
+  const styles = createStyles({
+    selector: '.title',
+    css: { px: '2rem', bgColor: 'blue' }
+  }).styles.props.children
+
+  expect(styles).toContain(`.title`)
+  expect(styles).toContain(`padding-inline-start:2rem;`)
+  expect(styles).toContain(`padding-inline-end:2rem;`)
+  expect(styles).toContain(`background-color:blue;`)
+})
 test('should generate correct styles when pass an array of objects', () => {
   const styles = createStyles([
     {
       selector: '.btn',
-      reactCss: { backgroundColor: 'blue' }
+      css: { backgroundColor: 'blue' }
     },
     {
       selector: '.btn:hover',
-      reactCss: { backgroundColor: 'violet' }
+      css: { backgroundColor: 'violet' }
     },
     {
       selector: '.btn',
-      reactCss: { fontSize: '1.5rem' },
+      css: { fontSize: '1.5rem' },
       breakpoint: 'md'
     }
   ]).styles.props.children
@@ -38,7 +49,7 @@ test('should generate correct styles when pass an array of objects', () => {
 test('should generate correct styles when pass a custom breakpoint', () => {
   const styles = createStyles({
     selector: '.title',
-    reactCss: { fontSize: '1.25rem' },
+    css: { fontSize: '1.25rem' },
     breakpoint: 500
   }).styles.props.children
 

@@ -6,10 +6,12 @@ import {
   ThemeMode,
   FontSize,
   FontWeight,
-  Color
+  Color,
+  theme
 } from '../../common/utils'
 
 export const componentSchema = [
+  'a',
   'p',
   'h1',
   'h2',
@@ -40,6 +42,7 @@ export interface ExtraProps {
   fontWeight?: FontWeight
 }
 export type TextProps = React.HTMLAttributes<HTMLElement> &
+  React.AnchorHTMLAttributes<HTMLAnchorElement> &
   CommonProps &
   ExtraProps
 
@@ -70,12 +73,13 @@ function Text(
   const props = {
     className: clsx(
       'text',
-      `color-${color}`,
-      `font-weight-${fontWeight}`,
-      `font-size-${fontSize}`,
+      `text-color-${color}`,
+      `text-weight-${fontWeight}`,
+      `text-size-${fontSize}`,
       {
         [`${className}`]: className
-      }
+      },
+      extraStyles.className
     ),
     'data-theme': themeMode,
     ...other,
@@ -84,6 +88,7 @@ function Text(
 
   return (
     <>
+      {'a' === as && <a {...props}>{children}</a>}
       {'p' === as && <p {...props}>{children}</p>}
       {'h1' === as && <h1 {...props}>{children}</h1>}
       {'h2' === as && <h2 {...props}>{children}</h2>}
@@ -104,6 +109,18 @@ function Text(
       {'sub' === as && <sub {...props}>{children}</sub>}
 
       <style jsx>{`
+        .text-color-${color} {
+          color: ${theme.color[color].main};
+        }
+        .text-color-${color}[data-theme="dark"] {
+          color: ${theme.color[color].light};
+        }
+        .text-size-${fontSize} {
+          font-size: ${theme.fontSize[fontSize]};
+        }
+        .text-weight-${fontWeight} {
+          font-weight: ${theme.fontWeight[fontWeight]};
+        }
         .text {
           transition-property: -webkit-line-clamp, overflow, display,
             text-overflow;

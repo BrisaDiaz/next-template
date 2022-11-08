@@ -1,7 +1,7 @@
 import { ReactNode, forwardRef, LegacyRef } from 'react'
 import clsx from 'clsx'
-import { CommonProps, defaultExtraStyles, Color } from '../../common/utils'
-
+import { CommonProps, defaultExtraStyles, theme } from '../../common/utils'
+import Spinner, { SpinnerProps } from '../Spinner'
 export const btnColorSchema = {
   whiteAlpha: {
     main: '--colors-whiteAlpha-600',
@@ -156,7 +156,7 @@ export const sizeSchema = {
     paddingInline: '--space-6'
   }
 }
-export const variantSchema = ['solid', 'ghost', 'outline'] as const
+export const variantSchema = ['solid', 'ghost', 'outline', 'link'] as const
 
 export type BtnColorSchema = keyof typeof btnColorSchema
 export type Size = keyof typeof sizeSchema
@@ -170,138 +170,14 @@ export type ExtraProps = {
   startIcon?: ReactNode
   endIcon?: ReactNode
   rounded?: boolean
+  isLoading?: boolean
+  loadingText?: string
+  spinnerProps?: SpinnerProps
 }
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   CommonProps &
   ExtraProps
 
-const generateStyles = () => {
-  const sizeCss = Object.entries(sizeSchema)
-    .map(
-      (size) => `        
-          .btn-${size[0]} {
-          height: var(${size[1].height});
-          min-width: var(${size[1].width});
-          font-size: var(${size[1].fontSize});
-          padding-inline-start: var(${size[1].paddingInline});
-          padding-inline-end: var(${size[1].paddingInline});
-        }`
-    )
-    .join(' ')
-
-  const colorCss = Object.entries(btnColorSchema)
-    .map((entry) => {
-      const colorName = entry[0] as Color
-      const colorRules = entry[1]
-      const isGray = colorName === 'gray'
-      return `
-    
-          .btn {
-             --solid-${colorName}-bg: var(${colorRules.main});
-             --solid-${colorName}-color: var(
-            ${
-              colorRules.contrast === 'light'
-                ? '--colors-black'
-                : '--colors-white'
-            }
-          );
-          --solid-${colorName}-bg-hover: var(${colorRules.dark});
-           --solid-${colorName}-bg-active: var(${colorRules.darker});
-         --outline-${colorName}-color: var(${
-        isGray ? '--colors-gray-600' : colorRules.dark
-      });
-          --ghost-${colorName}-color: var(--outline-${colorName}-color);
-          }
-        
-      
-
-        .btn-${colorName}-solid {
-          background-color: var(--solid-${colorName}-bg);
-          color: var(--solid-${colorName}-color);
-        }
-
-        .btn-${colorName}-solid:hover {
-          background-color: var(--solid-${colorName}-bg-hover);
-        }
-        .btn-${colorName}-solid:active {
-          background-color: var(--solid-${colorName}-bg-active);
-        }
-
-        .btn-${colorName}-ghost {
-          border-color: var(--colors-transparent);
-          background-color: var(--colors-transparent);
-          color: var(--ghost-${colorName}-color);
-        }
-
-       .btn-${colorName}-outline {
-          border-color: var(--outline-${colorName}-color);
-          color: var(--outline-${colorName}-color);
-          background-color: var(--colors-transparent);  
-        } 
-
-        .btn-${colorName}-ghost:hover::before,
-          .btn-${colorName}-outline:hover::before {
-          content: ' ';
-          position: absolute;
-          border-radius: inherit;
-          width: 100%;
-          height: 100%;
-          top: 0;
-          left: 0;
-          background-color: var(--ghost-${colorName}-color);
-          opacity: 0.1;
-        }
-
-      .btn-${colorName}-ghost:active::before,
-          .btn-${colorName}-outline:active::before {
-          opacity: 0.2;
-        }
-    
-        [data-theme='dark'] {
-          --outline-${colorName}-color: var(${colorRules.light});
-          --ghost-${colorName}-color: var(--outline-${colorName}-color);
-        }
-    `
-    })
-    .join(' ')
-
-  const staticStyles = ` 
-        .btn {
-          font-weight: var(--fontWeights-semibold);
-          cursor: pointer;
-          transition-property: var(--transition-property-common);
-          transition-duration: var(--transition-duration-normal);
-          position: relative;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: var(--fontSizes-3xs);
-          border-radius: var(--radii-md);
-          border:1px solid transparent
-        }
-       .btn-icon {
-          padding-inline-start: var(--space-2);
-          padding-inline-end: var(--space-2);
-        }
-        .btn-icon-xs {
-          padding-inline-start: 0;
-          padding-inline-end: 0;
-        }
-        .btn:focus-visible {
-          outline-offset: var(--ring-offset-width);
-          outline: 3px solid var(--ring-color);
-        }
-        .btn[disabled] {
-          opacity: 0.4;
-          cursor: not-allowed;
-          box-shadow: var(--shadows-none);
-        }
-        .btn--rounded {
-          border-radius: var(--radii-full);
-        }
-        `
-  return ` ${sizeCss}  ${staticStyles} ${colorCss}`
-}
 function Button(props: ButtonProps, ref?: LegacyRef<HTMLButtonElement>) {
   const {
     children,
@@ -314,35 +190,198 @@ function Button(props: ButtonProps, ref?: LegacyRef<HTMLButtonElement>) {
     rounded = false,
     themeMode = 'light',
     extraStyles = defaultExtraStyles,
+    isLoading,
+    loadingText,
     className,
+    spinnerProps,
     ...other
   } = props
 
   const buttonClassName = clsx(
     'btn',
     `btn-${size}`,
-    { 'btn-icon-xs': isIconButton && size === 'xs' },
-    { 'btn-icon': isIconButton },
+    { 'icon-btn': isIconButton },
+    { 'icon-btn-xs': isIconButton && size === 'xs' },
     { 'btn-rounded': rounded },
     `btn-${colorSchema}-${variant}`,
     { [`${className}`]: className },
     extraStyles.className
   )
+
   return (
     <>
       <button
         data-theme={themeMode}
         className={` ${buttonClassName} `}
+        disabled={isLoading}
         {...other}
         ref={ref}
       >
         <>
           {startIcon} {children} {endIcon}
+          {isLoading ? (
+            <span className="loading-indicator ">
+              <Spinner size={'sm'} {...spinnerProps} />
+              {loadingText ? loadingText : ''}
+            </span>
+          ) : (
+            <></>
+          )}
         </>
       </button>
 
       <style jsx>{`
-        ${generateStyles()}
+        .btn {
+          font-weight: var(--fontWeights-semibold);
+          cursor: pointer;
+          transition-property: var(--transition-property-common);
+          transition-duration: var(--transition-duration-normal);
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: var(--fontSizes-2xs);
+          border-radius: var(--radii-md);
+          border: 1px solid transparent;
+        }
+
+        .btn:focus-visible {
+          outline-offset: var(--ring-offset-width);
+          outline: 3px solid var(--ring-color);
+        }
+        .btn[disabled] {
+          opacity: 0.4;
+          cursor: not-allowed;
+          box-shadow: var(--shadows-none);
+        }
+       
+       .loading-indicator{
+        position:absolute;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        border-radius:inherit;
+        background-color:inherit;
+        gap:inherit;
+       padding-left:inherit;
+       padding-right:inherit;
+       height: 104%;
+       min-width:100%;
+       top: 50%;
+       left: 50%;
+       transform: translate(-50%, -50%);
+       }
+     
+        .btn-${size} {
+          min-height: var(${sizeSchema[size].height});
+          min-width: var(${sizeSchema[size].width});
+          font-size: var(${sizeSchema[size].fontSize});
+          padding-inline-start: var(${sizeSchema[size].paddingInline});
+          padding-inline-end: var(${sizeSchema[size].paddingInline});
+          
+        }
+        .icon-btn{
+          padding-inline-start: var(--spaces-1);
+          padding-inline-end: var(--spaces-1);
+       }
+       .icon-btn-xs{
+          padding-inline-start: var(--spaces-nones);
+          padding-inline-end: var(--spaces-nones);
+       }
+        .btn-rounded{
+         border-radius:${theme.borderRadius.full}
+       }
+      .btn {
+        --solid-${colorSchema}-bg: var(${btnColorSchema[colorSchema].main});
+        --solid-${colorSchema}-color: var(
+            ${
+              btnColorSchema[colorSchema].contrast === 'light'
+                ? '--colors-black'
+                : '--colors-white'
+            }
+          );
+       --solid-${colorSchema}-bg-hover: var(${
+        btnColorSchema[colorSchema].dark
+      });
+       --solid-${colorSchema}-bg-active: var(${
+        btnColorSchema[colorSchema].darker
+      });
+         --non-solid-${colorSchema}-color: var(${
+        colorSchema === 'gray'
+          ? '--colors-gray-600'
+          : btnColorSchema[colorSchema].dark
+      });
+        --link-${colorSchema}-color-active:  var(${
+        btnColorSchema[colorSchema].darker
+      })
+ 
+          }
+        
+        .btn-${colorSchema}-solid {
+          background-color: var(--solid-${colorSchema}-bg);
+          color: var(--solid-${colorSchema}-color);
+        }
+
+        .btn-${colorSchema}-solid:hover {
+          background-color: var(--solid-${colorSchema}-bg-hover);
+        }
+        .btn-${colorSchema}-solid:active {
+          background-color: var(--solid-${colorSchema}-bg-active);
+        }
+
+        .btn-${colorSchema}-ghost {
+          border-color: var(--colors-transparent);
+          background-color: var(--colors-transparent);
+          color: var(--non-solid-${colorSchema}-color);
+        }
+
+       .btn-${colorSchema}-outline {
+          border-color: var(--non-solid-${colorSchema}-color);
+          color: var(--non-solid-${colorSchema}-color);
+          background-color: var(--colors-transparent);  
+        } 
+
+        .btn-${colorSchema}-ghost:hover::before,
+          .btn-${colorSchema}-outline:hover::before {
+          content: ' ';
+          position: absolute;
+          border-radius: inherit;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          background-color: var(--non-solid-${colorSchema}-color);
+          opacity: 0.1;
+        }
+
+      .btn-${colorSchema}-ghost:active::before,
+          .btn-${colorSchema}-outline:active::before {
+          opacity: 0.2;
+        }
+        .btn-${colorSchema}-link{
+           color: var(--non-solid-${colorSchema}-color);
+           background:transparent
+        }
+        .btn-${colorSchema}-link:hover,.btn-${colorSchema}-link:active{
+          text-decoration: underline;
+           text-decoration-thickness: from-font;
+           text-underline-offset: 2px;
+        }
+        .btn-${colorSchema}-link:active{
+           color: var(--link-${colorSchema}-color-active);
+        }
+        [data-theme='dark'] {
+          --non-solid-${colorSchema}-color: var(${
+        btnColorSchema[colorSchema].light
+      });
+        --link-${colorSchema}-color-active:  var(${
+        colorSchema === 'gray'
+          ? btnColorSchema[colorSchema].darker
+          : btnColorSchema[colorSchema].main
+      })
+        }
+        
+
       `}</style>
       {extraStyles.styles}
     </>
