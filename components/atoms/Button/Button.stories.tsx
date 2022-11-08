@@ -54,6 +54,20 @@ export default {
         type: 'boolean'
       }
     },
+    isLoading: {
+      defaultValue: false,
+      control: {
+        type: 'boolean'
+      }
+    },
+    loadingText: {
+      control: {
+        type: 'text'
+      }
+    },
+    spinnerProps: {
+      defaultValue: undefined
+    },
     startIcon: {
       defaultValue: null
     },
