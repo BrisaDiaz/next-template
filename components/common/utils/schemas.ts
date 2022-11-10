@@ -1,3 +1,4 @@
+import { JsxStyles } from './index'
 export const paletteColorSchema = {
   current: 'var(--colors-current)',
   inherit: 'var(--colors-inherit)',
@@ -487,10 +488,6 @@ export const themeModes = ['light', 'dark'] as const
 export type ThemeMode = typeof themeModes[number]
 export type Breakpoint = keyof typeof breakpoints
 
-export interface ExtraStyles {
-  className: string
-  styles: JSX.Element
-}
 export type Space = keyof typeof spaceSchema
 export type BorderRadius = keyof typeof borderRadiusSchema
 export type BorderWidth = keyof typeof borderSchema
@@ -514,7 +511,7 @@ export type ZIndex = keyof typeof zIndexSchema
 export interface CommonProps {
   className?: string
   themeMode?: ThemeMode
-  extraStyles?: ExtraStyles
+  jsxStyles?: JsxStyles
 }
 export const theme = {
   blur: blurSchema,

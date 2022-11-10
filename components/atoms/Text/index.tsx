@@ -2,11 +2,11 @@ import { forwardRef } from 'react'
 import clsx from 'clsx'
 import {
   CommonProps,
-  defaultExtraStyles,
   ThemeMode,
   FontSize,
   FontWeight,
   Color,
+  useJsxStyles,
   theme
 } from '../../common/utils'
 
@@ -51,8 +51,7 @@ export const defaultValue = {
   fontWeight: 'normal' as FontWeight,
   as: 'p' as Component,
   color: 'inherit' as Color,
-  themeMode: 'light' as ThemeMode,
-  extraStyles: defaultExtraStyles
+  themeMode: 'light' as ThemeMode
 }
 
 function Text(
@@ -62,7 +61,7 @@ function Text(
     as = defaultValue.as,
     color = defaultValue.color,
     themeMode = defaultValue.themeMode,
-    extraStyles = defaultValue.extraStyles,
+    jsxStyles,
     noOfLines,
     children,
     className,
@@ -70,16 +69,17 @@ function Text(
   }: TextProps,
   ref?: any
 ) {
+  const extraStyles = useJsxStyles(jsxStyles)
   const props = {
     className: clsx(
+      extraStyles.className,
       'text',
       `text-color-${color}`,
       `text-weight-${fontWeight}`,
       `text-size-${fontSize}`,
       {
         [`${className}`]: className
-      },
-      extraStyles.className
+      }
     ),
     'data-theme': themeMode,
     ...other,
@@ -134,14 +134,13 @@ function Text(
           -webkit-box-orient: vertical;
           -webkit-line-clamp: ${noOfLines};
            transition-property: -webkit-line-clamp,overflow,display,text-overflow;
-            transition-timing-function: var(--transition-easing-ease-in-out ;
+            transition-timing-function: var(--transition-easing-ease-in-out);
             transition-duration: var( --transition-duration-ultra-slow)
         `
             : ''}
         }
+        ${extraStyles.styles}
       `}</style>
-
-      {extraStyles.styles}
     </>
   )
 }

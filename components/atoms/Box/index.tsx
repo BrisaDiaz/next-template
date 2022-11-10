@@ -4,9 +4,9 @@ import clsx from 'clsx'
 import {
   HTMLTag,
   CommonProps,
-  defaultExtraStyles,
   Space,
-  theme
+  theme,
+  useJsxStyles
 } from '../../common/utils'
 type Display = 'grid' | 'flex' | 'grid-item' | 'block'
 
@@ -48,7 +48,7 @@ export type BoxProps = CommonProps & ExtraProps & any
 function Box({
   as = 'div',
   display = 'block',
-  extraStyles = defaultExtraStyles,
+
   flexDirection,
   alignItems,
   alignSelf,
@@ -78,19 +78,21 @@ function Box({
   column,
   row,
   area,
+  jsxStyles,
   className,
   ...other
 }: BoxProps) {
+  const extraStyles = useJsxStyles(jsxStyles)
   const props = {
     className: clsx(
-      display,
+      extraStyles.className,
       'box',
+      display,
       'box-align',
       'box-spaces',
       {
         [`${className}`]: className
-      },
-      extraStyles.className
+      }
     ),
     ...other
   }
@@ -256,8 +258,8 @@ function Box({
           ${shrink ? ` flex-shrink: ${shrink}; ` : ' '}
           ${grow ? ` flex-grow: ${grow}; ` : ' '}
         }
+        ${extraStyles.styles}
       `}</style>
-      {extraStyles.styles}
     </>
   )
 }
