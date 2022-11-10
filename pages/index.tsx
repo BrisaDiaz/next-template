@@ -7,7 +7,7 @@ import Head from '../components/common/layouts/Head'
 import ModeSwitch from '../components/atoms/ModeSwitch/Index'
 import { useBreakpoints } from '../hooks'
 import Box from '../components/atoms/Box'
-import { createStyles, theme } from '../components/common/utils'
+import { theme, createStyle } from '../components/common/utils'
 const Home: NextPage = () => {
   const breakpoint = useBreakpoints()
   const [readMore, setReadMore] = useState(false)
@@ -21,9 +21,8 @@ const Home: NextPage = () => {
         flexDirection="column"
         alignItems="center"
         as="main"
-        className="container"
-        extraStyles={createStyles({
-          selector: '.container',
+        jsxStyles={createStyle({
+          selector: '.box',
           css: {
             p: theme.space['4'],
             pb: theme.space['8'],
@@ -53,15 +52,14 @@ const Home: NextPage = () => {
         </Text>
         <Box
           display="grid"
-          className="grid-box"
           templateAreas={`"header header"
                   "nav main"
                   "nav footer"`}
           templateRows={'50px 1fr 30px'}
           templateColumns={'150px 1fr'}
           gap="2"
-          extraStyles={createStyles({
-            selector: '.grid-box',
+          jsxStyles={createStyle({
+            selector: '.box',
             css: {
               mt: theme.space['4'],
               maxW: theme.size['container-md'],
@@ -74,9 +72,8 @@ const Home: NextPage = () => {
           <Box
             area={'header'}
             display="grid-item"
-            className="header-box"
-            extraStyles={createStyles({
-              selector: '.header-box',
+            jsxStyles={createStyle({
+              selector: '.box',
               css: {
                 pl: theme.space['2'],
                 bgColor: theme.paletteColor['orange-300']
@@ -87,10 +84,9 @@ const Home: NextPage = () => {
           </Box>
           <Box
             area={'nav'}
-            className="nav-box"
             display="grid-item"
-            extraStyles={createStyles({
-              selector: '.nav-box',
+            jsxStyles={createStyle({
+              selector: '.box',
               css: {
                 pl: theme.space['2'],
                 bgColor: theme.paletteColor['pink-300']
@@ -101,10 +97,9 @@ const Home: NextPage = () => {
           </Box>
           <Box
             area={'main'}
-            className="main-box"
             display="grid-item"
-            extraStyles={createStyles({
-              selector: '.main-box',
+            jsxStyles={createStyle({
+              selector: '.box',
               css: {
                 pl: theme.space['2'],
                 bgColor: theme.paletteColor['green-300']
@@ -116,9 +111,8 @@ const Home: NextPage = () => {
           <Box
             area={'footer'}
             display="grid-item"
-            className="footer-box"
-            extraStyles={createStyles({
-              selector: '.footer-box',
+            jsxStyles={createStyle({
+              selector: '.box',
               css: {
                 pl: theme.space['2'],
                 bgColor: theme.paletteColor['blue-300']
@@ -132,7 +126,7 @@ const Home: NextPage = () => {
           noOfLines={readMore ? undefined : breakpoint.up('md') ? 5 : 15}
           fontSize={breakpoint.up('sm') ? 'md' : 'sm'}
           className="text-content"
-          extraStyles={createStyles({
+          jsxStyles={createStyle({
             selector: '.text.text-content',
             css: {
               maxW: theme.size['container-lg'],

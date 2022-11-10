@@ -52,7 +52,7 @@ export default {
       }
     },
 
-    extraStyles: { defaultValue: null, description: 'JSX styles css.resolve' },
+    jsxStyles: { defaultValue: null, description: 'JSX styles' },
     children: {
       defaultValue: 'Hello Word 🖐',
       control: {

@@ -1,5 +1,7 @@
-import css from 'styled-jsx/css'
+import { useId } from 'react'
+
 import CSS from 'csstype'
+
 import { breakpoints, Breakpoint } from './index'
 
 const kebabize = (string: string) => {
@@ -46,6 +48,7 @@ const stylePropMap = {
 type CustomPropName = keyof typeof stylePropMap
 
 const cssToJsx = (stylesObj: ReactCss) => {
+  if (!stylesObj) return ''
   const css = Object.keys(stylesObj).map((prop) =>
     stylePropMap[prop as CustomPropName]
       ? ` ${stylePropMap[prop as CustomPropName]
@@ -119,19 +122,64 @@ function createStyleString(
     }
   `
 }
-export function createStyles(styles: CreateStylesArgument) {
-  let jsx = ''
-  if (Array.isArray(styles)) {
-    jsx = styles
-      .map((style: Argument) =>
-        createStyleString(style.selector, style.css, style?.breakpoint)
-      )
-      .join(' ')
-  } else {
-    jsx = createStyleString(styles.selector, styles.css, styles?.breakpoint)
-  }
 
-  return css.resolve`
-    ${jsx}
-  `
+export function createStyle(styles: CreateStylesArgument) {
+  if (!styles) {
+    return function name() {
+      return { className: '', styles: '' }
+    }
+  }
+  return function name(rootClass: string) {
+    let jsx = ''
+    if (Array.isArray(styles)) {
+      jsx = styles
+        .map((style: Argument) =>
+          createStyleString(
+            `.${rootClass}${style.selector}`,
+            style.css,
+            style?.breakpoint
+          )
+        )
+        .join(' ')
+    } else {
+      jsx = createStyleString(
+        `.${rootClass}${styles.selector}`,
+        styles.css,
+        styles?.breakpoint
+      )
+    }
+
+    return { className: rootClass, styles: jsx }
+  }
+}
+export function useClassName() {
+  const className = useId().replaceAll(':', '')
+  return className
+}
+export type ExtraStyles = {
+  className: string
+  styles: string
+}
+export type JsxStyles = (rootClass: string) => ExtraStyles
+
+export function useJsxStyles(jsxStyles?: JsxStyles) {
+  const rootClass = useClassName()
+  let extraStyles = { className: '', styles: '' } as ExtraStyles
+  if (jsxStyles) {
+    extraStyles = jsxStyles(rootClass)
+  }
+  return extraStyles
+}
+
+export function combineExtraStyles(extraStyles: ExtraStyles | ExtraStyles[]) {
+  if (Array.isArray(extraStyles)) {
+    const union = extraStyles.reduce((accumulator: ExtraStyles, current) => {
+      accumulator['className'] =
+        accumulator['className'] + ` ${current.className}`
+      accumulator['styles'] = accumulator['styles'] + ` ${current.styles}`
+      return accumulator
+    })
+    return union
+  }
+  return extraStyles
 }

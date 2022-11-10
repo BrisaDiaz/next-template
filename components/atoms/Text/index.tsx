@@ -2,11 +2,11 @@ import { forwardRef } from 'react'
 import clsx from 'clsx'
 import {
   CommonProps,
-  defaultExtraStyles,
   ThemeMode,
   FontSize,
   FontWeight,
   Color,
+  useJsxStyles,
   theme
 } from '../../common/utils'
 
@@ -51,8 +51,7 @@ export const defaultValue = {
   fontWeight: 'normal' as FontWeight,
   as: 'p' as Component,
   color: 'inherit' as Color,
-  themeMode: 'light' as ThemeMode,
-  extraStyles: defaultExtraStyles
+  themeMode: 'light' as ThemeMode
 }
 
 function Text(
@@ -62,7 +61,7 @@ function Text(
     as = defaultValue.as,
     color = defaultValue.color,
     themeMode = defaultValue.themeMode,
-    extraStyles = defaultValue.extraStyles,
+    jsxStyles,
     noOfLines,
     children,
     className,
@@ -70,16 +69,17 @@ function Text(
   }: TextProps,
   ref?: any
 ) {
+  const extraStyles = useJsxStyles(jsxStyles)
   const props = {
     className: clsx(
+      extraStyles.className,
       'text',
       `text-color-${color}`,
       `text-weight-${fontWeight}`,
       `text-size-${fontSize}`,
       {
         [`${className}`]: className
-      },
-      extraStyles.className
+      }
     ),
     'data-theme': themeMode,
     ...other,
@@ -139,9 +139,8 @@ function Text(
         `
             : ''}
         }
+        ${extraStyles.styles}
       `}</style>
-
-      {extraStyles.styles}
     </>
   )
 }

@@ -4,7 +4,7 @@ import {
   PaletteColor,
   CommonProps,
   theme,
-  defaultExtraStyles
+  useJsxStyles
 } from '../../common/utils'
 import clsx from 'clsx'
 
@@ -56,21 +56,22 @@ export default function Spinner({
   velocity = defaultProps.velocity,
   thickness = defaultProps.thickness,
   variant = defaultProps.variant,
-  extraStyles = defaultExtraStyles,
+  jsxStyles,
   className
 }: SpinnerProps) {
+  const extraStyles = useJsxStyles(jsxStyles)
   return (
     <>
       <div
         aria-label={label}
         role="status"
         className={clsx(
+          extraStyles.className,
           'spinner',
           `spinner--${variant}`,
           {
             [`${className}`]: className
-          },
-          extraStyles.className
+          }
         )}
       >
         {variant === 'ripple-multi'}
@@ -148,8 +149,8 @@ export default function Spinner({
             opacity: 0;
           }
         }
+        ${extraStyles.styles}
       `}</style>
-      {extraStyles.styles}
     </>
   )
 }
