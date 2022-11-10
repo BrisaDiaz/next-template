@@ -153,7 +153,7 @@ export function createStyle(styles: CreateStylesArgument) {
   }
 }
 export function useClassName() {
-  const className = useId().replaceAll(':', '')
+  const className = useId()?.replaceAll(':', '')
   return className
 }
 export type ExtraStyles = {
