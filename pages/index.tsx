@@ -7,7 +7,7 @@ import Head from '../components/common/layouts/Head'
 import ModeSwitch from '../components/atoms/ModeSwitch/Index'
 import { useBreakpoints } from '../hooks'
 import Box from '../components/atoms/Box'
-import { theme, createStyle } from '../components/common/utils'
+import { theme } from '../components/common/utils'
 const Home: NextPage = () => {
   const breakpoint = useBreakpoints()
   const [readMore, setReadMore] = useState(false)
@@ -21,14 +21,14 @@ const Home: NextPage = () => {
         flexDirection="column"
         alignItems="center"
         as="main"
-        jsxStyles={createStyle({
+        cs={{
           selector: '.box',
           css: {
             p: theme.space['4'],
             pb: theme.space['8'],
             minH: theme.size['screen-h']
           }
-        })}
+        }}
       >
         <ModeSwitch
           lightModeColor="blue"
@@ -41,7 +41,6 @@ const Home: NextPage = () => {
           fontSize={
             breakpoint.up('xl') ? '3xl' : breakpoint.up('sm') ? 'xl' : 'lg'
           }
-          className="my-2 font-weight-semibold"
           as="h1"
         >
           Click to switch theme
@@ -58,7 +57,7 @@ const Home: NextPage = () => {
           templateRows={'50px 1fr 30px'}
           templateColumns={'150px 1fr'}
           gap="2"
-          jsxStyles={createStyle({
+          cs={{
             selector: '.box',
             css: {
               mt: theme.space['4'],
@@ -67,57 +66,57 @@ const Home: NextPage = () => {
               minH: theme.size['72'],
               fontWeight: theme.fontWeight.bold
             }
-          })}
+          }}
         >
           <Box
             area={'header'}
             display="grid-item"
-            jsxStyles={createStyle({
+            cs={{
               selector: '.box',
               css: {
                 pl: theme.space['2'],
                 bgColor: theme.paletteColor['orange-300']
               }
-            })}
+            }}
           >
             Header
           </Box>
           <Box
             area={'nav'}
             display="grid-item"
-            jsxStyles={createStyle({
+            cs={{
               selector: '.box',
               css: {
                 pl: theme.space['2'],
                 bgColor: theme.paletteColor['pink-300']
               }
-            })}
+            }}
           >
             Nav
           </Box>
           <Box
             area={'main'}
             display="grid-item"
-            jsxStyles={createStyle({
+            cs={{
               selector: '.box',
               css: {
                 pl: theme.space['2'],
                 bgColor: theme.paletteColor['green-300']
               }
-            })}
+            }}
           >
             Main
           </Box>
           <Box
             area={'footer'}
             display="grid-item"
-            jsxStyles={createStyle({
+            cs={{
               selector: '.box',
               css: {
                 pl: theme.space['2'],
                 bgColor: theme.paletteColor['blue-300']
               }
-            })}
+            }}
           >
             Footer
           </Box>
@@ -125,15 +124,14 @@ const Home: NextPage = () => {
         <Text
           noOfLines={readMore ? undefined : breakpoint.up('md') ? 5 : 15}
           fontSize={breakpoint.up('sm') ? 'md' : 'sm'}
-          className="text-content"
-          jsxStyles={createStyle({
+          cs={{
             selector: '.text.text-content',
             css: {
               maxW: theme.size['container-lg'],
               mt: theme.space['8'],
               mb: theme.space['8']
             }
-          })}
+          }}
         >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu enim a
           eros eleifend dignissim in pretium leo. Etiam quis lorem ante.

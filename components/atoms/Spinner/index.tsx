@@ -4,7 +4,7 @@ import {
   PaletteColor,
   CommonProps,
   theme,
-  useJsxStyles
+  useCustomStyles
 } from '../../common/utils'
 import clsx from 'clsx'
 
@@ -56,10 +56,10 @@ export default function Spinner({
   velocity = defaultProps.velocity,
   thickness = defaultProps.thickness,
   variant = defaultProps.variant,
-  jsxStyles,
+  cs,
   className
 }: SpinnerProps) {
-  const extraStyles = useJsxStyles(jsxStyles)
+  const extraStyles = useCustomStyles(cs)
   return (
     <>
       <div

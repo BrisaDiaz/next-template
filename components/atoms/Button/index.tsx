@@ -1,6 +1,6 @@
 import { ReactNode, forwardRef, LegacyRef } from 'react'
 import clsx from 'clsx'
-import { CommonProps, useJsxStyles, theme } from '../../common/utils'
+import { CommonProps, useCustomStyles, theme } from '../../common/utils'
 import Spinner, { SpinnerProps } from '../Spinner'
 export const btnColorSchema = {
   whiteAlpha: {
@@ -193,10 +193,10 @@ function Button(props: ButtonProps, ref?: LegacyRef<HTMLButtonElement>) {
     loadingText,
     className,
     spinnerProps,
-    jsxStyles,
+    cs,
     ...other
   } = props
-  const extraStyles = useJsxStyles(jsxStyles)
+  const extraStyles = useCustomStyles(cs)
 
   const buttonClassName = clsx(
     extraStyles.className,

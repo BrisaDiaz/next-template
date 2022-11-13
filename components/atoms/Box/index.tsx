@@ -6,7 +6,7 @@ import {
   CommonProps,
   Space,
   theme,
-  useJsxStyles
+  useCustomStyles
 } from '../../common/utils'
 type Display = 'grid' | 'flex' | 'grid-item' | 'block'
 
@@ -78,11 +78,12 @@ function Box({
   column,
   row,
   area,
-  jsxStyles,
+  cs,
   className,
+
   ...other
 }: BoxProps) {
-  const extraStyles = useJsxStyles(jsxStyles)
+  const extraStyles = useCustomStyles(cs)
   const props = {
     className: clsx(
       extraStyles.className,

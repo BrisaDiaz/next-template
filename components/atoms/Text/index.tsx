@@ -6,7 +6,7 @@ import {
   FontSize,
   FontWeight,
   Color,
-  useJsxStyles,
+  useCustomStyles,
   theme
 } from '../../common/utils'
 
@@ -61,7 +61,7 @@ function Text(
     as = defaultValue.as,
     color = defaultValue.color,
     themeMode = defaultValue.themeMode,
-    jsxStyles,
+    cs,
     noOfLines,
     children,
     className,
@@ -69,7 +69,7 @@ function Text(
   }: TextProps,
   ref?: any
 ) {
-  const extraStyles = useJsxStyles(jsxStyles)
+  const extraStyles = useCustomStyles(cs)
   const props = {
     className: clsx(
       extraStyles.className,

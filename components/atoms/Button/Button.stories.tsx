@@ -80,7 +80,7 @@ export default {
         type: 'text'
       }
     },
-    jsxStyles: { defaultValue: null, description: 'JSX styles' }
+    cs: { defaultValue: null, description: 'JSX styles' }
   }
 } as ComponentMeta<typeof Button>
 
