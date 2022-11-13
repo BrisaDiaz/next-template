@@ -72,27 +72,40 @@ export interface CustomStyle {
 }
 export type CustomStyles = CustomStyle | CustomStyle[]
 
-const kebabize = (string: string) => {
+const toKebabCase = (string: string) => {
   return string
-    .split('')
-    .map((letter, idx) => {
-      return letter.toUpperCase() === letter
-        ? `${idx !== 0 ? '-' : ''}${letter.toLowerCase()}`
-        : letter
-    })
-    .join('')
+    .replace(/([a-z])([A-Z])/g, '$1-$2')
+    .replace(/[\s_]+/g, '-')
+    .toLowerCase()
 }
+
+function customPropsToJsx(propName: CustomPropName, value: string | number) {
+  return ` ${stylePropMap[propName]
+    .map((prop) => `${prop}:${value};`)
+    .join(' ')}`
+}
+
+function cssPropsToJsx(propName: string, value: string | number) {
+  return `${toKebabCase(propName)}:${value};`
+}
+
 const cssToJsx = (stylesObj: ReactCss) => {
   if (!stylesObj) return ''
-  const css = Object.keys(stylesObj).map((propName) =>
-    stylePropMap[propName as CustomPropName]
-      ? ` ${stylePropMap[propName as CustomPropName]
-          .map((prop) => `${prop}:${stylesObj[prop]};`)
-          .join(' ')}`
-      : `${kebabize(propName)}:${stylesObj[propName]};`
-  )
 
-  return css.join('')
+  let jsx = ''
+
+  for (const propName in stylesObj) {
+    if (stylePropMap[propName as CustomPropName]) {
+      jsx += ` ${customPropsToJsx(
+        propName as CustomPropName,
+        stylesObj[propName]
+      )} `
+    } else {
+      jsx += ` ${cssPropsToJsx(propName, stylesObj[propName])} `
+    }
+  }
+
+  return jsx
 }
 function createStyleString(
   selector: string,
