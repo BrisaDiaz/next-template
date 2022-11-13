@@ -80,13 +80,21 @@ export default {
         type: 'text'
       }
     },
-    cs: { defaultValue: null, description: 'JSX styles' }
+    className: { defaultValue: undefined, control: { type: 'text' } },
+    cs: {
+      defaultValue: undefined,
+      type: Object,
+      control: { type: 'object' },
+      description: 'Custom styles object format'
+    }
   }
 } as ComponentMeta<typeof Button>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Button> = ({ children, ...args }) => (
-  <Button {...args}>{children ?? 'Content'}</Button>
+  <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <Button {...args}>{children ? children : 'Content'}</Button>
+  </div>
 )
 
 export const Default = Template.bind({})
@@ -156,4 +164,31 @@ EndIconButton.args = {
   endIcon: <Moon size="1.25rem" />,
   children: 'Good Night',
   colorSchema: 'blue'
+}
+export const LoadingButton = Template.bind({})
+
+LoadingButton.args = {
+  isLoading: true,
+  loadingText: 'Submitting',
+  colorSchema: 'green'
+}
+export const WithCustomStylesButton = Template.bind({})
+
+WithCustomStylesButton.args = {
+  cs: [
+    {
+      selector: '.btn',
+      css: {
+        color: 'white',
+        background: 'black',
+        width: '100%'
+      }
+    },
+    {
+      selector: '.btn:hover',
+      css: {
+        opacity: '0.8'
+      }
+    }
+  ]
 }

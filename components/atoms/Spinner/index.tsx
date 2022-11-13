@@ -31,7 +31,7 @@ export type SpinnerExtraProps = {
   color?: PaletteColor
   bgColor?: PaletteColor
   label?: string
-  velocity?: string
+  velocity?: string | number
   thickness?: BorderWidth
   variant?: Variant
 }

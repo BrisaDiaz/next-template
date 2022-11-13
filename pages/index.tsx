@@ -125,7 +125,7 @@ const Home: NextPage = () => {
           noOfLines={readMore ? undefined : breakpoint.up('md') ? 5 : 15}
           fontSize={breakpoint.up('sm') ? 'md' : 'sm'}
           cs={{
-            selector: '.text.text-content',
+            selector: '.text',
             css: {
               maxW: theme.size['container-lg'],
               mt: theme.space['8'],
