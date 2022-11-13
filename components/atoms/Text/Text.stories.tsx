@@ -43,7 +43,7 @@ export default {
         type: 'select'
       }
     },
-    component: {
+    as: {
       defaultValue: 'p',
       options: componentSchema,
       control: {
