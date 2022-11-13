@@ -8,6 +8,7 @@ import {
   theme,
   useCustomStyles
 } from '../../common/utils'
+
 type Display = 'grid' | 'flex' | 'grid-item' | 'block'
 
 export type ExtraProps = {
@@ -48,7 +49,6 @@ export type BoxProps = CommonProps & ExtraProps & any
 function Box({
   as = 'div',
   display = 'block',
-
   flexDirection,
   alignItems,
   alignSelf,
