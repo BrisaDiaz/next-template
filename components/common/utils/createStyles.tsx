@@ -88,12 +88,12 @@ interface CSSType extends CSS.Properties {
   borderX?: CSS.Property.Border
   borderY?: CSS.Property.Border
 }
-export interface Argument {
+export interface CustomStyle {
   selector: string
   css: CSSType
   breakpoint?: Breakpoint | number
 }
-export type CreateStylesArgument = Argument | Argument[]
+export type CustomStyles = CustomStyle | CustomStyle[]
 
 function createStyleString(
   selector: string,
@@ -123,34 +123,26 @@ function createStyleString(
   `
 }
 
-export function createStyle(styles: CreateStylesArgument) {
-  if (!styles) {
-    return function name() {
-      return { className: '', styles: '' }
-    }
-  }
-  return function name(rootClass: string) {
-    let jsx = ''
-    if (Array.isArray(styles)) {
-      jsx = styles
-        .map((style: Argument) =>
-          createStyleString(
-            `.${rootClass}${style.selector}`,
-            style.css,
-            style?.breakpoint
-          )
+export function createStyle(styles: CustomStyles, rootClass: string) {
+  let jsx = ''
+  if (Array.isArray(styles)) {
+    jsx = styles
+      .map((style: CustomStyle) =>
+        createStyleString(
+          `.${rootClass}${style.selector}`,
+          style.css,
+          style?.breakpoint
         )
-        .join(' ')
-    } else {
-      jsx = createStyleString(
-        `.${rootClass}${styles.selector}`,
-        styles.css,
-        styles?.breakpoint
       )
-    }
-
-    return { className: rootClass, styles: jsx }
+      .join(' ')
+  } else {
+    jsx = createStyleString(
+      `.${rootClass}${styles.selector}`,
+      styles.css,
+      styles?.breakpoint
+    )
   }
+  return { className: rootClass, styles: jsx }
 }
 export function useClassName() {
   const id = useId().toString()
@@ -162,14 +154,15 @@ export type ExtraStyles = {
   className: string
   styles: string
 }
-export type JsxStyles = (rootClass: string) => ExtraStyles
 
-export function useJsxStyles(jsxStyles?: JsxStyles) {
+export function useCustomStyles(cs?: CustomStyles) {
   const rootClass = useClassName()
-  let extraStyles = { className: '', styles: '' } as ExtraStyles
-  if (jsxStyles) {
-    extraStyles = jsxStyles(rootClass)
+  if (!cs) {
+    return { className: '', styles: '' }
   }
+
+  const extraStyles = createStyle(cs, rootClass)
+
   return extraStyles
 }
 

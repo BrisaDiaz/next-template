@@ -12,14 +12,14 @@ export default {
   argTypes: {
     color: {
       defaultValue: defaultProps.color,
-      options: paletteColorSchema,
+      options: Object.keys(paletteColorSchema),
       control: {
         type: 'select'
       }
     },
     bgColor: {
       defaultValue: defaultProps.bgColor,
-      options: paletteColorSchema,
+      options: Object.keys(paletteColorSchema),
       control: {
         type: 'select'
       }
@@ -46,7 +46,19 @@ export default {
         type: 'select'
       }
     },
-    jsxStyles: { defaultValue: null, description: 'JSX styles' }
+    velocity: {
+      defaultValue: defaultProps.velocity,
+      control: {
+        type: 'text'
+      }
+    },
+    className: { defaultValue: undefined, control: { type: 'text' } },
+    cs: {
+      defaultValue: undefined,
+      type: Object,
+      control: { type: 'object' },
+      description: 'Custom styles object format'
+    }
   }
 } as ComponentMeta<typeof Spinner>
 
@@ -82,6 +94,6 @@ Ripple.args = {
 }
 
 export const RippleMulti = Template.bind({})
-Ripple.args = {
+RippleMulti.args = {
   variant: 'ripple-multi'
 }

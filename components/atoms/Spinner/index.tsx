@@ -4,7 +4,7 @@ import {
   PaletteColor,
   CommonProps,
   theme,
-  useJsxStyles
+  useCustomStyles
 } from '../../common/utils'
 import clsx from 'clsx'
 
@@ -31,7 +31,7 @@ export type SpinnerExtraProps = {
   color?: PaletteColor
   bgColor?: PaletteColor
   label?: string
-  velocity?: string
+  velocity?: string | number
   thickness?: BorderWidth
   variant?: Variant
 }
@@ -44,7 +44,7 @@ export const defaultProps = {
   color: 'current' as PaletteColor,
   bgColor: 'transparent' as PaletteColor,
   label: 'Loading',
-  velocity: '0.65s',
+  velocity: '0.65',
   thickness: '2' as BorderWidth,
   variant: 'solid' as Variant
 }
@@ -56,10 +56,10 @@ export default function Spinner({
   velocity = defaultProps.velocity,
   thickness = defaultProps.thickness,
   variant = defaultProps.variant,
-  jsxStyles,
+  cs,
   className
 }: SpinnerProps) {
-  const extraStyles = useJsxStyles(jsxStyles)
+  const extraStyles = useCustomStyles(cs)
   return (
     <>
       <div
@@ -90,25 +90,25 @@ export default function Spinner({
           border-color: var(--colors-${color});
           border-left-color: var(--colors-${bgColor});
           border-top-color: var(--colors-${bgColor});
-          animation: rotate-center ${velocity} linear infinite both;
+          animation: rotate-center ${velocity}s linear infinite both;
         }
         .spinner--donut {
           border-color: var(--colors-${bgColor});
           border-left-color: var(--colors-${color});
-          animation: rotate-center ${velocity} linear infinite both;
+          animation: rotate-center ${velocity}s linear infinite both;
         }
 
         .spinner--donut-multi {
           border-color: var(--colors-${color});
           border-left-color: var(--colors-${bgColor});
           border-right-color: var(--colors-${bgColor});
-          animation: rotate-center ${velocity} linear infinite both;
+          animation: rotate-center ${velocity}s linear infinite both;
         }
         .spinner--ripple,
         .spinner--ripple-multi {
           border-color: var(--colors-${color});
           transform: translate(50%);
-          animation: ${velocity} ripple ease-out infinite;
+          animation: ${velocity}s ripple ease-out infinite;
         }
         .spinner--ripple-multi {
           display: flex;
@@ -123,7 +123,7 @@ export default function Spinner({
           border: inherit;
           border-color: inherit;
           border-radius: inherit;
-          animation: ${velocity} ripple infinite;
+          animation: ${velocity}s ripple infinite;
         }
         .spinner--ripple-multi div:nth-child(2) {
           animation-delay: 0.5s;

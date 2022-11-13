@@ -1,4 +1,4 @@
-import { JsxStyles } from './index'
+import { CustomStyles } from './index'
 export const paletteColorSchema = {
   current: 'var(--colors-current)',
   inherit: 'var(--colors-inherit)',
@@ -511,7 +511,7 @@ export type ZIndex = keyof typeof zIndexSchema
 export interface CommonProps {
   className?: string
   themeMode?: ThemeMode
-  jsxStyles?: JsxStyles
+  cs?: CustomStyles
 }
 export const theme = {
   blur: blurSchema,

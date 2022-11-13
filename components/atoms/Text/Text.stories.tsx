@@ -15,6 +15,12 @@ export default {
   as: Text,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
+    children: {
+      defaultValue: 'Hello Word 🖐',
+      control: {
+        type: 'text'
+      }
+    },
     themeMode: {
       defaultValue: 'light',
 
@@ -37,7 +43,7 @@ export default {
         type: 'select'
       }
     },
-    component: {
+    as: {
       defaultValue: 'p',
       options: componentSchema,
       control: {
@@ -51,13 +57,12 @@ export default {
         type: 'select'
       }
     },
-
-    jsxStyles: { defaultValue: null, description: 'JSX styles' },
-    children: {
-      defaultValue: 'Hello Word 🖐',
-      control: {
-        type: 'text'
-      }
+    className: { defaultValue: undefined, control: { type: 'text' } },
+    cs: {
+      defaultValue: undefined,
+      type: Object,
+      control: { type: 'object' },
+      description: 'Custom styles object format'
     }
   }
 } as ComponentMeta<typeof Text>
