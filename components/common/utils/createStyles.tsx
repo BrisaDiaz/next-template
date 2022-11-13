@@ -4,18 +4,7 @@ import CSS from 'csstype'
 
 import { breakpoints, Breakpoint } from './index'
 
-const kebabize = (string: string) => {
-  return string
-    .split('')
-    .map((letter, idx) => {
-      return letter.toUpperCase() === letter
-        ? `${idx !== 0 ? '-' : ''}${letter.toLowerCase()}`
-        : letter
-    })
-    .join('')
-}
-
-type ReactCss = { [prop: string]: string }
+type ReactCss = { [propName: string]: string }
 const stylePropMap = {
   p: ['padding'],
   pt: ['padding-top'],
@@ -47,18 +36,6 @@ const stylePropMap = {
 }
 type CustomPropName = keyof typeof stylePropMap
 
-const cssToJsx = (stylesObj: ReactCss) => {
-  if (!stylesObj) return ''
-  const css = Object.keys(stylesObj).map((prop) =>
-    stylePropMap[prop as CustomPropName]
-      ? ` ${stylePropMap[prop as CustomPropName]
-          .map((propName) => `${propName}:${stylesObj[prop]};`)
-          .join(' ')}`
-      : `${kebabize(prop)}:${stylesObj[prop]};`
-  )
-
-  return css.join('')
-}
 interface CSSType extends CSS.Properties {
   p?: CSS.Property.Padding
   pt?: CSS.Property.Padding
@@ -95,6 +72,28 @@ export interface CustomStyle {
 }
 export type CustomStyles = CustomStyle | CustomStyle[]
 
+const kebabize = (string: string) => {
+  return string
+    .split('')
+    .map((letter, idx) => {
+      return letter.toUpperCase() === letter
+        ? `${idx !== 0 ? '-' : ''}${letter.toLowerCase()}`
+        : letter
+    })
+    .join('')
+}
+const cssToJsx = (stylesObj: ReactCss) => {
+  if (!stylesObj) return ''
+  const css = Object.keys(stylesObj).map((propName) =>
+    stylePropMap[propName as CustomPropName]
+      ? ` ${stylePropMap[propName as CustomPropName]
+          .map((prop) => `${prop}:${stylesObj[prop]};`)
+          .join(' ')}`
+      : `${kebabize(propName)}:${stylesObj[propName]};`
+  )
+
+  return css.join('')
+}
 function createStyleString(
   selector: string,
   css: CSSType,
@@ -150,10 +149,6 @@ export function useClassName() {
 
   return className
 }
-export type ExtraStyles = {
-  className: string
-  styles: string
-}
 
 export function useCustomStyles(cs?: CustomStyles) {
   const rootClass = useClassName()
@@ -164,6 +159,10 @@ export function useCustomStyles(cs?: CustomStyles) {
   const extraStyles = createStyle(cs, rootClass)
 
   return extraStyles
+}
+export type ExtraStyles = {
+  className: string
+  styles: string
 }
 
 export function combineExtraStyles(extraStyles: ExtraStyles | ExtraStyles[]) {
