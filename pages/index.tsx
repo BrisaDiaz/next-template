@@ -1,13 +1,13 @@
 import type { NextPage } from 'next'
 
 import React, { useState } from 'react'
-import Button from '../components/atoms/Button/ThemedButton'
-import Text from '../components/atoms/Text/ThemedText'
-import Head from '../components/common/layouts/Head'
-import ModeSwitch from '../components/atoms/ModeSwitch/Index'
-import { useBreakpoints } from '../hooks'
-import Box from '../components/atoms/Box'
-import { theme } from '../components/common/utils'
+import Button from '@components/atoms/Button/ThemedButton'
+import Text from '@components/atoms/Text/ThemedText'
+import Head from '@common/providers/Head'
+import ModeSwitch from '@components/atoms/ModeSwitch'
+import { useBreakpoints } from '@hooks'
+import Box from '@components/atoms/Box'
+import { theme } from '@common/utils'
 const Home: NextPage = () => {
   const breakpoint = useBreakpoints()
   const [readMore, setReadMore] = useState(false)

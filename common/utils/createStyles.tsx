@@ -4,18 +4,7 @@ import CSS from 'csstype'
 
 import { breakpoints, Breakpoint } from './index'
 
-const kebabize = (string: string) => {
-  return string
-    .split('')
-    .map((letter, idx) => {
-      return letter.toUpperCase() === letter
-        ? `${idx !== 0 ? '-' : ''}${letter.toLowerCase()}`
-        : letter
-    })
-    .join('')
-}
-
-type ReactCss = { [prop: string]: string }
+type ReactCss = { [propName: string]: string }
 const stylePropMap = {
   p: ['padding'],
   pt: ['padding-top'],
@@ -47,18 +36,6 @@ const stylePropMap = {
 }
 type CustomPropName = keyof typeof stylePropMap
 
-const cssToJsx = (stylesObj: ReactCss) => {
-  if (!stylesObj) return ''
-  const css = Object.keys(stylesObj).map((prop) =>
-    stylePropMap[prop as CustomPropName]
-      ? ` ${stylePropMap[prop as CustomPropName]
-          .map((propName) => `${propName}:${stylesObj[prop]};`)
-          .join(' ')}`
-      : `${kebabize(prop)}:${stylesObj[prop]};`
-  )
-
-  return css.join('')
-}
 interface CSSType extends CSS.Properties {
   p?: CSS.Property.Padding
   pt?: CSS.Property.Padding
@@ -95,6 +72,41 @@ export interface CustomStyle {
 }
 export type CustomStyles = CustomStyle | CustomStyle[]
 
+const toKebabCase = (string: string) => {
+  return string
+    .replace(/([a-z])([A-Z])/g, '$1-$2')
+    .replace(/[\s_]+/g, '-')
+    .toLowerCase()
+}
+
+function customPropsToJsx(propName: CustomPropName, value: string | number) {
+  return ` ${stylePropMap[propName]
+    .map((prop) => `${prop}:${value};`)
+    .join(' ')}`
+}
+
+function cssPropsToJsx(propName: string, value: string | number) {
+  return `${toKebabCase(propName)}:${value};`
+}
+
+const cssToJsx = (stylesObj: ReactCss) => {
+  if (!stylesObj) return ''
+
+  let jsx = ''
+
+  for (const propName in stylesObj) {
+    if (stylePropMap[propName as CustomPropName]) {
+      jsx += ` ${customPropsToJsx(
+        propName as CustomPropName,
+        stylesObj[propName]
+      )} `
+    } else {
+      jsx += ` ${cssPropsToJsx(propName, stylesObj[propName])} `
+    }
+  }
+
+  return jsx
+}
 function createStyleString(
   selector: string,
   css: CSSType,
@@ -150,10 +162,6 @@ export function useClassName() {
 
   return className
 }
-export type ExtraStyles = {
-  className: string
-  styles: string
-}
 
 export function useCustomStyles(cs?: CustomStyles) {
   const rootClass = useClassName()
@@ -164,6 +172,10 @@ export function useCustomStyles(cs?: CustomStyles) {
   const extraStyles = createStyle(cs, rootClass)
 
   return extraStyles
+}
+export type ExtraStyles = {
+  className: string
+  styles: string
 }
 
 export function combineExtraStyles(extraStyles: ExtraStyles | ExtraStyles[]) {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { themeModes, spaceSchema, theme } from '../../common/utils'
+import { themeModes, spaceSchema, theme } from '@common/utils'
 import Box from './index'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export

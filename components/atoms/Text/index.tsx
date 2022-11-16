@@ -8,7 +8,7 @@ import {
   Color,
   useCustomStyles,
   theme
-} from '../../common/utils'
+} from '@common/utils'
 
 export const componentSchema = [
   'a',

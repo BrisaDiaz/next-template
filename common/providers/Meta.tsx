@@ -1,4 +1,4 @@
-import { siteOrigin, meta as defaultMeta } from '../../../lib/constants'
+import { siteOrigin, meta as defaultMeta } from '../../lib/constants'
 
 type Meta = {
   title?: string
