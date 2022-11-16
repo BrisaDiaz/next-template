@@ -5,7 +5,7 @@ import {
   fontSizeSchema,
   fontWeightSchema,
   colorSchema
-} from '../../common/utils'
+} from '@common/utils'
 import Text, { componentSchema } from './index'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export

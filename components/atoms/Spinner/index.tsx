@@ -5,7 +5,7 @@ import {
   CommonProps,
   theme,
   useCustomStyles
-} from '../../common/utils'
+} from '@common/utils'
 import clsx from 'clsx'
 
 export const sizeSchema = {

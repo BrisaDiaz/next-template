@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import '../styles/fonts.css'
 import '../styles/normalize.css'
-import ThemeProvider from '../components/common/providers/ThemeProvider'
+import ThemeProvider from '@common/providers/ThemeProvider'
 
 
 export const parameters = {

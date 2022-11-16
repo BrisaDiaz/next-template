@@ -1,7 +1,7 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Sun, Moon } from '../SVG'
-import { themeModes } from '../../common/utils'
+import { themeModes } from '@common/utils'
 import Button, { btnColorSchema, variantSchema, sizeSchema } from './index'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export

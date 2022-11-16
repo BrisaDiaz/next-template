@@ -1,6 +1,6 @@
 import { ReactNode, forwardRef, LegacyRef } from 'react'
 import clsx from 'clsx'
-import { CommonProps, useCustomStyles, theme } from '../../common/utils'
+import { CommonProps, useCustomStyles, theme } from '@common/utils'
 import Spinner, { SpinnerProps } from '../Spinner'
 export const btnColorSchema = {
   whiteAlpha: {

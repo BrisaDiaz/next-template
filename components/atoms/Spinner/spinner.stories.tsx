@@ -1,6 +1,6 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { borderSchema, paletteColorSchema } from '../../common/utils'
+import { borderSchema, paletteColorSchema } from '@common/utils'
 import Spinner, { variantSchema, sizeSchema, defaultProps } from './index'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export

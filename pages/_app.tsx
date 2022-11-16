@@ -2,7 +2,7 @@ import '../styles/normalize.css'
 import '../styles/fonts.css'
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import ThemeProvider from '../components/common/providers/ThemeProvider'
+import ThemeProvider from '@common/providers/ThemeProvider'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

@@ -1,0 +1,14 @@
+# *
+User-agent: *
+Disallow: /secret
+
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://next-template-pi.vercel.app/
+
+# Sitemaps
+Sitemap: https://next-template-pi.vercel.app/sitemap.xml
+Sitemap: https://next-template-pi.vercel.app//server-sitemap.xml

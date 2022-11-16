@@ -7,7 +7,7 @@ import {
   Space,
   theme,
   useCustomStyles
-} from '../../common/utils'
+} from '@common/utils'
 
 type Display = 'grid' | 'flex' | 'grid-item' | 'block'
 
