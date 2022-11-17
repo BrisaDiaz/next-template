@@ -37,3 +37,6 @@ next-env.d.ts
 
 .vercel
 .lighthouseci
+
+/public/robots.txt
+/public/sitemap*
