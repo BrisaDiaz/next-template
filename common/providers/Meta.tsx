@@ -1,9 +1,9 @@
 import { siteOrigin, meta as defaultMeta } from '../../lib/constants'
 
-type Meta = {
+export type MetaData = {
   title?: string
   description?: string
-  ogImage?: string
+  ogImage?: { url: string; width: string; height: string }
   noIndex?: boolean
   author?: string
   siteName?: string
@@ -15,7 +15,7 @@ type Meta = {
   url?: string
 }
 
-export default function Head({
+export default function Meta({
   title = defaultMeta.title,
   description = defaultMeta.description,
   ogImage = defaultMeta.ogImage,
@@ -28,7 +28,7 @@ export default function Head({
   subject = defaultMeta.subject,
   twitterSite = defaultMeta.twitterSite,
   url = siteOrigin
-}: Meta) {
+}: MetaData) {
   return (
     <>
       {noIndex ? (
@@ -41,7 +41,7 @@ export default function Head({
           <meta name="robots" content="index,follow" />
           <meta name="googlebot" content="index,follow" />
         </>
-      )}{' '}
+      )}
       <title>{title}</title>
       <meta name="description" content={description} />
       <link rel="canonical" href={`${siteOrigin}${url}`} />
@@ -51,10 +51,10 @@ export default function Head({
       <meta property="og:description" content={description} />
       <meta property="og:url" content={`${siteOrigin}${url}`} />
       <meta property="og:site_name" content={siteName} />
-      <meta property="og:image" content={ogImage} />
-      <meta property="og:image:secure_url" content={ogImage} />
-      <meta property="og:image:width" content="730" />
-      <meta property="og:image:height" content="487" />
+      <meta property="og:image" content={ogImage.url} />
+      <meta property="og:image:secure_url" content={ogImage.url} />
+      <meta property="og:image:width" content={ogImage.width} />
+      <meta property="og:image:height" content={ogImage.height} />
       <meta property="og:image:type" content="image/png" />
       {author && <meta name="author" content={author} />}
       <meta name="keywords" content={keywords} />
@@ -63,7 +63,7 @@ export default function Head({
       <meta name="twitter:description" content={description} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:site" content={twitterSite} />
-      <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:image" content={ogImage.url} />
       <meta name="twitter:creator" content={twitterSite} />
     </>
   )
