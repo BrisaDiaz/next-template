@@ -1,24 +1,33 @@
 import useWindowSize from './useWindowSize'
 
 const defaultBreakpoints = {
+  xs: 0,
   sm: 640,
   md: 768,
   lg: 1024,
   xl: 1280,
   '2xl': 1536
 } as const
-type BreakpointsSchema = typeof defaultBreakpoints
-type Breakpoint = keyof typeof defaultBreakpoints
+
+export type BreakpointsSchema = {
+  xs: number
+  sm: number
+  md: number
+  lg: number
+  xl: number
+  '2xl': number
+}
+export type Breakpoint = keyof typeof defaultBreakpoints
 export default function useScreenSize(customBreakpoints?: BreakpointsSchema) {
   const { width } = useWindowSize()
 
   const breakpoints = customBreakpoints || defaultBreakpoints
 
-  const valuesEqual = {
+  const rangeMarches = {
     xs: width < breakpoints['sm'],
-    sm: width < breakpoints['sm'],
-    md: width >= breakpoints['sm'] && width < breakpoints['md'],
-    lg: width >= breakpoints['md'] && width < breakpoints['lg'],
+    sm: width >= breakpoints['sm'] && width < breakpoints['md'],
+    md: width >= breakpoints['md'] && width < breakpoints['lg'],
+    lg: width >= breakpoints['lg'] && width < breakpoints['xl'],
     xl: width >= breakpoints['xl'] && width < breakpoints['2xl'],
     '2xl': width >= breakpoints['2xl']
   }
@@ -33,11 +42,17 @@ export default function useScreenSize(customBreakpoints?: BreakpointsSchema) {
   }
   const equal = (breakpoint: Breakpoint | number) => {
     if (typeof breakpoint === 'number') return width === breakpoint
-    return valuesEqual[breakpoint]
+    return width === breakpoints[breakpoint]
   }
-  const not = (breakpoint: Breakpoint | number) => {
+  const unequal = (breakpoint: Breakpoint | number) => {
     if (typeof breakpoint === 'number') return width !== breakpoint
-    return !valuesEqual[breakpoint]
+    return width !== breakpoints[breakpoint]
+  }
+  const not = (breakpoint: Breakpoint) => {
+    return !rangeMarches[breakpoint]
+  }
+  const only = (breakpoint: Breakpoint) => {
+    return rangeMarches[breakpoint]
   }
   const between = (
     fromBreakpoint: Breakpoint | number,
@@ -58,5 +73,5 @@ export default function useScreenSize(customBreakpoints?: BreakpointsSchema) {
 
     return width >= start && width < end
   }
-  return { equal, up, between, down, not }
+  return { equal, unequal, up, between, down, not, only }
 }
