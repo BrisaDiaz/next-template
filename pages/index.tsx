@@ -1,10 +1,10 @@
 import type { NextPage } from 'next'
 
 import React, { useState } from 'react'
-import Button from '@components/atoms/Button/ThemedButton'
-import Text from '@components/atoms/Text/ThemedText'
+import Button from '@components/atoms/Button/Themed'
+import Text from '@components/atoms/Text/Themed'
 import Head from '@common/providers/Head'
-import ModeSwitch from '@components/atoms/ModeSwitch'
+import ModeSwitch from '@components/atoms/ModeSwitch/Themed'
 import { useBreakpoints } from '@hooks'
 import Box from '@components/atoms/Box'
 import { theme } from '@common/utils'
@@ -31,8 +31,8 @@ const Home: NextPage = () => {
         }}
       >
         <ModeSwitch
-          lightModeColor="blue"
-          darkModeColor="orange"
+          lightColorSchema="blue"
+          darkColorSchema="orange"
           variant="ghost"
           size={breakpoint.up('xl') ? 'lg' : breakpoint.up('sm') ? 'md' : 'sm'}
           data-testid="theme switch"
