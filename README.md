@@ -29,50 +29,52 @@ This is an next started project that contains the following features:
 - React testing library - Jest - Cypress
 - Storybook
 - Eslint - Prettier - Styleslint - Husky - Commitlint
-- Styled-jsx/css (included with create-next-app )
+- Styled-jsx/css (included within create-next-app )
     
 ## Folder Structure   
+```bash
  .   
 ├── public  
-│   ├── images   (image assets folder)    
-│   │      ├── ico    (manifest  icon assets folder)   
-│   ├── fonts  (font assets folder)     
-│   ├── manifest.json (customizable manifest file)   
-├── styles   (global styles folder)    
+│   ├── images                        #image assets folder    
+│   │      ├── ico                        #manifest  icon assets folder   
+│   ├── fonts                        #font assets folder     
+│   ├── manifest.json                        #customizable manifest file   
+├── styles                        #global styles folder    
 │   ├── globals.css     
 │   ├── fonts.css     
 │   ├── normalize.css     
 ├── .github  
-│   ├── workflows       (github workflows folder)  
-├── husky  (husky hooks folder)  
-├── cypress      (cypress config and tests folder)  
-│   ├── e2e/integration       (e2e or integration tests folder)  
-├── storybook     (storybook config folder)  
+│   ├── workflows                        #github workflows folder  
+├── husky                         #husky hooks folder  
+├── cypress                        #cypress config and tests folder  
+│   ├── e2e/integration                        #e2e or integration tests folder  
+├── storybook                        #storybook config folder  
 ├── lib  
-│   ├── constants.ts   (customizable project config constants)  
-│   ├── ga.tsx       (google analytics functions and script component)   
+│   ├── constants.ts                        #customizable project config constants
+│   ├── ga.tsx                          #google analytics functions and script component  
 ├── common   
-│   ├── providers   (data and context provider components folder)   
-│   ├── utils    (components common utility functions and types folder)  
+│   ├── providers                         #data and context provider components folder   
+│   ├── utils                         #components common utility functions and types folder  
 ├── hooks 
-├── components  (atomic design components folder)  
+├── components                        #atomic design components folder  
 │   ├── atoms   
 │   │      ├── Button  
-│   │      │      ├── index.tsx  (component file)  
-│   │      │      ├── Button.stories.tsx  (component storybook file)  
-│   │      │      ├── Button.test.tsx  (component tests file)  
-│   │      │      ├── ThemedButton.test.tsx  (theme consumer component file)  
+│   │      │      ├── index.tsx                        #component file  
+│   │      │      ├── Button.stories.tsx                        #component storybook file  
+│   │      │      ├── Button.test.tsx                         #component tests file  
+│   │      │      ├── Themed.test.tsx                          #theme consumer component file  
 │   ├── molecules    
 │   ├── templates    
 │   ├── pages    
-├── doc                 (documentation folder)  
-├── lighthouserc.js                     (lightouse rules config file)  
-├── next-sitemap.config.js         (sitemap config file)  
-├── cypress.config.ts                  (cypress config file)  
-├── jest.config.js                  (jest config file)  
-├── jest.setup.js                     (jest and storybook setup file)    
-├── commitlint.config.js   (conventional commits config file)   
-   
+├── doc                        #documentation folder  
+├── lighthouserc.js                         #lighthouse rules config file  
+├── next-sitemap.config.js                        #sitemap config file  
+├── cypress.config.ts                        #cypress config file  
+├── jest.config.js                          #jest config file  
+├── jest.setup.js                        #jest and storybook setup file    
+├── commitlint.config.js                         #conventional commits config file   
+
+```
 ## Setup   
 
 Install project dependencies  
@@ -80,10 +82,6 @@ Install project dependencies
 ```bash
 npm install
 ```
-  
-```bash
-npm run prepare
-``` 
 
 To download and install  typescript CLI , run the following command:
      

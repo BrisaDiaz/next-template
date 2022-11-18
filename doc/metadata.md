@@ -2,19 +2,19 @@
      
         
 ## Related files     
-        
+  ```bash      
 ├── lib  
-│   ├── constants.ts   (default metadata value configurations)  
+│   ├── constants.ts             #default metadata value configurations   
 ├── public  
 │   ├── images   
-│   │      ├── ico    (manifest icon assets folder)   
-│   ├── manifest.json (customizable manifest file)   
+│   │      ├── ico              #manifest icon assets folder    
+│   ├── manifest.json           #customizable manifest file   
 ├── page  
-│   ├──_document.tsx  (manifest.json and web icons imports )   
+│   ├──_document.tsx            #manifest.json and web icons imports   
 ├── common    
 │   ├── providers   
-│   │      ├── Meta.tsx    (metadata component )   
-    
+│   │      ├── Meta.tsx              #metadata component   
+ ```
       
 ## Meta prop types
 
