@@ -4,14 +4,20 @@ This is an next started project that contains the following features:
 
 - Dark mode support
 - Basic accessible components
-- Reusable components construction guideline
+- Reusable components development guideline
 - Components documentation width storybook
 - Basic ui related hooks
 - Configurable SEO features as: sitemap, meta data on headers and manifest.json
-- Google analytics  configuration
+- Google analytics configuration
 - Global Style guidelines
-- Unit test, cypress, lighthouse and linting configuration
+- Unit test with jest and react testing library
+- E2E tests with cypress
+- Lighthouse score tests
+- Type checking, Linting and formatting configuration
+- Pre-commit hooks
 - Conventional commits
+- Absolute imports using @ prefix
+- Bundler analyzer
 - Github CI/CD pipeline
 
 ## Table of Contents

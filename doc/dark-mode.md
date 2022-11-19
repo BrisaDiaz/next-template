@@ -25,29 +25,33 @@ export default MyApp
    
 A SwitchMode component is provided within the project, you can make it available in every page by importing it inside a new layout and then wrapping the _app component with it.  
    
-```ts
+```tsx
 /// from ./components/templates/Layout.tsx
+
+import { ReactNode } from 'react'
 import ModeSwitch from '@components/atoms/ModeSwitch/Themed'
-import {ReactNode} from 'react'
-export default function Layout(children:ReactNode){
+
+export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>
-    <ModeSwitch>
-     {children}
+      <ModeSwitch />
+      {children}
     </>
   )
 }
 ```
 ```ts
 /// from ./pages/_app.tsx
+
+import type { AppProps } from 'next/app'
 import Layout from '@components/templates/Layout'
 import ThemeProvider from '@common/providers/ThemeProvider'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider>
-    <Layout>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
       </Layout>
     </ThemeProvider>
   )
@@ -56,31 +60,37 @@ function MyApp({ Component, pageProps }: AppProps) {
 export default MyApp
 ```
 ## Custom theme switch component  example
-```ts
+  
+```tsx
 
 import { useTheme } from '@common/providers/ThemeProvider'
 
-export default function darkModeSwitch(){
-    const { toggleMode, mode } = useTheme()
-  const toSwitchMode= mode==="light" ?"dark mode":"light mode"
-  return (<button onClick={()=>toggleMode() }>{`click to toggle ${toSwitchMode}`}</button>)
+export default function DarkModeSwitch() {
+  const { toggleMode, mode } = useTheme()
+  const toSwitchMode = mode === 'light' ? 'dark mode' : 'light mode'
+
+  return (
+    <button
+      onClick={() => toggleMode()}
+    >{`click to toggle ${toSwitchMode}`}</button>
+  )
 }
 ```
 
 ## How to use theme context inside a custom component
-
-```ts
+   
+```tsx
 // example extract from ./components/atoms/Themed.tsx
 
 import { forwardRef, Ref } from 'react'
 import { useTheme } from '@common/providers/ThemeProvider'
 import Button, { ButtonProps } from '.'
+
 function ThemedButton(props: ButtonProps, ref?: Ref<HTMLButtonElement>) {
   const { mode } = useTheme()
 
   return <Button themeMode={mode} {...props} ref={ref} />
 }
 export default forwardRef(ThemedButton)
-
 
 ```

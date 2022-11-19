@@ -15,35 +15,40 @@ This binding returns several methods that allows you to adapt layouts and compon
      
 ### Custom breakpoints as argument
    
-   ```ts
-
-import useBreakpoints,{BreakpointsSchema} from '@hooks/useBreakpoints'
+   ```tsx
+import useBreakpoints, { BreakpointsSchema } from '@hooks/useBreakpoints'
 // or import { useBreakpoints } from '@hooks'
 
-export default function Component(){
+export default function Component() {
   /// the values are used as px
-  const customBreakpoints:BreakpointsSchema = {
-    xs:0,
-   sm: 411 ,
-   md: 768 ,
-   lg: 1366 ,
-   xl: 1536 ,
-   '2xl': 1920 ,
-}
-const breakpoints = useBreakpoints(customBreakpoints)
-    return (
-      <div>
+  const customBreakpoints: BreakpointsSchema = {
+    xs: 0,
+    sm: 411,
+    md: 768,
+    lg: 1366,
+    xl: 1536,
+    '2xl': 1920
+  }
+  const breakpoints = useBreakpoints(customBreakpoints)
 
-      </div>
-    )
+  return (
+    <div>
+      <p>Is small size screen: {breakpoints.only('sm')}</p>
+      <p>Is medium size screen: {breakpoints.only('sm')}</p>
+      <p>Is large size screen: {breakpoints.only('lg')}</p>
+      <p>Is extra large size screen: {breakpoints.only('xl')}</p>
+      <p>Is extra extra large size screen: {breakpoints.only('2xl')}</p>
+    </div>
+  )
 }
+
 ```  
   
 ### Methods
 
 `breakpoints.up(key)` 
        
-  *Arguments*
+  *Argument*
   >  A breakpoint key (xs, sm, etc.) or a screen width number in px.
       
    *Return* 
@@ -51,7 +56,7 @@ const breakpoints = useBreakpoints(customBreakpoints)
    
 `breakpoints.down(key)`   
   
-*Arguments*
+*Argument*
   >  A breakpoint key (xs, sm, etc.) or a screen width number in px.
       
 *Return* 
@@ -59,7 +64,7 @@ const breakpoints = useBreakpoints(customBreakpoints)
 
 `breakpoints.only(key)`   
    
-*Arguments*
+*Argument*
   >  A breakpoint key (xs, sm, etc.).
       
 *Return*  
@@ -68,7 +73,7 @@ const breakpoints = useBreakpoints(customBreakpoints)
 
 `breakpoints.equal(key)`   
        
-*Arguments*  
+*Argument*  
   >  A breakpoint key (xs, sm, etc.) or a screen width number in px.
       
 *Return* 
@@ -76,7 +81,7 @@ const breakpoints = useBreakpoints(customBreakpoints)
 
 `breakpoints.unequal(key)`   
        
-*Arguments*  
+*Argument*  
   >  A breakpoint key (xs, sm, etc.) or a screen width number in px.
       
 *Return* 
@@ -85,7 +90,7 @@ const breakpoints = useBreakpoints(customBreakpoints)
 
 `breakpoints.not(key)`  
    
-*Arguments*
+*Argument*
   >  A breakpoint key (xs, sm, etc.).
       
 *Return* 
@@ -93,7 +98,7 @@ const breakpoints = useBreakpoints(customBreakpoints)
 
 `breakpoints.between(start, end)`
        
-*Arguments*  
+*Argument*  
   >  A breakpoint key (xs, sm, etc.) or a screen width number in px.
 
 *Return* 
@@ -101,25 +106,24 @@ const breakpoints = useBreakpoints(customBreakpoints)
    
 ### Usage example
    
-```js
+```tsx
 import useBreakpoints from '@hooks/useBreakpoints'
 // or import { useBreakpoints } from '@hooks'
 
-
 import Button from '@components/atoms/Button'
 
-export default function Page(){
-    const breakpoints = useBreakpoints()
-    return (
-      <div>
-   <Button
-          size={breakpoints.up('md') ? 'md' : 'sm'}
-          colorSchema={breakpoints.between('sm',950) ? 'blue' : 'red'}
-        >
-           Click me
-        </Button>
-      </div>
-    )
+export default function Page() {
+  const breakpoints = useBreakpoints()
+  return (
+    <div>
+      <Button
+        size={breakpoints.up('md') ? 'md' : 'sm'}
+        colorSchema={breakpoints.between('sm', 950) ? 'blue' : 'red'}
+      >
+        Click me
+      </Button>
+    </div>
+  )
 }
 ```
  
@@ -129,25 +133,22 @@ This hook helps you to dynamically recover the width and the height of an HTML e
     
 ### Usage Example
 
-```js
+```tsx
 
 import useElementSize from '@hooks/useElementSize'
 // or import { useElementSize } from '@hooks'
 import Button from '@components/atoms/Button'
 
-export default function Page(){
+export default function Page() {
   const [buttonRef, { width, height }] = useElementSize<HTMLButtonElement>()
-  console.log({ width, height })
-    return (
-      <div>
 
-      <Button
-          ref={buttonRef}
-        >
-           Click me
-        </Button>
-      </div>
-    )
+  return (
+    <div>
+      <Button ref={buttonRef}>Click me</Button>
+      <p>Button height {height}</p>
+      <p>Button width {width}</p>
+    </div>
+  )
 }
 
 ```
