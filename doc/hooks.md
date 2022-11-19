@@ -48,7 +48,7 @@ export default function Component() {
 
 `breakpoints.up(key)` 
        
-  *Arguments*
+  *Argument*
   >  A breakpoint key (xs, sm, etc.) or a screen width number in px.
       
    *Return* 
@@ -56,7 +56,7 @@ export default function Component() {
    
 `breakpoints.down(key)`   
   
-*Arguments*
+*Argument*
   >  A breakpoint key (xs, sm, etc.) or a screen width number in px.
       
 *Return* 
@@ -64,7 +64,7 @@ export default function Component() {
 
 `breakpoints.only(key)`   
    
-*Arguments*
+*Argument*
   >  A breakpoint key (xs, sm, etc.).
       
 *Return*  
@@ -73,7 +73,7 @@ export default function Component() {
 
 `breakpoints.equal(key)`   
        
-*Arguments*  
+*Argument*  
   >  A breakpoint key (xs, sm, etc.) or a screen width number in px.
       
 *Return* 
@@ -81,7 +81,7 @@ export default function Component() {
 
 `breakpoints.unequal(key)`   
        
-*Arguments*  
+*Argument*  
   >  A breakpoint key (xs, sm, etc.) or a screen width number in px.
       
 *Return* 
@@ -90,7 +90,7 @@ export default function Component() {
 
 `breakpoints.not(key)`  
    
-*Arguments*
+*Argument*
   >  A breakpoint key (xs, sm, etc.).
       
 *Return* 
@@ -98,7 +98,7 @@ export default function Component() {
 
 `breakpoints.between(start, end)`
        
-*Arguments*  
+*Argument*  
   >  A breakpoint key (xs, sm, etc.) or a screen width number in px.
 
 *Return* 
