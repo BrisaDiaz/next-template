@@ -8,10 +8,16 @@ This is an next started project that contains the following features:
 - Components documentation width storybook
 - Basic ui related hooks
 - Configurable SEO features as: sitemap, meta data on headers and manifest.json
-- Google analytics  configuration
+- Google analytics configuration
 - Global Style guidelines
-- Unit test, cypress, lighthouse and linting configuration
+- Unit test with jest and react testing library
+- E2E tests with cypress
+- lighthouse score 
+- Type checking, Linting and formatting configuration
+- Pre-commit hooks
 - Conventional commits
+- Absolute imports using @ prefix
+- Bundle analyzer 
 - Github CI/CD pipeline
 
 ## Table of Contents
