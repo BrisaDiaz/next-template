@@ -20,7 +20,11 @@ export const meta = {
   description:
     'Next.js frontend template with: eslint - prettier - styleslint - husky - conventional commits - jest - react testing library - cypress - storybook - githube actions configuration',
   subject: 'frontend template made with next.js',
-  ogImage: `${siteOrigin}/images/ico/og.png`,
+  ogImage: {
+    url: `${siteOrigin}/images/ico/og.png`,
+    width: '730',
+    height: '487'
+  },
   siteName: siteName,
   twitterSite: '',
   author: '',

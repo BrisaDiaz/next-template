@@ -164,7 +164,7 @@ export type Variant = typeof variantSchema[number]
 
 export type ExtraProps = {
   variant?: Variant
-  size: Size
+  size?: Size
   colorSchema?: BtnColorSchema
   isIconButton?: boolean
   startIcon?: ReactNode

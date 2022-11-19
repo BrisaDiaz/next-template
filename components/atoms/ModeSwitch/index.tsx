@@ -1,32 +1,31 @@
-import { forwardRef, Ref } from 'react'
 import { Moon, Sun } from '../SVG'
 import Button, { ButtonProps, BtnColorSchema } from '../Button'
-import { useTheme } from '@common/providers/ThemeProvider'
+import { forwardRef, Ref } from 'react'
 const sizeSchema: { [key: string]: string } = {
   xs: '0.75rem',
   sm: '1rem',
   md: '1.25rem',
   lg: '1.5rem'
 }
+export type ModeSwitchProps = ButtonProps & {
+  darkColorSchema?: BtnColorSchema
+  lightColorSchema?: BtnColorSchema
+}
 function ModeSwitch(
   {
     size = 'md',
-    darkModeColor,
-    lightModeColor,
+    darkColorSchema,
+    lightColorSchema,
+    themeMode = 'light',
     ...props
-  }: ButtonProps & {
-    darkModeColor?: BtnColorSchema
-    lightModeColor?: BtnColorSchema
-  },
+  }: ModeSwitchProps,
   ref?: Ref<HTMLButtonElement>
 ) {
-  const { toggleMode, mode } = useTheme()
-
   const color =
-    darkModeColor && mode === 'dark'
-      ? darkModeColor
-      : lightModeColor && mode === 'light'
-      ? lightModeColor
+    darkColorSchema && themeMode === 'dark'
+      ? darkColorSchema
+      : lightColorSchema && themeMode === 'light'
+      ? lightColorSchema
       : undefined
 
   return (
@@ -35,13 +34,12 @@ function ModeSwitch(
       {...props}
       colorSchema={color}
       size={size}
-      aria-label={`switch to ${mode === 'light' ? 'dark' : 'light'} mode`}
-      onClick={() => toggleMode()}
+      aria-label={`switch to ${themeMode === 'light' ? 'dark' : 'light'} mode`}
       isIconButton={true}
-      themeMode={mode}
+      themeMode={themeMode}
       ref={ref}
     >
-      {mode === 'dark' ? (
+      {themeMode === 'dark' ? (
         <Sun size={sizeSchema[size]} />
       ) : (
         <Moon size={sizeSchema[size]} />

@@ -1,5 +1,5 @@
 import { createStyle } from './createStyles'
-import { breakpoints } from './schemas'
+import { breakpoints } from './themeSchemas'
 const className = 'jadlkadgj'
 test('should generate correct styles when pass a single object', () => {
   const styles = createStyle(
