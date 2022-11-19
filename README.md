@@ -47,7 +47,7 @@ This is an next started project that contains the following features:
 │   ├── workflows                        #github workflows folder  
 ├── husky                         #husky hooks folder  
 ├── cypress                        #cypress config and tests folder  
-│   ├── e2e/integration                        #e2e or integration tests folder  
+│   ├── e2e                        #e2e tests folder  
 ├── storybook                        #storybook config folder  
 ├── lib  
 │   ├── constants.ts                        #customizable project config constants
