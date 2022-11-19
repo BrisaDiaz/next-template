@@ -2,9 +2,9 @@
    
 ## Global css variables
 
-All css variables declared inside global.css can be access from inside css modules or styles-jsx tags using the var() keyword, or throughout the theme object.
+All css variables declared inside global.css can be access from inside css modules or styles-jsx tags using the var() keyword, or through the theme object.
 
-```ts
+```tsx 
 import { theme } from '@common/utils'
 // or import { theme } from '@common/utils/themeSchemas'
 import Text from '@components/atoms/Text'
@@ -141,7 +141,7 @@ function Card(props: CardProps, ref?: LegacyRef<HTMLDivElement>) {
 export default forwardRef(Card)
 ```
   
-Now i whe pass or styles throughout the cs prop.
+And now we can pass styles through the cs prop.
 
 ```ts
 import { theme } from '@common/utils'
