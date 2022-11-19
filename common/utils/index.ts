@@ -1,3 +1,3 @@
 export * from './htmlTag'
-export * from './schemas'
+export * from './themeSchemas'
 export * from './createStyles'
