@@ -54,7 +54,11 @@ The hook  an object or an array of objects with the following props:
    
 >`selector`: A string similar to css selectors (required).   
 >`css`: An object containing the css properties (in camelCased) and values. In addition it accepts the following custom properties names:  
-
+<style>
+    table {
+        width: 100%;
+    }
+</style>
 | Prop      | CSS Property	 |
 | ---------------------- | ---------------------- |
 | w               | width       |
