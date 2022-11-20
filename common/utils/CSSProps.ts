@@ -80,8 +80,10 @@ export type CSSProps = {
   backgroundPositionY?: CSSPropertyValue<CSS.Property.BackgroundPositionY>
   backgroundRepeat?: CSSPropertyValue<CSS.Property.BackgroundRepeat>
   backgroundSize?: CSSPropertyValue<CSS.Property.BackgroundSize>
+  background?: CSSPropertyValue<CSS.Property.Background>
   blockOverflow?: CSSPropertyValue<CSS.Property.BlockOverflow>
   blockSize?: CSSPropertyValue<CSS.Property.BlockSize>
+  border?: CSSPropertyValue<CSS.Property.Border>
   borderBlockColor?: CSSPropertyValue<CSS.Property.BorderBlockColor>
   borderBlockEndColor?: CSSPropertyValue<CSS.Property.BorderBlockEndColor>
   borderBlockEndStyle?: CSSPropertyValue<CSS.Property.BorderBlockEndStyle>
@@ -227,6 +229,7 @@ export type CSSProps = {
   listStyleImage?: CSSPropertyValue<CSS.Property.ListStyleImage>
   listStylePosition?: CSSPropertyValue<CSS.Property.ListStylePosition>
   listStyleType?: CSSPropertyValue<CSS.Property.ListStyleType>
+  margin?: CSSPropertyValue<CSS.Property.Margin>
   marginBlock?: CSSPropertyValue<CSS.Property.MarginBlock>
   marginBlockEnd?: CSSPropertyValue<CSS.Property.MarginBlockEnd>
   marginBlockStart?: CSSPropertyValue<CSS.Property.MarginBlockStart>
@@ -294,6 +297,7 @@ export type CSSProps = {
   overscrollBehaviorInline?: CSSPropertyValue<CSS.Property.OverscrollBehaviorInline>
   overscrollBehaviorX?: CSSPropertyValue<CSS.Property.OverscrollBehaviorX>
   overscrollBehaviorY?: CSSPropertyValue<CSS.Property.OverscrollBehaviorY>
+  padding?: CSSPropertyValue<CSS.Property.Padding>
   paddingBlock?: CSSPropertyValue<CSS.Property.PaddingBlock>
   paddingBlockEnd?: CSSPropertyValue<CSS.Property.PaddingBlockEnd>
   paddingBlockStart?: CSSPropertyValue<CSS.Property.PaddingBlockStart>
