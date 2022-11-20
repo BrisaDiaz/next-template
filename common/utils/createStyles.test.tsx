@@ -5,8 +5,7 @@ test('should generate correct styles when pass a single object', () => {
   const styles = createStyle(
     {
       selector: '.title',
-      css: { fontSize: '2rem' },
-      breakpoint: 'md'
+      css: { fontSize: { md: '2rem' } }
     },
     className
   ).styles
@@ -42,8 +41,7 @@ test('should generate correct styles when pass an array of objects', () => {
       },
       {
         selector: '.btn',
-        css: { fontSize: '1.5rem' },
-        breakpoint: 'md'
+        css: { fontSize: { xs: '1rem', md: '1.5rem' } }
       }
     ],
     className
@@ -59,8 +57,7 @@ test('should generate correct styles when pass a custom breakpoint', () => {
   const styles = createStyle(
     {
       selector: '.title',
-      css: { fontSize: '1.25rem' },
-      breakpoint: 500
+      css: { fontSize: { 500: '1.25rem' } }
     },
     className
   ).styles
