@@ -48,13 +48,14 @@ export default function Page(){
    
 This hooks allows you to inject jsx styles from the component's props without causing classNames conflicts, in a similar way to the component's style prop but width support to pseudo-classes, pseudo-elements, combinator, breakpoints and custom css props names.
 
-*Arguments*   
+*Argument*   
    
 The hook  an object or an array of objects with the following props:
    
 >`selector`: A string similar to css selectors (required).   
->`css`: An object containing the css properties (in camelCased) and values. In addition it accepts the following custom properties names:   
-    
+>`css`: An object of css property names (in camelCased) and plain values / objects of  breakpoints `( "xs" | "sm" | "md" |"lg" | "xl" | "2xl" | number)` and it's respective value (required).
+   
+The css prop in addition accepts the following custom property names:     
    
 | Prop      | CSS Property	 |
 | ---------------------- | ---------------------- |
@@ -86,7 +87,16 @@ The hook  an object or an array of objects with the following props:
 | borderX               | 'border-left + border-right       |
 | borderY               | border-top + border-bottom       |
    
->`breakpoint`: A breakpoint key ( "xs" | "sm" | "md" |"lg" | "xl" | "2xl").
+*Argument example*   
+```tsx
+const argument = {
+selector:".container",
+css:{
+ color:"red"
+  p:{xs:"1rem",sm:"2rem", 1000:"3rem"}
+}
+}
+```
 
 *Return*   
    
@@ -171,9 +181,8 @@ export default function Page() {
            {
             selector: '.card',
             css: {
-              p: theme.space['4']
-            },
-            breakpoint:"sm"
+              p: {sm: theme.space['4']}
+            }
           }
           
           ]}
