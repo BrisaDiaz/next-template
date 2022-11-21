@@ -28,6 +28,13 @@ export default {
         type: 'radio'
       }
     },
+    underline: {
+      defaultValue: 'hover',
+      options: ['always', 'hover', 'none'],
+      control: {
+        type: 'select'
+      }
+    },
     color: {
       defaultValue: 'gray',
       options: Object.keys(colorSchema),
