@@ -37,6 +37,13 @@ function Link(props: LinkProps, ref: Ref<HTMLAnchorElement>) {
               }
             },
             {
+              selector: '.text:focus-visible',
+              css: {
+                outlineOffset: 'var(--ring-offset-width)',
+                outline: '3px solid var(--ring-color)'
+              }
+            },
+            {
               selector: '.text svg',
               css: {
                 ml: '0.2rem'
