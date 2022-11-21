@@ -8,6 +8,8 @@ import ModeSwitch from '@components/atoms/ModeSwitch/Themed'
 import { useBreakpoints } from '@hooks'
 import Box from '@components/atoms/Box'
 import { theme } from '@common/utils'
+import Link from '@components/atoms/Link/Themed'
+
 const Home: NextPage = () => {
   const breakpoint = useBreakpoints()
   const [readMore, setReadMore] = useState(false)
@@ -24,9 +26,12 @@ const Home: NextPage = () => {
         cs={{
           selector: '.box',
           css: {
-            p: theme.space['4'],
+            px: theme.space['4'],
+            pt: theme.space['2'],
             pb: theme.space['8'],
-            minH: theme.size['screen-h']
+            minH: theme.size['screen-h'],
+            maxW: theme.size['container-lg'],
+            mx: 'auto'
           }
         }}
       >
@@ -34,7 +39,13 @@ const Home: NextPage = () => {
           lightColorSchema="blue"
           darkColorSchema="orange"
           variant="ghost"
-          size={breakpoint.up('xl') ? 'lg' : breakpoint.up('sm') ? 'md' : 'sm'}
+          cs={{
+            selector: '.btn',
+            css: {
+              alignSelf: 'flex-end'
+            }
+          }}
+          size={breakpoint.up('sm') ? 'md' : 'sm'}
           data-testid="theme switch"
         />
         <Text
@@ -155,7 +166,14 @@ const Home: NextPage = () => {
           pulvinar lorem leo sit amet libero. Vivamus eleifend, elit sit amet
           dapibus molestie, ipsum turpis euismod justo, eget interdum dolor
           dolor sit amet nulla. Aliquam consectetur risus at augue lacinia
-          suscipit. Vestibulum id fermentum sapien.
+          suscipit. Vestibulum id fermentum sapien{' '}
+          <Link
+            color="teal"
+            href="https://github.com/BrisaDiaz/next-template"
+            isExternal={true}
+          >
+            Check the documentation
+          </Link>
         </Text>
         <Button
           size={breakpoint.up('md') ? 'md' : 'sm'}
