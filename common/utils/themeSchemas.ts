@@ -397,6 +397,18 @@ export const colorSchema = {
     main: 'var(--colors-inherit)',
     light: 'var(--colors-inherit)'
   },
+  currentColor: {
+    main: 'var(--colors-currentColor)',
+    light: 'var(--colors-currentColor)'
+  },
+  whiteAlpha: {
+    main: 'var(--colors-blackAlpha-900)',
+    light: 'var(--colors-whiteAlpha-900)'
+  },
+  blackAlpha: {
+    main: 'var(--colors-blackAlpha-900)',
+    light: 'var(--colors-whiteAlpha-900)'
+  },
   gray: {
     main: 'var(--colors-gray-600)',
     light: 'var(--colors-gray-200)'
@@ -432,6 +444,34 @@ export const colorSchema = {
   pink: {
     main: 'var(--colors-pink-600)',
     light: 'var(--colors-pink-300)'
+  },
+  cyan: {
+    main: 'var(--colors-cyan-800)',
+    light: 'var(--colors-cyan-300)'
+  },
+  telegram: {
+    main: 'var(--colors-telegram-600)',
+    light: 'var(--colors-cyan-400)'
+  },
+  twitter: {
+    main: 'var(--colors-twitter-800)',
+    light: 'var(--colors-twitter-400)'
+  },
+  whatsapp: {
+    main: 'var(--colors-whatsapp-700)',
+    light: 'var(--colors-whatsapp-400)'
+  },
+  messenger: {
+    main: 'var(--colors-messenger-600)',
+    light: 'var(--colors-messenger-300)'
+  },
+  facebook: {
+    main: 'var(--colors-facebook-500)',
+    light: 'var(--colors-facebook-300)'
+  },
+  linkedin: {
+    main: 'var(--colors-linkedin-700)',
+    light: 'var(--colors-linkedin-400)'
   }
 }
 export const lineHeightSchema = {
