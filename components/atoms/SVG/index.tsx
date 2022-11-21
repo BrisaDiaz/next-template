@@ -1,3 +1,5 @@
 export { default as Moon } from './Moon'
 export { default as Sun } from './Sun'
 export { default as ExternalLinkAlt } from './ExternalLinkAlt'
+export { default as Ellipsis } from './Ellipsis'
+export { default as EllipsisVertical } from './EllipsisVertical'
