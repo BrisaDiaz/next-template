@@ -5,6 +5,7 @@ import { ExternalLinkAlt } from '../SVG'
 
 export interface ExtraProps {
   isExternal?: boolean
+  underline?: 'always' | 'hover' | 'none'
 }
 export type LinkProps = TextProps &
   ExtraProps &
@@ -13,7 +14,13 @@ export type LinkProps = TextProps &
   CommonProps
 
 function Link(props: LinkProps, ref: Ref<HTMLAnchorElement>) {
-  const { children, isExternal = false, cs, ...other } = props
+  const {
+    children,
+    isExternal = false,
+    cs,
+    underline = 'hover',
+    ...other
+  } = props
   const linkAttributes = isExternal
     ? {
         target: '_blank',
@@ -30,10 +37,17 @@ function Link(props: LinkProps, ref: Ref<HTMLAnchorElement>) {
         cs={combineCustomStyles(
           [
             {
+              selector: '.text',
+              css: {
+                textDecorationLine:
+                  underline === 'always' ? 'underline' : 'none',
+                textUnderlineOffset: '2px'
+              }
+            },
+            {
               selector: '.text:hover',
               css: {
-                textDecorationLine: 'underline',
-                textUnderlineOffset: '2px'
+                textDecorationLine: underline !== 'none' ? 'underline' : 'none'
               }
             },
             {
