@@ -38,7 +38,6 @@ const stylePropMap = {
   borderY: ['border-top', 'border-bottom']
 }
 type CustomPropName = keyof CustomCSSProps
-
 export interface CustomStyle {
   selector: string
   css: CSSProperties
@@ -188,11 +187,49 @@ export function useCustomStyles(cs?: CustomStyles) {
     return { className: '', styles: '' }
   }
 
-  const extraStyles = createStyle(cs, rootClass)
+  const customStyles = createStyle(cs, rootClass)
 
-  return extraStyles
+  return customStyles
 }
 export type ExtraStyles = {
   className: string
   styles: string
+}
+
+export function combineCustomStyles(
+  customStyles: CustomStyle | CustomStyle[],
+  customStyles2: CustomStyle | CustomStyle[] | undefined
+): CustomStyles {
+  if (!customStyles2) return customStyles
+
+  if (Array.isArray(customStyles2) && Array.isArray(customStyles)) {
+    return groupSelectorProps([...customStyles, ...customStyles2])
+  }
+  if (Array.isArray(customStyles2)) {
+    return groupSelectorProps([customStyles, ...customStyles2] as CustomStyle[])
+  }
+
+  return groupSelectorProps([customStyles, customStyles2] as CustomStyle[])
+}
+function groupSelectorProps(stylesArr: CustomStyle[]) {
+  const selectorMap: { [key: string]: CSSProperties } = {}
+
+  stylesArr.forEach((styleObj) => {
+    const selector = styleObj.selector
+
+    if (selector in selectorMap) {
+      selectorMap[selector] = Object.assign(selectorMap[selector], styleObj.css)
+    } else {
+      selectorMap[selector] = styleObj.css
+    }
+  })
+  const resolveStyle: CustomStyle[] = []
+  for (const selector in selectorMap) {
+    resolveStyle.push({
+      selector: selector,
+      css: selectorMap[selector]
+    })
+  }
+
+  return resolveStyle
 }

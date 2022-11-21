@@ -44,16 +44,12 @@ export default function Page(){
 }
 ```
 
-## `useCustomStyles`
-   
-This hooks allows you to inject jsx styles from the component's props without causing classNames conflicts, in a similar way to the component's style prop but width support to pseudo-classes, pseudo-elements, combinator, breakpoints and custom css props names.
+## `CustomStyles`
 
-*Argument*   
-   
-The hook  an object or an array of objects with the following props:
+It's an object or an array of objects with the following props:
    
 >`selector`: A string similar to css selectors (required).   
->`css`: An object of css property names (in camelCased) and plain values / objects of  breakpoints `( "xs" | "sm" | "md" |"lg" | "xl" | "2xl" | number)` and it's respective value (required).
+>`css`: An object of css property names (in camelCased) and plain values / objects of  breakpoints `( "xs" | "sm" | "md" |"lg" | "xl" | "2xl" | number)` and it's respective value (required).  
    
 The css prop in addition accepts the following custom property names:     
    
@@ -87,17 +83,40 @@ The css prop in addition accepts the following custom property names:
 | borderX               | 'border-left + border-right       |
 | borderY               | border-top + border-bottom       |
    
-*Argument example*   
+
+*Examples*   
 ```tsx
-const argument = {
+const customStyles = {
 selector:".container",
 css:{
  color:"red"
   p:{xs:"1rem",sm:"2rem", 1000:"3rem"}
 }
 }
+const customStylesArray =[
+  {
+selector:".btn",
+css:{
+ color:"white"
+background:"blue"
+}
+},
+{
+selector:".btn:hover",
+css:{
+background:"green"
+}
+}
+]
 ```
+## `useCustomStyles(customStyles)`
+   
+This hooks allows you to inject jsx styles from the component's props without causing classNames conflicts, in a similar way to the component's style prop but width support to pseudo-classes, pseudo-elements, combinator, breakpoints and custom css props names.
 
+*Argument*   
+
+> `customStyles`: [CustomStyles](#customstyles) 
+   
 *Return*   
    
 The hook returns an object with the following props:
@@ -154,7 +173,7 @@ export default forwardRef(Card)
   
 And now we can pass styles through the cs prop.
 
-```ts
+```tsx
 import { theme } from '@common/utils'
 // or import { theme } from '@common/utils/themeSchemas'
 import Text from '@components/atoms/Text'
@@ -214,5 +233,78 @@ export default function Page() {
     </>
   )
 }
+
+```
+## `combineCustomStyles(styles1,styles2)`
+
+This function allows you to resolve custom styles drilling. It is useful when you want to extend the functionality of a component and you need to add or override styles.   
+  
+*Argument* 
+> `styles1`: [CustomStyles](#customstyles)  
+> `styles2`: [CustomStyles](#customstyles) or undefined  
+   
+  
+*return* 
+> `combinedStyles`: [CustomStyles](#customstyles)
+```tsx
+//// example from ./components/atoms/Link
+
+import { forwardRef, Ref, AnchorHTMLAttributes } from 'react'
+import { CommonProps, combineCustomStyles } from '@common/utils'
+import Text, { TextProps, ExtraProps as TextExtraProps } from '../Text'
+import { ExternalLinkAlt } from '../SVG'
+
+export interface ExtraProps {
+  isExternal?: boolean
+}
+export type LinkProps = TextProps &
+  ExtraProps &
+  AnchorHTMLAttributes<HTMLAnchorElement> &
+  Omit<TextExtraProps, 'as'> &
+  CommonProps
+
+function Link(props: LinkProps, ref: Ref<HTMLAnchorElement>) {
+  const { children, isExternal = false, cs, ...other } = props
+  const linkAttributes = isExternal
+    ? {
+        target: '_blank',
+        rel: 'noopener'
+      }
+    : ''
+  return (
+    <>
+      <Text
+        {...linkAttributes}
+        {...other}
+        ref={ref}
+        as="a"
+        cs={combineCustomStyles(
+          [
+            {
+              selector: '.text:hover',
+              css: {
+                textDecorationLine: 'underline',
+                textUnderlineOffset: '2px'
+              }
+            },
+            {
+              selector: '.text svg',
+              css: {
+                ml: '0.2rem'
+              }
+            }
+          ],
+          cs /// custom styles that will be pass as prop to the Link component
+        )}
+      >
+        <>
+          {children}
+          {isExternal && <ExternalLinkAlt data-testid="external-link-icon" />}
+        </>
+      </Text>
+    </>
+  )
+}
+export default forwardRef(Link)
 
 ```
