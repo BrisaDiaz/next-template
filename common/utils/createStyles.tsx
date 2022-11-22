@@ -208,7 +208,9 @@ export function combineCustomStyles(
   if (Array.isArray(customStyles2)) {
     return groupSelectorProps([customStyles, ...customStyles2] as CustomStyle[])
   }
-
+  if (Array.isArray(customStyles)) {
+    return groupSelectorProps([...customStyles, customStyles2] as CustomStyle[])
+  }
   return groupSelectorProps([customStyles, customStyles2] as CustomStyle[])
 }
 function groupSelectorProps(stylesArr: CustomStyle[]) {
