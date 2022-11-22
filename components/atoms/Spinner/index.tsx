@@ -67,6 +67,7 @@ export default function Spinner({
         role="status"
         className={clsx(
           extraStyles.className,
+          'root',
           'spinner',
           `spinner--${variant}`,
           {

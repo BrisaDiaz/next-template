@@ -200,6 +200,7 @@ function Button(props: ButtonProps, ref?: LegacyRef<HTMLButtonElement>) {
 
   const buttonClassName = clsx(
     extraStyles.className,
+    'root',
     'btn',
     `btn-${size}`,
     { 'icon-btn': isIconButton },
