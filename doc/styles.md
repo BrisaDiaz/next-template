@@ -15,7 +15,6 @@ export default function Page(){
    <div className="container">
      <Text
           cs={{
-            selector: '.text',
             css: {
               maxW: theme.size['container-lg'],
               my: theme.space['8']
@@ -48,7 +47,7 @@ export default function Page(){
 
 It's an object or an array of objects with the following props:
    
->`selector`: A string similar to css selectors (required).   
+>`selector`: A string similar to css selectors, if not provided `.root` is used as default.   
 >`css`: An object of css property names (in camelCased) and plain values / objects of  breakpoints `( "xs" | "sm" | "md" |"lg" | "xl" | "2xl" | number)` and it's respective value (required).  
    
 The css prop in addition accepts the following custom property names:     
@@ -87,7 +86,6 @@ The css prop in addition accepts the following custom property names:
 *Examples*   
 ```tsx
 const customStyles = {
-selector:".container",
 css:{
  color:"red"
   p:{xs:"1rem",sm:"2rem", 1000:"3rem"}
@@ -95,14 +93,13 @@ css:{
 }
 const customStylesArray =[
   {
-selector:".btn",
 css:{
  color:"white"
 background:"blue"
 }
 },
 {
-selector:".btn:hover",
+selector:".root:hover",
 css:{
 background:"green"
 }
@@ -185,7 +182,6 @@ export default function Page() {
         <Card
           cs={[
             {
-            selector: '.card',
             css: {
               maxW: theme.size['container-lg'],
               my: theme.space['4'],
@@ -198,7 +194,6 @@ export default function Page() {
             }
           },
            {
-            selector: '.card',
             css: {
               p: {sm: theme.space['4']}
             }
@@ -281,14 +276,14 @@ function Link(props: LinkProps, ref: Ref<HTMLAnchorElement>) {
         cs={combineCustomStyles(
           [
             {
-              selector: '.text:hover',
+              selector: '.root:hover',
               css: {
                 textDecorationLine: 'underline',
                 textUnderlineOffset: '2px'
               }
             },
             {
-              selector: '.text svg',
+              selector: '.root svg',
               css: {
                 ml: '0.2rem'
               }

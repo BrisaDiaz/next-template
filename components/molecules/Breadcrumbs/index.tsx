@@ -52,6 +52,7 @@ function Breadcrumbs(props: BreadcrumbsProps, ref?: LegacyRef<HTMLElement>) {
         ref={ref}
         className={clsx(
           extraStyles.className,
+          'root',
           'breadcrumbs',
           `breadcrumbs-${color}`,
           {

@@ -73,6 +73,7 @@ function Text(
   const props = {
     className: clsx(
       extraStyles.className,
+      'root',
       'text',
       `text-color-${color}`,
       `text-weight-${fontWeight}`,
@@ -122,6 +123,7 @@ function Text(
           font-weight: ${theme.fontWeight[fontWeight]};
         }
         .text {
+          margin: 0;
           transition-property: -webkit-line-clamp, overflow, display,
             text-overflow;
           transition-timing-function: var(--transition-easing-ease-in-out);

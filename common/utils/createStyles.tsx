@@ -8,6 +8,8 @@ import {
 } from '@common/utils'
 import { Breakpoint } from '@hooks/useBreakpoints'
 
+const ROOT_SELECTOR = '.root'
+
 const stylePropMap = {
   p: ['padding'],
   pt: ['padding-top'],
@@ -38,10 +40,12 @@ const stylePropMap = {
   borderY: ['border-top', 'border-bottom']
 }
 type CustomPropName = keyof CustomCSSProps
+
 export interface CustomStyle {
-  selector: string
+  selector?: string
   css: CSSProperties
 }
+
 export type CustomStyles = CustomStyle | CustomStyle[]
 
 const toKebabCase = (string: any) => {
@@ -162,14 +166,21 @@ function createStyleString(selector: string, css: CSSProperties) {
 
 export function createStyle(styles: CustomStyles, rootClass: string) {
   let jsx = ''
+
   if (Array.isArray(styles)) {
     jsx = styles
       .map((style: CustomStyle) =>
-        createStyleString(`.${rootClass}${style.selector}`, style.css)
+        createStyleString(
+          `.${rootClass}${style?.selector || ROOT_SELECTOR}`,
+          style.css
+        )
       )
       .join(' ')
   } else {
-    jsx = createStyleString(`.${rootClass}${styles.selector}`, styles.css)
+    jsx = createStyleString(
+      `.${rootClass}${styles?.selector || ROOT_SELECTOR}`,
+      styles.css
+    )
   }
   return { className: rootClass, styles: jsx }
 }
@@ -217,7 +228,7 @@ function groupSelectorProps(stylesArr: CustomStyle[]) {
   const selectorMap: { [key: string]: CSSProperties } = {}
 
   stylesArr.forEach((styleObj) => {
-    const selector = styleObj.selector
+    const selector = styleObj.selector || ROOT_SELECTOR
 
     if (selector in selectorMap) {
       selectorMap[selector] = Object.assign(selectorMap[selector], styleObj.css)

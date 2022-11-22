@@ -11,17 +11,14 @@ import {
 
 type Display = 'grid' | 'flex' | 'grid-item' | 'block'
 
-export type ExtraProps = {
-  as?: HTMLTag
-  display?: Display
+export interface FlexBoxProps {
   gap?: Space
   flexDirection?: CSS.Property.FlexDirection
-  alignItems?: CSS.Property.AlignItems
-  alignSelf?: CSS.Property.AlignSelf
-  alignContent?: CSS.Property.AlignContent
-  justifyItems?: CSS.Property.JustifyItems
-  justifyContent?: CSS.Property.JustifyContent
-  justifySelf?: CSS.Property.JustifySelf
+  basis?: CSS.Property.FlexBasis
+  shrink?: CSS.Property.FlexShrink
+  grow?: CSS.Property.FlexGrow
+}
+export interface GridProps {
   rowGap?: Space
   gridGap?: Space
   columnGap?: Space
@@ -30,12 +27,11 @@ export type ExtraProps = {
   templateColumns?: CSS.Property.GridTemplateColumns
   templateRows?: CSS.Property.GridTemplateRows
   templateAreas?: CSS.Property.GridTemplateAreas
-  basis?: CSS.Property.FlexBasis
-  shrink?: CSS.Property.FlexShrink
-  grow?: CSS.Property.FlexGrow
   autoColumns?: CSS.Property.GridAutoColumns
   autoRows?: CSS.Property.GridAutoRows
   column?: CSS.Property.GridColumn
+}
+export interface GridItemProps {
   row?: CSS.Property.GridRow
   area?: CSS.Property.GridArea
   columnStart?: CSS.Property.GridColumnStart
@@ -43,6 +39,21 @@ export type ExtraProps = {
   rowStart?: CSS.Property.GridColumnStart
   rowEnd?: CSS.Property.GridColumnEnd
 }
+export interface GenericBoxProps {
+  as?: HTMLTag
+  display?: Display
+  children?: React.ReactNode
+  alignItems?: CSS.Property.AlignItems
+  alignSelf?: CSS.Property.AlignSelf
+  alignContent?: CSS.Property.AlignContent
+  justifyItems?: CSS.Property.JustifyItems
+  justifyContent?: CSS.Property.JustifyContent
+  justifySelf?: CSS.Property.JustifySelf
+}
+export type ExtraProps = FlexBoxProps &
+  GridProps &
+  GridItemProps &
+  GenericBoxProps
 
 export type BoxProps = CommonProps & ExtraProps & any
 
@@ -87,6 +98,7 @@ function Box({
   const props = {
     className: clsx(
       extraStyles.className,
+      'root',
       'box',
       display,
       'box-align',
