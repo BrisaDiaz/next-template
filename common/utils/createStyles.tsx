@@ -48,7 +48,7 @@ export interface CustomStyle {
 
 export type CustomStyles = CustomStyle | CustomStyle[]
 
-const toKebabCase = (string: any) => {
+export const toKebabCase = (string: any) => {
   return string
     .replace(/([a-z])([A-Z])/g, '$1-$2')
     .replace(/[\s_]+/g, '-')
