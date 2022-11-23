@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef, Ref } from 'react'
 import CSS from 'csstype'
 import clsx from 'clsx'
 import {
@@ -57,43 +57,46 @@ export type ExtraProps = FlexBoxProps &
 
 export type BoxProps = CommonProps & ExtraProps & any
 
-function Box({
-  as = 'div',
-  display = 'block',
-  flexDirection,
-  alignItems,
-  alignSelf,
-  alignContent,
-  justifyItems,
-  justifyContent,
-  justifySelf,
-  basis,
-  shrink,
-  grow,
-  children,
-  autoColumns,
-  autoRows,
-  templateColumns,
-  templateAreas,
-  columnStart,
-  columnEnd,
-  rowStart,
-  rowEnd,
-  gap,
-  rowGap,
-  gridGap,
-  columnGap,
-  gridColumnGap,
-  gridRowGap,
-  templateRows,
-  column,
-  row,
-  area,
-  cs,
-  className,
+function Box(
+  {
+    as = 'div',
+    display = 'block',
+    flexDirection,
+    alignItems,
+    alignSelf,
+    alignContent,
+    justifyItems,
+    justifyContent,
+    justifySelf,
+    basis,
+    shrink,
+    grow,
+    children,
+    autoColumns,
+    autoRows,
+    templateColumns,
+    templateAreas,
+    columnStart,
+    columnEnd,
+    rowStart,
+    rowEnd,
+    gap,
+    rowGap,
+    gridGap,
+    columnGap,
+    gridColumnGap,
+    gridRowGap,
+    templateRows,
+    column,
+    row,
+    area,
+    cs,
+    className,
 
-  ...other
-}: BoxProps) {
+    ...other
+  }: BoxProps,
+  ref?: Ref<any>
+) {
   const extraStyles = useCustomStyles(cs)
   const props = {
     className: clsx(
@@ -107,6 +110,7 @@ function Box({
         [`${className}`]: className
       }
     ),
+    ref,
     ...other
   }
 
@@ -276,4 +280,4 @@ function Box({
     </>
   )
 }
-export default Box
+export default forwardRef(Box)
