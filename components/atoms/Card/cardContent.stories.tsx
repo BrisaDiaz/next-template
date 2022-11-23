@@ -44,7 +44,7 @@ export default {
         type: 'select'
       }
     },
-    flexDirection: { defaultValue: undefined, control: { type: 'text' } },
+    flexDirection: { defaultValue: 'column', control: { type: 'text' } },
     alignItems: { defaultValue: undefined, control: { type: 'text' } },
     alignSelf: { defaultValue: undefined, control: { type: 'text' } },
     alignContent: { defaultValue: undefined, control: { type: 'text' } },

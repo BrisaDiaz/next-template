@@ -18,7 +18,8 @@ export interface FlexBoxProps {
   shrink?: CSS.Property.FlexShrink
   grow?: CSS.Property.FlexGrow
 }
-export interface GridProps {
+export interface GridBoxProps {
+  gap?: Space
   rowGap?: Space
   gridGap?: Space
   columnGap?: Space
@@ -31,7 +32,7 @@ export interface GridProps {
   autoRows?: CSS.Property.GridAutoRows
   column?: CSS.Property.GridColumn
 }
-export interface GridItemProps {
+export interface GridItemBoxProps {
   row?: CSS.Property.GridRow
   area?: CSS.Property.GridArea
   columnStart?: CSS.Property.GridColumnStart
@@ -41,7 +42,6 @@ export interface GridItemProps {
 }
 export interface GenericBoxProps {
   as?: HTMLTag
-  display?: Display
   children?: React.ReactNode
   alignItems?: CSS.Property.AlignItems
   alignSelf?: CSS.Property.AlignSelf
@@ -50,14 +50,19 @@ export interface GenericBoxProps {
   justifyContent?: CSS.Property.JustifyContent
   justifySelf?: CSS.Property.JustifySelf
 }
-export type ExtraProps = FlexBoxProps &
+export type ExtraProps = FlexProps &
   GridProps &
-  GridItemProps &
+  GridItemBoxProps & {
+    display?: Display
+  }
+
+export type BaseProps = CommonProps &
+  React.HTMLAttributes<any> &
   GenericBoxProps
 
-export type BoxProps = CommonProps & ExtraProps & any
+export type BoxProps = BaseProps & ExtraProps
 
-function Box(
+function BoxComponent(
   {
     as = 'div',
     display = 'block',
@@ -210,19 +215,19 @@ function Box(
       {as === 'noscript' && <noscript {...props}>{children}</noscript>}
       {as === 'object' && <object {...props}>{children}</object>}
       {as === 'optgroup' && <optgroup {...props}>{children}</optgroup>}
-      {as === 'area' && <area {...props} />}
-      {as === 'base' && <base {...props} />}
-      {as === 'br' && <br {...props} />}
-      {as === 'col' && <col {...props} />}
-      {as === 'embed' && <embed {...props} />}
-      {as === 'hr' && <hr {...props} />}
-      {as === 'input' && <input {...props} />}
-      {as === 'link' && <link {...props} />}
-      {as === 'meta' && <meta {...props} />}
-      {as === 'param' && <param {...props} />}
-      {as === 'source' && <source {...props} />}
-      {as === 'track' && <track {...props} />}
-      {as === 'wbr' && <wbr {...props} />}
+      {as === ('area' as HTMLTag) && <area {...props} />}
+      {as === ('base' as HTMLTag) && <base {...props} />}
+      {as === ('br' as HTMLTag) && <br {...props} />}
+      {as === ('col' as HTMLTag) && <col {...props} />}
+      {as === ('embed' as HTMLTag) && <embed {...props} />}
+      {as === ('hr' as HTMLTag) && <hr {...props} />}
+      {as === ('input' as HTMLTag) && <input {...props} />}
+      {as === ('link' as HTMLTag) && <link {...props} />}
+      {as === ('meta' as HTMLTag) && <meta {...props} />}
+      {as === ('param' as HTMLTag) && <param {...props} />}
+      {as === ('source' as HTMLTag) && <source {...props} />}
+      {as === ('track' as HTMLTag) && <track {...props} />}
+      {as === ('wbr' as HTMLTag) && <wbr {...props} />}
       <style jsx>{`
         .box-align {
           ${alignSelf ? `align-self:${alignSelf};` : ''}
@@ -280,4 +285,33 @@ function Box(
     </>
   )
 }
-export default forwardRef(Box)
+const Box = forwardRef(BoxComponent)
+export default Box
+
+export type FlexProps = FlexBoxProps & BaseProps
+
+export function FlexBoxComponent(props: FlexProps, ref?: any) {
+  return <Box {...props} display="flex" ref={ref} />
+}
+export const Flex = forwardRef(FlexBoxComponent)
+
+export type GridProps = GridBoxProps & BaseProps
+
+export function GridComponent(props: FlexBoxProps, ref?: any) {
+  return <Box {...props} display="grid" ref={ref} />
+}
+export const Grid = forwardRef(GridComponent)
+
+export type GridItemProps = GridItemBoxProps & BaseProps
+
+export function GridItemComponent(props: GridItemProps, ref?: any) {
+  return <Box {...props} display="grid-item" ref={ref} />
+}
+export const GridItem = forwardRef(GridItemComponent)
+
+export type BlockProps = BaseProps
+
+export function BlockComponent(props: BlockProps, ref?: any) {
+  return <Box {...props} display="block" ref={ref} />
+}
+export const Block = forwardRef(BlockComponent)

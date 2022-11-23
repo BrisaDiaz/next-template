@@ -1,6 +1,6 @@
-import Box, { GenericBoxProps, FlexBoxProps } from '../Box'
+import { FlexProps, Flex, Block, BlockProps } from '../Box'
 import { forwardRef, Ref } from 'react'
-import { CommonProps, combineCustomStyles, theme } from '@common/utils'
+import { combineCustomStyles, theme } from '@common/utils'
 import Image, { ImageProps } from 'next/image'
 import clsx from 'clsx'
 
@@ -47,15 +47,12 @@ interface ExtraProps {
   size?: Size
   rounded?: boolean
 }
-export type CardProps = ExtraProps &
-  Omit<GenericBoxProps, 'display'> &
-  FlexBoxProps &
-  CommonProps
+export type CardProps = ExtraProps & FlexProps
 
 export const cardDefaultValues = {
   variant: 'outline' as Variant,
   size: 'md' as Size,
-  flexDirection: 'column',
+  flexDirection: 'column' as FlexProps['flexDirection'],
   rounded: true
 }
 export function CardComponent(props: CardProps, ref?: Ref<any>) {
@@ -70,13 +67,12 @@ export function CardComponent(props: CardProps, ref?: Ref<any>) {
   } = props
 
   return (
-    <Box
+    <Flex
       {...other}
       ref={ref}
       className={clsx('card', {
         [`${className}`]: className
       })}
-      display="flex"
       flexDirection={flexDirection}
       cs={combineCustomStyles(
         [
@@ -130,19 +126,24 @@ export const borderSchema = {
   }
 }
 export type Bordered = keyof typeof borderSchema
-export type CardContentProps = Omit<GenericBoxProps, 'display'> &
-  FlexBoxProps &
-  CommonProps & {
-    bordered?: Bordered
-    rounded?: boolean
-  }
+export type CardContentProps = FlexProps & {
+  bordered?: Bordered
+  rounded?: boolean
+}
 export function CardContentComponent(props: CardContentProps, ref?: Ref<any>) {
-  const { className, cs, rounded = false, bordered = 'none', ...other } = props
+  const {
+    className,
+    cs,
+    rounded = false,
+    bordered = 'none',
+    flexDirection = 'column',
+    ...other
+  } = props
 
   return (
-    <Box
-      display="flex"
+    <Flex
       {...other}
+      flexDirection={flexDirection}
       ref={ref}
       className={clsx(
         'card-content',
@@ -165,7 +166,8 @@ export function CardContentComponent(props: CardContentProps, ref?: Ref<any>) {
 }
 export const CardContent = forwardRef(CardContentComponent)
 
-export type CardMediaProps = ImageProps & CommonProps & { rounded?: boolean }
+export type CardMediaProps = ImageProps & BlockProps & { rounded?: boolean }
+
 export function CardMediaComponent(props: CardMediaProps, ref?: Ref<any>) {
   const {
     className,
@@ -178,7 +180,7 @@ export function CardMediaComponent(props: CardMediaProps, ref?: Ref<any>) {
 
   return (
     <>
-      <Box
+      <Block
         ref={ref}
         className={clsx(
           'card-media',
@@ -199,7 +201,7 @@ export function CardMediaComponent(props: CardMediaProps, ref?: Ref<any>) {
         )}
       >
         <Image {...other} objectFit={objectFit} alt={alt} />
-      </Box>
+      </Block>
     </>
   )
 }
