@@ -175,6 +175,7 @@ export function CardMediaComponent(props: CardMediaProps, ref?: Ref<any>) {
     alt = 'card media',
     rounded,
     cs,
+    themeMode,
     ...other
   } = props
 
@@ -182,6 +183,7 @@ export function CardMediaComponent(props: CardMediaProps, ref?: Ref<any>) {
     <>
       <Block
         ref={ref}
+        themeMode={themeMode}
         className={clsx(
           'card-media',
           { rounded: rounded },
