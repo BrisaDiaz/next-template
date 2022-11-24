@@ -138,7 +138,15 @@ function customPropsToJsx(
   }
   return rules
 }
-
+const solveMultiClass = (rootClass: string, selector: string) => {
+  if (selector === ROOT_SELECTOR) return `.${rootClass}${selector}`
+  const classes = selector.split(',')
+  if (classes.length === 1) return `.${rootClass}${selector}`
+  const formattedSelector = classes
+    .map((className) => `.${rootClass}${className.trim()}`)
+    .join(',')
+  return formattedSelector
+}
 function createStyleString(selector: string, css: CSSProperties) {
   if (!css || !selector) return ' '
 
@@ -171,14 +179,14 @@ export function createStyle(styles: CustomStyles, rootClass: string) {
     jsx = styles
       .map((style: CustomStyle) =>
         createStyleString(
-          `.${rootClass}${style?.selector || ROOT_SELECTOR}`,
+          solveMultiClass(rootClass, style?.selector || ROOT_SELECTOR),
           style.css
         )
       )
       .join(' ')
   } else {
     jsx = createStyleString(
-      `.${rootClass}${styles?.selector || ROOT_SELECTOR}`,
+      solveMultiClass(rootClass, styles?.selector || ROOT_SELECTOR),
       styles.css
     )
   }
