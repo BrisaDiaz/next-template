@@ -97,7 +97,7 @@ function BoxComponent(
     area,
     cs,
     className,
-
+    themeMode,
     ...other
   }: BoxProps,
   ref?: Ref<any>
@@ -116,6 +116,7 @@ function BoxComponent(
       }
     ),
     ref,
+    'data-theme': themeMode,
     ...other
   }
 
