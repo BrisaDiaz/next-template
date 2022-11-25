@@ -81,6 +81,7 @@ export default {
     shrink: { defaultValue: undefined, control: { type: 'text' } },
     grow: { defaultValue: undefined, control: { type: 'text' } },
     className: { defaultValue: undefined, control: { type: 'text' } },
+    wrap: { defaultValue: undefined, control: { type: 'text' } },
     cs: {
       defaultValue: undefined,
       type: Object,

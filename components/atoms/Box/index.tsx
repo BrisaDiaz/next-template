@@ -14,6 +14,7 @@ type Display = 'grid' | 'flex' | 'grid-item' | 'block'
 export interface FlexBoxProps {
   gap?: Space
   flexDirection?: CSS.Property.FlexDirection
+  wrap?: CSS.Property.FlexWrap
   basis?: CSS.Property.FlexBasis
   shrink?: CSS.Property.FlexShrink
   grow?: CSS.Property.FlexGrow
@@ -75,6 +76,7 @@ function BoxComponent(
     justifySelf,
     basis,
     shrink,
+    wrap,
     grow,
     children,
     autoColumns,
@@ -280,6 +282,7 @@ function BoxComponent(
           ${basis ? ` flex-basis: ${basis}; ` : ' '}
           ${shrink ? ` flex-shrink: ${shrink}; ` : ' '}
           ${grow ? ` flex-grow: ${grow}; ` : ' '}
+          ${wrap ? ` flex-wrap: ${wrap}; ` : ' '}
         }
         ${extraStyles.styles}
       `}</style>

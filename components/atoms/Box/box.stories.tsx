@@ -85,6 +85,7 @@ export default {
     templateRows: { defaultValue: undefined, control: { type: 'text' } },
     templateAreas: { defaultValue: undefined, control: { type: 'text' } },
     basis: { defaultValue: undefined, control: { type: 'text' } },
+    wrap: { defaultValue: undefined, control: { type: 'text' } },
     shrink: { defaultValue: undefined, control: { type: 'text' } },
     grow: { defaultValue: undefined, control: { type: 'text' } },
     autoColumns: { defaultValue: undefined, control: { type: 'text' } },
