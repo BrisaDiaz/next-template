@@ -54,6 +54,7 @@ export default {
     basis: { defaultValue: undefined, control: { type: 'text' } },
     shrink: { defaultValue: undefined, control: { type: 'text' } },
     grow: { defaultValue: undefined, control: { type: 'text' } },
+    wrap: { defaultValue: undefined, control: { type: 'text' } },
     cs: {
       defaultValue: undefined,
       type: Object,
