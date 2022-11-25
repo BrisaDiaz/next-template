@@ -11,7 +11,8 @@ import { theme } from '@common/utils'
 import Link from '@components/atoms/Link/Themed'
 import Breadcrumbs from '@components/molecules/Breadcrumbs/Themed'
 import { Card, CardContent, CardMedia } from '@components/atoms/Card/Themed'
-
+import Stack from '@components/atoms/Stack'
+import Divider from '@components/atoms/Divider'
 const Home: NextPage = () => {
   const breakpoint = useBreakpoints()
   const [readMore, setReadMore] = useState(false)
@@ -213,6 +214,7 @@ const Home: NextPage = () => {
               >
                 Duis suscipit
               </Text>
+
               <Text
                 noOfLines={readMore ? undefined : breakpoint.up('md') ? 4 : 10}
                 fontSize={breakpoint.up('lg') ? 'md' : 'sm'}
@@ -258,6 +260,58 @@ const Home: NextPage = () => {
                 {readMore ? 'Read Less' : 'Read More'}
               </Button>
             </CardContent>
+          </CardContent>
+        </Card>
+        <Box
+          display="flex"
+          cs={{
+            css: { maxW: theme.size['container-lg'], my: theme.space['2'] }
+          }}
+          flexDirection={breakpoint.up('md') ? 'row' : 'column'}
+        >
+          <Text fontSize={breakpoint.up('lg') ? 'md' : 'sm'}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu enim
+            a eros eleifend dignissim in pretium leo. Etiam quis lorem ante.
+            Maecenas a risus laoreet, porta tortor vel, ultrices ante. Duis
+            suscipit sit amet diam eget mattis. Aenean lobortis lacinia mi,
+            sagittis pulvinar felis ornare ut. Duis tempus ex eleifend sem
+            dignissim porta.
+          </Text>
+          <Divider
+            orientation={breakpoint.up('md') ? 'vertical' : 'horizontal'}
+            spacing="6"
+          >
+            Text
+          </Divider>
+          <Text fontSize={breakpoint.up('lg') ? 'md' : 'sm'}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu enim
+            a eros eleifend dignissim in pretium leo. Etiam quis lorem ante.
+            Maecenas a risus laoreet, porta tortor vel, ultrices ante. Duis
+            suscipit sit amet diam eget mattis. Aenean lobortis lacinia mi,
+            sagittis pulvinar felis ornare ut. Duis tempus ex eleifend sem
+            dignissim porta.
+          </Text>
+        </Box>
+        <Card cs={{ css: { my: theme.space['8'] } }}>
+          <CardContent>
+            <Stack spacing="4" divider={<Divider />}>
+              <>
+                <Text fontWeight="semibold">SUMARY</Text>
+                <Text>
+                  View a summary of all your clients over the last month.
+                </Text>
+              </>
+              <>
+                <Text fontWeight="semibold">OVERVIEW</Text>
+                <Text>Check out the overview of your clients.</Text>
+              </>
+              <>
+                <Text fontWeight="semibold">ANALYSIS</Text>
+                <Text>
+                  See a detailed analysis of all your business clients.
+                </Text>
+              </>
+            </Stack>
           </CardContent>
         </Card>
       </Box>
