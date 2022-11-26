@@ -1,13 +1,20 @@
 import React from 'react'
 
-function Icon({ size = '1rem', ...other }: { size?: string } & any) {
+function Icon({
+  size = '1rem',
+  color = 'currentColor',
+  ...other
+}: {
+  size?: string | number
+  color?: string
+} & React.SVGAttributes<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width={size}
       height={size}
-      fill="currentColor"
-      stroke="currentColor"
+      fill={color}
+      stroke={color}
       strokeWidth="0"
       aria-hidden="true"
       viewBox="0 0 512 512"
