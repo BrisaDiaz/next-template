@@ -523,11 +523,30 @@ export const zIndexSchema = {
   toast: 'var(--zIndices-toast)',
   tooltip: 'var(--zIndices-tooltip)'
 }
+export const bodySchema = {
+  bgColor: 'var(--colors-body-bg)',
+  color: 'var(--colors-body-text)',
+  borderColor: 'var(--colors-border-color)',
+  placeholderColor: 'var(--colors-placeholder-color)',
+  lineHeight: 'var(--lineHeights-base)',
+  fontWeight: 'var(--fontWeights-normal)',
+  colors: {
+    accent: 'var(--colors-teal-300)',
+    accentEmphasis: 'var(--colors-teal-200)',
+    accentMuted: 'var(--colors-teal-200)',
+    accentSubtle: 'var(--colors-teal-800)',
+    fg: 'var(--colors-gray-100)',
+    fgEmphasis: 'var(--colors-gray-200)',
+    fgMuted: 'var(--colors-gray-400)',
+    fgSubtle: 'var(--colors-gray-300)',
+    fgSubtleOnAccent: 'inherit'
+  }
+}
 export const themeModes = ['light', 'dark'] as const
 
 export type ThemeMode = typeof themeModes[number]
 export type Breakpoint = keyof typeof breakpoints
-
+export type Body = keyof typeof bodySchema
 export type Space = keyof typeof spaceSchema
 export type BorderRadius = keyof typeof borderRadiusSchema
 export type BorderWidth = keyof typeof borderSchema
@@ -569,5 +588,7 @@ export const theme = {
   border: borderSchema,
   shadow: shadowSchema,
   opacity: opacitySchema,
-  size: sizeSchema
+  size: sizeSchema,
+  body: bodySchema,
+  breakpoints
 }
