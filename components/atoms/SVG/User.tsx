@@ -1,7 +1,7 @@
 import React from 'react'
 
 function Icon({
-  size = '1rem',
+  size = '1em',
   color = 'currentColor',
   ...other
 }: {
