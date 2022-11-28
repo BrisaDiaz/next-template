@@ -127,7 +127,7 @@ function Text(
         }
         .text {
           margin: 0;
-          transform: ${transform};
+          text-transform: ${transform};
           transition-property: -webkit-line-clamp, overflow, display,
             text-overflow;
           transition-timing-function: var(--transition-easing-ease-in-out);
