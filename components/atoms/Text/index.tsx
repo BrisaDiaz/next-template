@@ -1,4 +1,5 @@
 import { forwardRef } from 'react'
+import CSS from 'csstype'
 import clsx from 'clsx'
 import {
   CommonProps,
@@ -40,6 +41,7 @@ export interface ExtraProps {
   noOfLines?: number
   fontSize?: FontSize
   fontWeight?: FontWeight
+  transform?: CSS.Property.TextTransform
 }
 export type TextProps = React.HTMLAttributes<HTMLElement> &
   React.AnchorHTMLAttributes<HTMLAnchorElement> &
@@ -61,6 +63,7 @@ function Text(
     as = defaultValue.as,
     color = defaultValue.color,
     themeMode = defaultValue.themeMode,
+    transform = 'none',
     cs,
     noOfLines,
     children,
@@ -124,6 +127,7 @@ function Text(
         }
         .text {
           margin: 0;
+          transform: ${transform};
           transition-property: -webkit-line-clamp, overflow, display,
             text-overflow;
           transition-timing-function: var(--transition-easing-ease-in-out);

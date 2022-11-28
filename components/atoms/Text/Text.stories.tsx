@@ -36,6 +36,21 @@ export default {
         type: 'select'
       }
     },
+    transform: {
+      defaultValue: 'none',
+      options: [
+        'none',
+        'capitalize',
+        'full-size-kana',
+        'full-width',
+        'lowercase',
+        'uppercase',
+        'inherit'
+      ],
+      control: {
+        type: 'select'
+      }
+    },
     fontSize: {
       defaultValue: 'md',
       options: Object.keys(fontSizeSchema),
