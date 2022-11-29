@@ -1,7 +1,8 @@
-import { ReactNode, forwardRef, LegacyRef } from 'react'
+import React, { ReactNode, forwardRef, LegacyRef, Children } from 'react'
 import clsx from 'clsx'
 import { CommonProps, useCustomStyles, theme } from '@common/utils'
 import Spinner, { SpinnerProps } from '../Spinner'
+import { Flex, FlexProps } from '../Box'
 export const btnColorSchema = {
   whiteAlpha: {
     main: '--colors-whiteAlpha-600',
@@ -92,14 +93,14 @@ export const btnColorSchema = {
     dark: '--colors-twitter-600',
     darker: '--colors-twitter-700',
     light: '--colors-twitter-500',
-    contrast: 'light'
+    contrast: 'dark'
   },
   linkedin: {
     main: '--colors-linkedin-500',
     dark: '--colors-linkedin-600',
     darker: '--colors-linkedin-700',
     light: '--colors-linkedin-500',
-    contrast: 'light'
+    contrast: 'dark'
   },
   facebook: {
     main: '--colors-facebook-500',
@@ -113,21 +114,21 @@ export const btnColorSchema = {
     dark: '--colors-messenger-600',
     darker: '--colors-messenger-700',
     light: '--colors-messenger-500',
-    contrast: 'light'
+    contrast: 'dark'
   },
   telegram: {
     main: '--colors-telegram-500',
     dark: '--colors-telegram-600',
     darker: '--colors-telegram-700',
     light: '--colors-telegram-500',
-    contrast: 'light'
+    contrast: 'dark'
   },
   whatsapp: {
     main: '--colors-whatsapp-500',
     dark: '--colors-whatsapp-600',
     darker: '--colors-whatsapp-700',
     light: '--colors-whatsapp-500',
-    contrast: 'light'
+    contrast: 'dark'
   }
 }
 export const sizeSchema = {
@@ -178,7 +179,10 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   CommonProps &
   ExtraProps
 
-function Button(props: ButtonProps, ref?: LegacyRef<HTMLButtonElement>) {
+function ButtonComponent(
+  props: ButtonProps,
+  ref?: LegacyRef<HTMLButtonElement>
+) {
   const {
     children,
     colorSchema = 'gray',
@@ -324,7 +328,8 @@ function Button(props: ButtonProps, ref?: LegacyRef<HTMLButtonElement>) {
           color: var(--solid-${colorSchema}-color);
         }
 
-        .btn-${colorSchema}-solid:hover {
+        .btn-${colorSchema}-solid:hover,
+        .btn-${colorSchema}-solid:focus-visible {
           background-color: var(--solid-${colorSchema}-bg-hover);
         }
         .btn-${colorSchema}-solid:active {
@@ -344,7 +349,9 @@ function Button(props: ButtonProps, ref?: LegacyRef<HTMLButtonElement>) {
         } 
 
         .btn-${colorSchema}-ghost:hover::before,
-          .btn-${colorSchema}-outline:hover::before {
+          .btn-${colorSchema}-outline:hover::before,    
+          .btn-${colorSchema}-ghost:focus-visible::before,
+          .btn-${colorSchema}-outline:focus-visible::before {
           content: ' ';
           position: absolute;
           border-radius: inherit;
@@ -389,4 +396,110 @@ function Button(props: ButtonProps, ref?: LegacyRef<HTMLButtonElement>) {
     </>
   )
 }
-export default forwardRef(Button)
+const Button = forwardRef(ButtonComponent)
+export default Button
+export const buttonGroupDefaultValues = {
+  orientation: 'horizontal',
+  variant: 'solid' as Variant,
+  rounded: false,
+  size: 'md' as Size
+}
+export type ButtonGroupProps = {
+  orientation?: 'vertical' | 'horizontal'
+  children?: ReactNode
+  variant?: Variant
+  rounded?: boolean
+  size?: Size
+  colorSchema?: BtnColorSchema
+} & FlexProps
+function ButtonGroupComponent(props: ButtonGroupProps, ref?: any) {
+  const {
+    orientation = buttonGroupDefaultValues.orientation,
+    variant = buttonGroupDefaultValues.variant,
+    size = buttonGroupDefaultValues.size,
+    themeMode,
+    colorSchema,
+    children,
+    rounded,
+    ...other
+  } = props
+  const isFirstChild = (index: number) => 0 === index
+  const isLastChild = (index: number) => arrayChildren.length - 1 === index
+
+  const isHTZL = orientation === 'horizontal'
+
+  const arrayChildren = Children.toArray(children)
+  const borderRadius = rounded ? 'var(--radii-full)' : 'var(--radii-md)'
+  const borderStyles = (index: number, variant: Variant) => {
+    if (variant === 'solid') {
+      return isHTZL
+        ? {
+            borderRight: !isLastChild(index)
+              ? '1px solid var(--colors-blackAlpha-300)'
+              : '1px solid transparent'
+          }
+        : {
+            borderBottom: !isLastChild(index)
+              ? '1px solid var(--colors-blackAlpha-300)'
+              : '1px solid transparent'
+          }
+    }
+
+    return isHTZL
+      ? {
+          borderRight: !isLastChild(index)
+            ? `1px solid currentColor`
+            : '1px solid transparent'
+        }
+      : {
+          borderBottom: !isLastChild(index)
+            ? `1px solid  currentColor`
+            : '1px solid transparent'
+        }
+  }
+
+  const borderRadiusStyles = (index: number) =>
+    isHTZL
+      ? {
+          borderTopLeftRadius: isFirstChild(index) ? borderRadius : 0,
+          borderBottomLeftRadius: isFirstChild(index) ? borderRadius : 0,
+          borderTopRightRadius: isLastChild(index) ? borderRadius : 0,
+          borderBottomRightRadius: isLastChild(index) ? borderRadius : 0
+        }
+      : {
+          borderTopLeftRadius: isFirstChild(index) ? borderRadius : 0,
+          borderTopRightRadius: isFirstChild(index) ? borderRadius : 0,
+          borderBottomLeftRadius: isLastChild(index) ? borderRadius : 0,
+          borderBottomRightRadius: isLastChild(index) ? borderRadius : 0
+        }
+
+  return (
+    <Flex
+      {...other}
+      themeMode={themeMode}
+      ref={ref}
+      className="button-group"
+      flexDirection={isHTZL ? 'row' : 'column'}
+    >
+      {Children.map(arrayChildren, (child, index) => (
+        <>
+          {React.cloneElement(child as React.ReactElement, {
+            themeMode,
+            variant,
+            size,
+            rounded,
+            cs: {
+              css: {
+                ...borderRadiusStyles(index),
+                ...borderStyles(index, variant)
+              }
+            },
+            ...(colorSchema ? { colorSchema: colorSchema } : {})
+          })}
+        </>
+      ))}
+    </Flex>
+  )
+}
+
+export const ButtonGroup = forwardRef(ButtonGroupComponent)
