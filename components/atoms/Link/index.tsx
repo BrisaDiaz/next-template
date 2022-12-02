@@ -41,22 +41,17 @@ function Link(props: LinkProps, ref: Ref<HTMLAnchorElement>) {
               css: {
                 textDecorationLine:
                   underline === 'always' ? 'underline' : 'none',
-                textUnderlineOffset: '2px'
+                textUnderlineOffset: '2px',
+                outline: 'none'
               }
             },
             {
-              selector: '.text:hover',
+              selector: '.text:hover,.text:focus-visible',
               css: {
                 textDecorationLine: underline !== 'none' ? 'underline' : 'none'
               }
             },
-            {
-              selector: '.text:focus-visible',
-              css: {
-                outlineOffset: 'var(--ring-offset-width)',
-                outline: '3px solid var(--ring-color)'
-              }
-            },
+
             {
               selector: '.text svg',
               css: {
