@@ -31,13 +31,22 @@ function Stack(props: StackProps, ref?: any) {
       {...other}
       ref={ref}
       cs={combineCustomStyles(
-        {
-          selector: ' .spacing',
-          css: {
-            py: isVERT ? theme.space[spacing] : 0,
-            px: isHTZL ? theme.space[spacing] : 0
+        [
+          {
+            css: {
+              w: 'inherit',
+              h: 'inherit'
+            }
+          },
+          {
+            selector: ' .spacing',
+            css: {
+              py: isVERT ? theme.space[spacing] : 0,
+              px: isHTZL ? theme.space[spacing] : 0,
+              w: '100%'
+            }
           }
-        },
+        ],
         cs
       )}
       flexDirection={isHTZL ? 'row' : 'column'}
