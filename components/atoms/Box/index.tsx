@@ -61,7 +61,7 @@ export type BaseProps = CommonProps &
   React.HTMLAttributes<any> &
   GenericBoxProps
 
-export type BoxProps = BaseProps & ExtraProps
+export type BoxProps = BaseProps & ExtraProps & any
 
 function BoxComponent(
   {
