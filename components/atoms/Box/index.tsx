@@ -218,19 +218,19 @@ function BoxComponent(
       {as === 'noscript' && <noscript {...props}>{children}</noscript>}
       {as === 'object' && <object {...props}>{children}</object>}
       {as === 'optgroup' && <optgroup {...props}>{children}</optgroup>}
-      {as === ('area' as HTMLTag) && <area {...props} />}
-      {as === ('base' as HTMLTag) && <base {...props} />}
-      {as === ('br' as HTMLTag) && <br {...props} />}
-      {as === ('col' as HTMLTag) && <col {...props} />}
-      {as === ('embed' as HTMLTag) && <embed {...props} />}
-      {as === ('hr' as HTMLTag) && <hr {...props} />}
-      {as === ('input' as HTMLTag) && <input {...props} />}
-      {as === ('link' as HTMLTag) && <link {...props} />}
-      {as === ('meta' as HTMLTag) && <meta {...props} />}
-      {as === ('param' as HTMLTag) && <param {...props} />}
-      {as === ('source' as HTMLTag) && <source {...props} />}
-      {as === ('track' as HTMLTag) && <track {...props} />}
-      {as === ('wbr' as HTMLTag) && <wbr {...props} />}
+      {as === 'area' && <area {...props} />}
+      {as === 'base' && <base {...props} />}
+      {as === 'br' && <br {...props} />}
+      {as === 'col' && <col {...props} />}
+      {as === 'embed' && <embed {...props} />}
+      {as === 'hr' && <hr {...props} />}
+      {as === 'input' && <input {...props} />}
+      {as === 'link' && <link {...props} />}
+      {as === 'meta' && <meta {...props} />}
+      {as === 'param' && <param {...props} />}
+      {as === 'source' && <source {...props} />}
+      {as === 'track' && <track {...props} />}
+      {as === 'wbr' && <wbr {...props} />}
       <style jsx>{`
         .box-align {
           ${alignSelf ? `align-self:${alignSelf};` : ''}
