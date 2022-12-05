@@ -1,11 +1,10 @@
 import '@testing-library/jest-dom'
 
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, act, waitFor } from '@testing-library/react'
 import { defaultValues } from '.'
 import * as popoverStories from './popover.stories'
 import { composeStories } from '@storybook/testing-react'
 const { Complete } = composeStories(popoverStories)
-jest.useFakeTimers()
 
 test('render with default props', async () => {
   const onClose = jest.fn()
@@ -15,6 +14,7 @@ test('render with default props', async () => {
     onOpen,
     closeDelay: undefined
   }
+
   render(
     <>
       <p>outer element</p>
@@ -32,27 +32,65 @@ test('render with default props', async () => {
     'data-placement',
     defaultValues.placement
   )
-  fireEvent.click(triggerElement)
+  act(() => {
+    fireEvent.click(triggerElement)
+  })
 
-  expect(popoverContent).toHaveStyle('visibility:visible')
-  expect(triggerElement).toHaveAttribute('aria-expanded', 'true')
+  await waitFor(() => {
+    expect(popoverContent).toHaveStyle('visibility:visible')
+    expect(triggerElement).toHaveAttribute('aria-expanded', 'true')
+  })
+
   const popoverCloseButton = screen.getByTestId('popover-close-btn')
 
-  await fireEvent.click(popoverCloseButton)
+  act(() => {
+    fireEvent.click(popoverCloseButton)
+  })
 
-  await fireEvent.click(triggerElement)
+  await waitFor(() => {
+    expect(popoverContent).toHaveStyle('visibility:hidden')
+    expect(triggerElement).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  act(() => {
+    fireEvent.click(triggerElement)
+  })
+
+  await waitFor(() => {
+    expect(popoverContent).toHaveStyle('visibility:visible')
+    expect(triggerElement).toHaveAttribute('aria-expanded', 'true')
+  })
 
   const outerElement = screen.getByText('outer element')
 
-  await fireEvent.click(outerElement)
+  act(() => {
+    fireEvent.click(outerElement)
+  })
 
-  await fireEvent.click(triggerElement)
+  await waitFor(() => {
+    expect(popoverContent).toHaveStyle('visibility:hidden')
+    expect(triggerElement).toHaveAttribute('aria-expanded', 'false')
+  })
 
-  await fireEvent.keyDown(popoverContent, { code: 'Esc' })
+  act(() => {
+    fireEvent.click(triggerElement)
+  })
 
-  jest.runAllTimers()
+  await waitFor(() => {
+    expect(popoverContent).toHaveStyle('visibility:visible')
+    expect(triggerElement).toHaveAttribute('aria-expanded', 'true')
+  })
+
+  act(() => {
+    fireEvent.keyDown(popoverContent, { code: 'Esc' })
+  })
+  await waitFor(() => {
+    expect(popoverContent).toHaveStyle('visibility:hidden')
+    expect(triggerElement).toHaveAttribute('aria-expanded', 'false')
+  })
+
   expect(onOpen).toHaveBeenCalled()
-  expect(onClose).toHaveBeenCalledTimes(4)
+  expect(onClose).toHaveBeenCalled()
 })
 
 test('render with custom props', async () => {
@@ -82,18 +120,28 @@ test('render with custom props', async () => {
   expect(triggerElement).toHaveAttribute('aria-expanded', 'false')
   expect(popoverContent).toHaveAttribute('role', props.role)
   expect(popoverContent).toHaveAttribute('data-placement', props.placement)
-  fireEvent.click(triggerElement)
 
-  expect(popoverContent).toHaveStyle('visibility:visible')
-  expect(triggerElement).toHaveAttribute('aria-expanded', 'true')
+  act(() => {
+    fireEvent.click(triggerElement)
+  })
+  await waitFor(() => {
+    expect(popoverContent).toHaveStyle('visibility:visible')
+    expect(triggerElement).toHaveAttribute('aria-expanded', 'true')
+  })
 
   const outerElement = screen.getByText('outer element')
 
-  await fireEvent.click(outerElement)
-
-  await fireEvent.keyDown(popoverContent, { code: 'Esc' })
-
-  jest.runAllTimers()
+  act(() => {
+    fireEvent.click(outerElement)
+  })
+  act(() => {
+    fireEvent.keyDown(popoverContent, { code: 'Esc' })
+  })
+  await waitFor(() => {
+    expect(popoverContent).toHaveStyle('visibility:visible')
+    expect(triggerElement).toHaveAttribute('aria-expanded', 'true')
+  })
+  expect(onOpen).toHaveBeenCalled()
   expect(onClose).not.toHaveBeenCalled()
 })
 test('opens on hover', async () => {
@@ -116,14 +164,22 @@ test('opens on hover', async () => {
   const triggerElement = screen.getByTestId('popover-trigger')
   expect(popoverContent).toHaveStyle('visibility:hidden')
 
-  await fireEvent.mouseOver(triggerElement)
+  act(() => {
+    fireEvent.mouseOver(triggerElement)
+  })
+  await waitFor(() => {
+    expect(popoverContent).toHaveStyle('visibility:visible')
+    expect(triggerElement).toHaveAttribute('aria-expanded', 'true')
+  })
 
-  expect(popoverContent).toHaveStyle('visibility:visible')
-  expect(triggerElement).toHaveAttribute('aria-expanded', 'true')
+  act(() => {
+    fireEvent.mouseLeave(triggerElement)
+  })
+  await waitFor(() => {
+    expect(popoverContent).toHaveStyle('visibility:hidden')
+    expect(triggerElement).toHaveAttribute('aria-expanded', 'false')
+  })
 
-  await fireEvent.mouseOut(triggerElement)
-
-  jest.runAllTimers()
   expect(onOpen).toHaveBeenCalled()
   expect(onClose).toHaveBeenCalled()
 })
