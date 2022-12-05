@@ -11,7 +11,7 @@ export default function useClickAway<
 
       const target = e?.target as HTMLElement
 
-      setIsClickingAway(ref !== target || !ref.contains(target))
+      setIsClickingAway(ref !== target && !ref.contains(target))
     }
     document.addEventListener('click', clickAndTouchCallback)
     document.addEventListener('touchstart', clickAndTouchCallback)
