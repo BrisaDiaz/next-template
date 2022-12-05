@@ -20,26 +20,6 @@ export default function useModalFocus({
 }) {
   const [fallbackElement, setFallbackElement] =
     React.useState<HTMLElement | null>(null)
-
-  React.useEffect(() => {
-    if (!isOpen) {
-      fallbackElement && returnFocusOnClose ? fallbackElement?.focus() : false
-      return
-    }
-    setFallbackElement((document?.activeElement as HTMLElement) || null)
-
-    const firstToFocus = initialFocusRef?.current as HTMLElement
-    autoFocus && firstToFocus?.focus()
-    document.addEventListener('keydown', keydownCallback)
-    document.addEventListener('click', clickAndTouchCallback)
-    document.addEventListener('touchstart', clickAndTouchCallback)
-    return () => {
-      window.removeEventListener('keydown', keydownCallback)
-      window.removeEventListener('click', clickAndTouchCallback)
-      window.removeEventListener('touchstart', clickAndTouchCallback)
-    }
-  }, [isOpen])
-
   const keydownCallback = (e: KeyboardEvent) => {
     const focusableElements =
       'a,button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -97,4 +77,29 @@ export default function useModalFocus({
 
     onBlur && onBlur()
   }
+  React.useEffect(() => {
+    if (!isOpen) {
+      fallbackElement && returnFocusOnClose ? fallbackElement?.focus() : false
+      return
+    }
+    setFallbackElement((document?.activeElement as HTMLElement) || null)
+    const modal = ref.current as HTMLElement
+    const firstToFocus = (initialFocusRef?.current as HTMLElement) || modal
+    autoFocus && firstToFocus?.focus()
+    document.addEventListener('keydown', keydownCallback)
+    document.addEventListener('click', clickAndTouchCallback)
+    document.addEventListener('touchstart', clickAndTouchCallback)
+    return () => {
+      window.removeEventListener('keydown', keydownCallback)
+      window.removeEventListener('click', clickAndTouchCallback)
+      window.removeEventListener('touchstart', clickAndTouchCallback)
+    }
+  }, [
+    isOpen,
+    autoFocus,
+    fallbackElement,
+    initialFocusRef,
+    returnFocusOnClose,
+    ref?.current
+  ])
 }

@@ -545,34 +545,44 @@ function PopoverContentComponent(
 }
 export type PopoverTriggerProps = {
   children?: React.ReactElement<any, string | React.JSXElementConstructor<any>>
+  keydownListener?: boolean
 }
 export function PopoverTrigger(props: PopoverTriggerProps) {
-  const { children } = props
-  const { popoverId, isOpen, openPopover, closePopover, trigger, triggerRef } =
-    usePopoverContext()
+  const { children, keydownListener = false } = props
+  const {
+    popoverId,
+    isOpen,
+    openPopover,
+    closePopover,
+    trigger,
+    triggerRef,
+    closeOnBlur
+  } = usePopoverContext()
   const handleTrigger = () => {
     isOpen ? closePopover() : openPopover()
   }
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>) => {
-    if (e.code === 'Enter') {
+    if (e.code === 'Enter' || e.code === 'Space') {
       handleTrigger()
     }
   }
-
   const dynamicProps =
     trigger === 'click'
       ? {
           onClick: () => handleTrigger(),
-          onKeyDown: (e: React.KeyboardEvent<HTMLSpanElement>) =>
-            handleKeyDown(e)
+          ...(keydownListener
+            ? {
+                onKeyDown: (e: React.KeyboardEvent<HTMLSpanElement>) =>
+                  handleKeyDown(e)
+              }
+            : {})
         }
       : {
           onMouseEnter: () => handleTrigger(),
-          onMouseLeave: () => handleTrigger(),
+          onMouseLeave: () => closeOnBlur && handleTrigger(),
           onTouchStart: () => handleTrigger(),
-          onTouchEnd: () => handleTrigger(),
-          onFocus: () => handleTrigger(),
-          onBlur: () => handleTrigger()
+          onTouchEnd: () => closeOnBlur && handleTrigger()
         }
 
   return children ? (
