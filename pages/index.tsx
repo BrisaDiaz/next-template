@@ -1,22 +1,27 @@
 import type { NextPage } from 'next'
-
 import React, { useState } from 'react'
 import Button from '@components/atoms/Button/Themed'
 import Text from '@components/atoms/Text/Themed'
 import Head from '@common/providers/Head'
 import ModeSwitch from '@components/atoms/ModeSwitch/Themed'
 import { useBreakpoints } from '@hooks'
-import Box from '@components/atoms/Box/Themed'
+import Box, { Flex } from '@components/atoms/Box/Themed'
 import { theme } from '@common/utils'
 import Link from '@components/atoms/Link/Themed'
 import Breadcrumbs from '@components/molecules/Breadcrumbs/Themed'
 import { Card, CardContent, CardMedia } from '@components/atoms/Card/Themed'
 import Stack from '@components/atoms/Stack'
 import Divider from '@components/atoms/Divider'
+import Skeleton from '@components/atoms/Skeleton'
+import Tag from '@components/atoms/Tag/Themed'
+import Input, { InputGroup } from '@components/atoms/Input/Themed'
+import { Search } from '@components/atoms/SVG'
 const Home: NextPage = () => {
   const breakpoint = useBreakpoints()
   const [readMore, setReadMore] = useState(false)
   const toggleReadMore = () => setReadMore(!readMore)
+  const [isLoading, setIsLoading] = useState(true)
+  const toggleLoading = () => setIsLoading(!isLoading)
   const breadcrumbsLinks = [
     { label: 'Home', href: '/' },
     { label: 'Components', href: '#components' },
@@ -24,6 +29,11 @@ const Home: NextPage = () => {
     { label: 'Box', href: '#box' },
     { label: ' Layouts with Box' }
   ]
+  const isMd = breakpoint.up('md')
+  const isLg = breakpoint.up('lg')
+  const isSm = breakpoint.up('sm')
+  const isXl = breakpoint.up('xl')
+
   return (
     <>
       <Head />
@@ -43,18 +53,33 @@ const Home: NextPage = () => {
           }
         }}
       >
-        <ModeSwitch
-          lightColorSchema="blue"
-          darkColorSchema="orange"
-          variant="ghost"
-          cs={{
-            css: {
-              alignSelf: 'flex-end'
-            }
-          }}
-          size={breakpoint.up('sm') ? 'md' : 'sm'}
-          data-testid="theme switch"
-        />
+        <Flex
+          gap="2"
+          alignSelf="flex-end"
+          cs={{ css: { mb: theme.space['4'] } }}
+        >
+          <InputGroup
+            orientation="horizontal"
+            colorSchema="teal"
+            alignSelf="flex-start"
+          >
+            <Input placeholder="Search..." name="search" />
+            <Button isIconButton={true}>
+              <Search />
+            </Button>
+          </InputGroup>
+          <ModeSwitch
+            lightColorSchema="blue"
+            darkColorSchema="orange"
+            cs={{
+              css: {
+                alignSelf: 'flex-end'
+              }
+            }}
+            size={isSm ? 'md' : 'sm'}
+            data-testid="theme switch"
+          />
+        </Flex>
 
         <Breadcrumbs
           maxItems={2}
@@ -79,9 +104,7 @@ const Home: NextPage = () => {
           )}
         </Breadcrumbs>
         <Text
-          fontSize={
-            breakpoint.up('xl') ? '3xl' : breakpoint.up('sm') ? 'xl' : 'lg'
-          }
+          fontSize={isXl ? '3xl' : isSm ? 'xl' : 'lg'}
           as="h1"
           fontWeight="semibold"
           cs={{
@@ -169,21 +192,19 @@ const Home: NextPage = () => {
               }
             }
           }}
-          size={breakpoint.up('lg') ? 'md' : 'sm'}
+          size={isLg ? 'md' : 'sm'}
         >
           <CardContent
             alignItems="flex-start"
             gap="4"
-            flexDirection={breakpoint.up('md') ? 'row' : 'column'}
+            flexDirection={isMd ? 'row' : 'column'}
             rounded={true}
           >
             <CardMedia
               height={512}
               width={512}
               rounded={true}
-              src="/images/ico/maskable_icon_x512.png"
-              unoptimized
-              loader={({ src }) => src}
+              src="/testing/maskable_icon_x512.png"
               alt="og image"
               layout="responsive"
               cs={{
@@ -196,28 +217,28 @@ const Home: NextPage = () => {
             />
             <CardContent
               flexDirection="column"
-              alignItems={breakpoint.up('md') ? 'flex-start' : 'center'}
+              alignItems={isMd ? 'flex-start' : 'center'}
               cs={{ css: { w: { xs: '100%', md: '70%' } } }}
               gap="4"
-              bordered={breakpoint.up('md') ? 'left' : 'none'}
+              bordered={isMd ? 'left' : 'none'}
             >
               <Text
                 fontWeight="semibold"
                 as="h2"
-                fontSize={
-                  breakpoint.up('lg')
-                    ? '2xl'
-                    : breakpoint.up('sm')
-                    ? 'xl'
-                    : 'lg'
-                }
+                fontSize={isLg ? '2xl' : isSm ? 'xl' : 'lg'}
               >
-                Duis suscipit
+                Card
+                <Tag
+                  label="new"
+                  colorSchema="green"
+                  transform="uppercase"
+                  cs={{ css: { ml: '0.5em' } }}
+                />
               </Text>
 
               <Text
-                noOfLines={readMore ? undefined : breakpoint.up('md') ? 4 : 10}
-                fontSize={breakpoint.up('lg') ? 'md' : 'sm'}
+                noOfLines={readMore ? undefined : isMd ? 4 : 10}
+                fontSize={isLg ? 'md' : 'sm'}
                 cs={{
                   css: {
                     h: 'auto'
@@ -244,7 +265,7 @@ const Home: NextPage = () => {
                 sed eu elit. Vivamus varius tempor dignissim.
                 <Link
                   color="teal"
-                  fontSize={breakpoint.up('lg') ? 'md' : 'sm'}
+                  fontSize={isLg ? 'md' : 'sm'}
                   href="https://github.com/BrisaDiaz/next-template"
                   isExternal={true}
                 >
@@ -253,7 +274,7 @@ const Home: NextPage = () => {
               </Text>
               <Button
                 variant="outline"
-                size={breakpoint.up('md') ? 'md' : 'sm'}
+                size={isMd ? 'md' : 'sm'}
                 onClick={() => toggleReadMore()}
                 colorSchema="teal"
               >
@@ -262,28 +283,41 @@ const Home: NextPage = () => {
             </CardContent>
           </CardContent>
         </Card>
+        <Text
+          fontWeight="semibold"
+          as="h2"
+          fontSize={isLg ? '2xl' : isSm ? 'xl' : 'lg'}
+        >
+          Divider
+        </Text>
         <Box
           display="flex"
           cs={{
-            css: { maxW: theme.size['container-lg'], my: theme.space['2'] }
+            css: {
+              maxW: theme.size['container-lg'],
+
+              my: theme.space['8']
+            }
           }}
-          flexDirection={breakpoint.up('md') ? 'row' : 'column'}
+          flexDirection={isMd ? 'row' : 'column'}
         >
-          <Text fontSize={breakpoint.up('lg') ? 'md' : 'sm'}>
+          <Text fontSize={isLg ? 'md' : 'sm'}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu enim
             a eros eleifend dignissim in pretium leo. Etiam quis lorem ante.
             Maecenas a risus laoreet, porta tortor vel, ultrices ante. Duis
             suscipit sit amet diam eget mattis. Aenean lobortis lacinia mi,
             sagittis pulvinar felis ornare ut. Duis tempus ex eleifend sem
-            dignissim porta.
+            dignissim porta. Lorem ipsum dolor sit amet, consectetur adipiscing
+            elit. Ut eu enim a eros eleifend dignissim in pretium leo. Etiam
+            quis lorem ante. Maecenas a risus laoreet, porta tortor vel,
+            ultrices ante. Duis suscipit sit amet diam eget mattis. Aenean
+            lobortis lacinia mi, sagittis pulvinar felis ornare ut. Duis tempus
+            ex eleifend sem dignissim porta.
           </Text>
-          <Divider
-            orientation={breakpoint.up('md') ? 'vertical' : 'horizontal'}
-            spacing="6"
-          >
+          <Divider orientation={isMd ? 'vertical' : 'horizontal'} spacing="6">
             Text
           </Divider>
-          <Text fontSize={breakpoint.up('lg') ? 'md' : 'sm'}>
+          <Text fontSize={isLg ? 'md' : 'sm'}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu enim
             a eros eleifend dignissim in pretium leo. Etiam quis lorem ante.
             Maecenas a risus laoreet, porta tortor vel, ultrices ante. Duis
@@ -292,25 +326,58 @@ const Home: NextPage = () => {
             dignissim porta.
           </Text>
         </Box>
+
+        <Text
+          fontWeight="semibold"
+          as="h2"
+          fontSize={isLg ? '2xl' : isSm ? 'xl' : 'lg'}
+        >
+          Loading Skeletons
+        </Text>
         <Card cs={{ css: { my: theme.space['8'] } }}>
           <CardContent>
             <Stack spacing="4" divider={<Divider />}>
-              <>
-                <Text fontWeight="semibold">SUMARY</Text>
-                <Text>
-                  View a summary of all your clients over the last month.
-                </Text>
-              </>
-              <>
-                <Text fontWeight="semibold">OVERVIEW</Text>
-                <Text>Check out the overview of your clients.</Text>
-              </>
-              <>
-                <Text fontWeight="semibold">ANALYSIS</Text>
-                <Text>
-                  See a detailed analysis of all your business clients.
-                </Text>
-              </>
+              {[
+                {
+                  title: 'SUMARY',
+                  summary:
+                    'View a summary of all your clients over the last month.'
+                },
+                {
+                  title: 'OVERVIEW',
+                  summary: 'Check out the overview of your clients.'
+                },
+                {
+                  title: 'ANALYSIS',
+                  summary:
+                    'See a detailed analysis of all your business clients.'
+                }
+              ].map((listItem) => (
+                <div key={listItem.title}>
+                  <Text
+                    fontWeight="semibold"
+                    cs={{
+                      css: {
+                        mb: theme.space['1']
+                      }
+                    }}
+                  >
+                    {listItem.title}
+                  </Text>
+                  <Skeleton isLoading={isLoading}>
+                    <Text>{listItem.summary}</Text>
+                  </Skeleton>
+                </div>
+              ))}
+
+              <Button
+                variant="outline"
+                size={isMd ? 'md' : 'sm'}
+                onClick={() => toggleLoading()}
+                colorSchema="teal"
+              >
+                Toggle Loading
+              </Button>
             </Stack>
           </CardContent>
         </Card>
