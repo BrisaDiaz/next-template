@@ -143,7 +143,7 @@ const solveMultiClass = (rootClass: string, selector: string) => {
   const classes = selector.split(',')
   if (classes.length === 1) return `.${rootClass}${selector}`
   const formattedSelector = classes
-    .map((className) => `.${rootClass}${className.trim()}`)
+    .map((className) => `.${rootClass}${className}`)
     .join(',')
   return formattedSelector
 }
