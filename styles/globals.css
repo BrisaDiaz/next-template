@@ -464,7 +464,7 @@ html {
    --colors-body-text: var(--colors-whiteAlpha-900);
     --colors-body-bg: var(--colors-gray-800);
     --colors-border-color: var(--colors-whiteAlpha-300);
-    --colors-placeholder-color: var(--colors-whiteAlpha-400);
+    --colors-placeholder-color: var(--colors-whiteAlpha-600);
     --colors-accent: var(--colors-teal-300);
     --colors-accent-emphasis: var(--colors-teal-200);
     --colors-accent-muted: var(--colors-teal-200);
